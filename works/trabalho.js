@@ -15,26 +15,30 @@ var speed_max = 0.5;
 var stats = new Stats();          // To show FPS information
 var scene = new THREE.Scene(); 
 var renderer = initRenderer();
-var lookAtVec   = new THREE.Vector3( 0.0, 0.0, 0.0 );
-var camPosition = new THREE.Vector3( 0, -30, 15 );
-var upVec       = new THREE.Vector3( 0.0, -1.0, 0.0 );
-var vcWidth = 400; 
-var vcHeidth = 300;
+// var lookAtVec   = new THREE.Vector3( 0.0, 0.0, 0.0 );
+// var camPosition = new THREE.Vector3( 0, -30, 15 );
+// var upVec       = new THREE.Vector3( 0.0, -1.0, 0.0 );
+// var vcWidth = 400; 
+// var vcHeidth = 300;
 // var camera = new THREE.PerspectiveCamera(45, vcWidth/vcHeidth, 0.1, 30.0);
 //   camera.position.copy(camPosition);
 //   camera.up.copy(upVec);
-  // camera.lookAt(lookAtVec);
+//   camera.lookAt(lookAtVec);
 var camera = initCamera(new THREE.Vector3(0, -30, 15));
 var keyboard = new KeyboardState();
 
 // Enable mouse rotation, pan, zoom etc.
 var trackballControls = new TrackballControls( camera, renderer.domElement );
 
+scene.add(new THREE.HemisphereLight());
+
+// initDefaultBasicLight(scene, true);
+
 var axesHelper = new THREE.AxesHelper( 12 );
 scene.add( axesHelper );
 
 var planeGeometry = new THREE.PlaneGeometry(2000, 2000);
-var planeMaterial = new THREE.MeshBasicMaterial({
+var planeMaterial = new THREE.MeshPhongMaterial({
     color: "rgba(150, 150, 150)",
     side: THREE.DoubleSide,
 });
@@ -44,7 +48,7 @@ scene.add(plane);
 
 // create a cube
 var cubeGeometry = new THREE.BoxGeometry(4, 2, 2); 
-var cubeMaterial = new THREE.MeshBasicMaterial({color: "rgba(0, 10, 150)"});
+var cubeMaterial = new THREE.MeshPhongMaterial({color: "rgba(0, 10, 150)"});
 var carro = new THREE.Mesh(cubeGeometry, cubeMaterial);
 // position the carro
 carro.position.set(0.0, 0.0, 1.5);
@@ -53,21 +57,21 @@ carro.translateX(Math.PI/2);
 scene.add(carro);
 
 var eixofG = new THREE.CylinderGeometry( 0.1, 0.1, 2.3, 32 );
-var eixofM = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+var eixofM = new THREE.MeshPhongMaterial( {color: 0xffff00} );
 var eixof = new THREE.Mesh(eixofG, eixofM);
 eixof.position.x = eixof.position.x-1;
 eixof.position.z = eixof.position.z-1;
 carro.add(eixof);
 
 var eixotG = new THREE.CylinderGeometry( 0.1, 0.1, 2.3, 32 );
-var eixotM = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+var eixotM = new THREE.MeshPhongMaterial( {color: 0xffff00} );
 var eixot = new THREE.Mesh(eixotG, eixotM);
 eixot.position.x = eixot.position.x+1;
 eixot.position.z = eixot.position.z-1;
 carro.add(eixot);
 
 var rodaDfG = new THREE.CylinderGeometry( 0.5, 0.5, 0.3, 32 );
-var rodaDfM = new THREE.MeshBasicMaterial( {color: 0x000000} );
+var rodaDfM = new THREE.MeshPhongMaterial( {color: 0x000000} );
 var rodaDf = new THREE.Mesh(rodaDfG, rodaDfM);
 // rodaDf.position.x = rodaDf.position.x+0.5;
 rodaDf.position.y = rodaDf.position.y-1.1;
@@ -75,7 +79,7 @@ rodaDf.position.y = rodaDf.position.y-1.1;
 eixof.add(rodaDf);
 
 var rodaEfG = new THREE.CylinderGeometry( 0.5, 0.5, 0.3, 32 );
-var rodaEfM = new THREE.MeshBasicMaterial( {color: 0x000000} );
+var rodaEfM = new THREE.MeshPhongMaterial( {color: 0x000000} );
 var rodaEf = new THREE.Mesh(rodaEfG, rodaEfM);
 // rodaEf.position.x = rodaEf.position.x+1;
 rodaEf.position.y = rodaEf.position.y+1.1;
@@ -83,13 +87,13 @@ rodaEf.position.y = rodaEf.position.y+1.1;
 eixof.add(rodaEf);
 
 var rodaDtG = new THREE.CylinderGeometry( 0.5, 0.5, 0.3, 32 );
-var rodaDtM = new THREE.MeshBasicMaterial( {color: 0x000000} );
+var rodaDtM = new THREE.MeshPhongMaterial( {color: 0x000000} );
 var rodaDt = new THREE.Mesh(rodaDtG, rodaDtM);
 rodaDt.position.y = rodaDt.position.y-1.1;
 eixot.add(rodaDt);
 
 var rodaEtG = new THREE.CylinderGeometry( 0.5, 0.5, 0.3, 32 );
-var rodaEtM = new THREE.MeshBasicMaterial( {color: 0x000000} );
+var rodaEtM = new THREE.MeshPhongMaterial( {color: 0x000000} );
 var rodaEt = new THREE.Mesh(rodaEtG, rodaEtM);
 rodaEt.position.y = rodaEt.position.y+1.1;
 eixot.add(rodaEt);
