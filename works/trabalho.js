@@ -9,62 +9,8 @@ import {initRenderer,
         createGroundPlaneWired,
         degreesToRadians} from "../libs/util/util.js";
 
-// var stats = new Stats();          // To show FPS information
-// var scene = new THREE.Scene();    //  Cria cena
-// var renderer = initRenderer();    //  Inicia o render
-// var lookAtVec   = new THREE.Vector3( 0.0, 0.0, 0.0 );
-// var camPosition = new THREE.Vector3( 15, 15, 10 );
-// var upVec       = new THREE.Vector3( 0.0, 1.0, 0.0 );
-// var vcWidth = 400; 
-// var vcHeidth = 300;
-// var camera = new THREE.PerspectiveCamera(45, vcWidth/vcHeidth, 1.0, 20.0);
-//   camera.position.copy(camPosition);
-//   camera.up.copy(upVec);
-//   camera.lookAt(lookAtVec);
-// var keyboard = new KeyboardState();
-
-// var planeGeometry = new THREE.PlaneGeometry(20, 20);
-// var planeMaterial = new THREE.MeshBasicMaterial({
-//     color: "rgba(250, 150, 150)",
-//     side: THREE.DoubleSide,
-// });
-// var plane = new THREE.Mesh(planeGeometry, planeMaterial);
-// // add the plane to the scene
-// scene.add(plane); // plano na cena
-
-// // create a camera
-// var holder = new THREE.Object3D ();
-// scene.add(holder); //  na cena
-
-// holder.add(camera);
-
-// scene.add(new THREE.HemisphereLight());
-
-// // Listen window size changes
-// window.addEventListener( 'resize', function(){onWindowResize(camera, renderer)}, false );
-
-// render();// render executado
-// function render()
-// {
-//   stats.update(); // Update FPS
-//   keyboardUpdate();
-//   requestAnimationFrame(render);
-//   renderer.render(scene, camera) // Render scene
-// }
-
-// function keyboardUpdate() {
-
-//   keyboard.update();
-
-//   if ( keyboard.pressed(",") )     holder.rotateY( .05);
-//   if ( keyboard.pressed(".") )    holder.rotateY(  -.05 );
-//   if ( keyboard.pressed("left") )     holder.rotateZ( -.05);
-//   if ( keyboard.pressed("right") )   holder.rotateZ(  0.05 );
-//   if ( keyboard.pressed("space") )    holder.translateY(  -.05 );
-//   if ( keyboard.pressed("up") )       holder.rotateX(  -.05 );
-//   if ( keyboard.pressed("down") )     holder.rotateX( .05 );
- 
-// }
+var speed = 0;
+var speed_max = 0.5;
 
 var stats = new Stats();          // To show FPS information
 var scene = new THREE.Scene(); 
@@ -176,6 +122,11 @@ function keyboardUpdate() {
   keyboard.update();
   if ( keyboard.pressed("left") )     carro.rotateZ( .05);
   if ( keyboard.pressed("right") )   carro.rotateZ(  -0.05 );
-  if ( keyboard.pressed("space") )    carro.translateX(  -.05 );
+  if ( keyboard.pressed("space") ){
+    if(speed< speed_max){
+      speed = speed + 0.01;
+    }
+    carro.translateX(  -speed );
+  } 
  
 }
