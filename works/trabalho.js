@@ -119,14 +119,21 @@ function render()
 
 function keyboardUpdate() {
 
-  keyboard.update();
+  keyboard.update(); 
   if ( keyboard.pressed("left") )     carro.rotateZ( .05);
   if ( keyboard.pressed("right") )   carro.rotateZ(  -0.05 );
-  if ( keyboard.pressed("space") ){
+  if ( keyboard.pressed("X") ){
     if(speed< speed_max){
       speed = speed + 0.01;
     }
     carro.translateX(  -speed );
+  }
+  if ( !keyboard.pressed("X") ){
+    if(speed> 0){
+      speed = speed - 0.02;
+      carro.translateX(  -speed );
+    }
+    
   } 
  
 }
