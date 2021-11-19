@@ -15,16 +15,15 @@ var speed_max = 0.5;
 var stats = new Stats();          // To show FPS information
 var scene = new THREE.Scene(); 
 var renderer = initRenderer();
-// var lookAtVec   = new THREE.Vector3( 0.0, 0.0, 0.0 );
-// var camPosition = new THREE.Vector3( 0, -30, 15 );
-// var upVec       = new THREE.Vector3( 0.0, -1.0, 0.0 );
-// var vcWidth = 400; 
-// var vcHeidth = 300;
-// var camera = new THREE.PerspectiveCamera(45, vcWidth/vcHeidth, 0.1, 30.0);
-//   camera.position.copy(camPosition);
-//   camera.up.copy(upVec);
-//   camera.lookAt(lookAtVec);
-var camera = initCamera(new THREE.Vector3(0, -30, 15));
+var lookAtVec   = new THREE.Vector3( 0.0, 0.0, 0.0 );
+var camPosition = new THREE.Vector3( -30, -30, 50 );
+var upVec       = new THREE.Vector3( 0.0, 0, 1.0 );
+var vcWidth = 400; 
+var vcHeidth = 300;
+var camera = new THREE.PerspectiveCamera(45, vcWidth/vcHeidth, 0.1, 8000.0);
+  camera.position.copy(camPosition);
+  camera.up.copy(upVec);
+  camera.lookAt(lookAtVec);
 var keyboard = new KeyboardState();
 
 // Enable mouse rotation, pan, zoom etc.
@@ -124,18 +123,27 @@ function render()
 function keyboardUpdate() {
 
   keyboard.update(); 
-  if ( keyboard.pressed("left") )     carro.rotateZ( .05);
-  if ( keyboard.pressed("right") )   carro.rotateZ(  -0.05 );
+  if ( keyboard.pressed("left") ){     
+    carro.rotateZ( .05);
+  }
+  if ( keyboard.pressed("right") ){
+    carro.rotateZ( -.05);
+  }
   if ( keyboard.pressed("X") ){
     if(speed< speed_max){
       speed = speed + 0.01;
     }
     carro.translateX(  -speed );
+    // var x = eixof.axis;
+    // rotateAroundObjectAxis(eixot, )
+    // carro.children[0].translateX(  -speed );
   }
   if ( !keyboard.pressed("X") ){
     if(speed> 0){
       speed = speed - 0.02;
       carro.translateX(  -speed );
+      // carro.rotateOnAxis(, 0,05);
+      // p2.matrixWorld.makeRotationAxis(axis, Math.random());
     }
     
   } 
