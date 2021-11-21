@@ -109,6 +109,7 @@ var controls = new InfoBox();
 // Listen window size changes
 window.addEventListener( 'resize', function(){onWindowResize(camera, renderer)}, false );
 
+// Controls Config
 function keyboardUpdate() {
   keyboard.update(); 
   if ( keyboard.pressed("left") ){     
@@ -133,9 +134,7 @@ function keyboardUpdate() {
       // carro.rotateOnAxis(, 0,05);
       // p2.matrixWorld.makeRotationAxis(axis, Math.random());
     }
-    
   } 
- 
 }
 
 render();
