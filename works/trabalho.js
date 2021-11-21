@@ -44,12 +44,11 @@ class bloco {
     else{ this.material = new THREE.MeshPhongMaterial({color: "rgba(0, 150, 250)"});}
     this.bloc = new THREE.Mesh(this.forma, this.material);
     this.bloc.position.set(pos_centro[0], pos_centro[1], pos_centro[2]);
-    if(tipo=="inicial") this.colisao = true;
-    else this.colisao = false;
+    if(tipo=="inicial") this.passouPeloBloco = true;
+    else this.passouPeloBloco = false;
   }
 }
 var tamanho_bloco = 9.7;
-
 
 // Plane Config
 var planeGeometry = new THREE.PlaneGeometry(2000, 2000);
@@ -61,10 +60,11 @@ var planeMaterial = new THREE.MeshPhongMaterial({
 var plane = new THREE.Mesh(planeGeometry, planeMaterial);
 scene.add(plane); 
 
+var blocos_comuns = [];
 var bloco_inicial = new bloco(tamanho_bloco,tamanho_bloco,0.3,"inicial",[0,0,-0.1])
 scene.add(bloco_inicial.bloc);
+blocos_comuns.push(bloco_inicial);
 
-var blocos_comuns = [];
 //Blocos reta inicial
 var bloco_comum = new bloco(tamanho_bloco,tamanho_bloco,0.3,"comum",[10,0,-0.1]);
 blocos_comuns.push(bloco_comum);
@@ -181,6 +181,19 @@ eixot.add(rodaEt);
 
 carro.scale.set(0.4,0.4,.4)
 
+function verificaPista(carro){
+  for(var i = 0; i<blocos_comuns.length; i++){
+    if(carro.position.x <= blocos_comuns[i].bloc.position.x+tamanho_bloco*1.1/2 && 
+      carro.position.x >= blocos_comuns[i].bloc.position.x-tamanho_bloco*1.1/2 &&
+      carro.position.y <= blocos_comuns[i].bloc.position.y+tamanho_bloco*1.1/2 &&
+      carro.position.y >= blocos_comuns[i].bloc.position.y-tamanho_bloco*1.1/2 ){
+        console.log("carro: ", carro.position.x, " bloco", i, ", carro: ", carro.position.y);
+        return true;
+      }
+  }
+  return false;
+}
+
 // Car Speed Config
 var speed = 0;
 var speed_max = 0.5;
@@ -198,12 +211,6 @@ var controls = new InfoBox();
 // Listen window size changes
 window.addEventListener( 'resize', function(){onWindowResize(camera, renderer)}, false );
 
-function detecta_pista1(){
-  if(carro.position.x<-20-tamanho_bloco || carro.position.x>20+tamanho_bloco || carro.position.y<-20-tamanho_bloco || carro.position.y>40+tamanho_bloco){
-    speed = 0.5*speed;
-  }
-}
-
 // Controls Config
 function keyboardUpdate() {
   keyboard.update(); 
@@ -217,7 +224,9 @@ function keyboardUpdate() {
     if(speed< speed_max){
       speed = speed + 0.01;
     }
-    detecta_pista1()
+    if(!verificaPista(carro)){
+      speed = speed*0.5;
+    }
     carro.translateX(speed);
     // var x = eixof.axis;
     // rotateAroundObjectAxis(eixot, )
@@ -225,7 +234,9 @@ function keyboardUpdate() {
   }
   if ( !keyboard.pressed("X") ){
     if(speed> 0){
-      detecta_pista1()
+      if(!verificaPista(carro)){
+        speed = speed*0.5;
+      }
       speed = speed - 0.01;
       carro.translateX(  speed );
       // carro.rotateOnAxis(, 0,05);
@@ -233,7 +244,9 @@ function keyboardUpdate() {
     }
   }
   if (keyboard.pressed("down")){
-    detecta_pista1()
+    if(!verificaPista(carro)){
+      speed = speed*0.5;
+    }
     if(speed> 0){
       speed = .95*speed;
     }else{
