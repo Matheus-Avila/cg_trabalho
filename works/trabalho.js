@@ -40,13 +40,15 @@ class bloco {
     this.profundidade = profundidade;
     this.tipo = tipo;
     this.forma = new THREE.BoxGeometry(this.altura, this.largura, this.profundidade);
-    if(tipo=="inicial") this.material = new THREE.MeshPhongMaterial({color: "rgba(250, 10, 150)"});
-    else this.material = new THREE.MeshPhongMaterial({color: "rgba(250, 150, 250)"});
+    if(tipo=="inicial"){ this.material = new THREE.MeshPhongMaterial({color: "rgba(250, 10, 150)"});}
+    else{ this.material = new THREE.MeshPhongMaterial({color: "rgba(0, 150, 250)"});}
     this.bloc = new THREE.Mesh(this.forma, this.material);
     this.bloc.position.set(pos_centro[0], pos_centro[1], pos_centro[2]);
+    if(tipo=="inicial") this.colisao = true;
+    else this.colisao = false;
   }
 }
-
+var tamanho_bloco = 9.7;
 
 
 // Plane Config
@@ -59,21 +61,80 @@ var planeMaterial = new THREE.MeshPhongMaterial({
 var plane = new THREE.Mesh(planeGeometry, planeMaterial);
 scene.add(plane); 
 
-var bloco_inicial = new bloco(9.7,9.7,0.3,"inicial",[0,0,-0.1])
+var bloco_inicial = new bloco(tamanho_bloco,tamanho_bloco,0.3,"inicial",[0,0,-0.1])
 scene.add(bloco_inicial.bloc);
 
 var blocos_comuns = [];
-for(var x = 1; x < 15; x++){
-  var bloco_comum = new bloco(9.7,9.7,0.3,"comum",[0,0,-0.1]);
-  blocos_comuns.push(bloco_comum);
-  scene.add(bloco_comum.bloc);
-}
+//Blocos reta inicial
+var bloco_comum = new bloco(tamanho_bloco,tamanho_bloco,0.3,"comum",[10,0,-0.1]);
+blocos_comuns.push(bloco_comum);
+scene.add(bloco_comum.bloc);
+
+var bloco_comum = new bloco(tamanho_bloco,tamanho_bloco,0.3,"comum",[20,0,-0.1]);
+blocos_comuns.push(bloco_comum);
+scene.add(bloco_comum.bloc);
+
+var bloco_comum = new bloco(tamanho_bloco,tamanho_bloco,0.3,"comum",[-10,0,-0.1]);
+blocos_comuns.push(bloco_comum);
+scene.add(bloco_comum.bloc);
+
+var bloco_comum = new bloco(tamanho_bloco,tamanho_bloco,0.3,"comum",[-20,0,-0.1]);
+blocos_comuns.push(bloco_comum);
+scene.add(bloco_comum.bloc);
+// Blocos curva direita
+var bloco_comum = new bloco(tamanho_bloco,tamanho_bloco,0.3,"comum",[-20,10,-0.1]);
+blocos_comuns.push(bloco_comum);
+scene.add(bloco_comum.bloc);
+
+var bloco_comum = new bloco(tamanho_bloco,tamanho_bloco,0.3,"comum",[-20,20,-0.1]);
+blocos_comuns.push(bloco_comum);
+scene.add(bloco_comum.bloc);
+
+var bloco_comum = new bloco(tamanho_bloco,tamanho_bloco,0.3,"comum",[-20,30,-0.1]);
+blocos_comuns.push(bloco_comum);
+scene.add(bloco_comum.bloc);
+
+var bloco_comum = new bloco(tamanho_bloco,tamanho_bloco,0.3,"comum",[-20,40,-0.1]);
+blocos_comuns.push(bloco_comum);
+scene.add(bloco_comum.bloc);
+
+var bloco_comum = new bloco(tamanho_bloco,tamanho_bloco,0.3,"comum",[-10,40,-0.1]);
+blocos_comuns.push(bloco_comum);
+scene.add(bloco_comum.bloc);
+
+var bloco_comum = new bloco(tamanho_bloco,tamanho_bloco,0.3,"comum",[0,40,-0.1]);
+blocos_comuns.push(bloco_comum);
+scene.add(bloco_comum.bloc);
+
+var bloco_comum = new bloco(tamanho_bloco,tamanho_bloco,0.3,"comum",[10,40,-0.1]);
+blocos_comuns.push(bloco_comum);
+scene.add(bloco_comum.bloc);
+
+var bloco_comum = new bloco(tamanho_bloco,tamanho_bloco,0.3,"comum",[20,40,-0.1]);
+blocos_comuns.push(bloco_comum);
+scene.add(bloco_comum.bloc);
+
+var bloco_comum = new bloco(tamanho_bloco,tamanho_bloco,0.3,"comum",[20,30,-0.1]);
+blocos_comuns.push(bloco_comum);
+scene.add(bloco_comum.bloc);
+
+var bloco_comum = new bloco(tamanho_bloco,tamanho_bloco,0.3,"comum",[20,20,-0.1]);
+blocos_comuns.push(bloco_comum);
+scene.add(bloco_comum.bloc);
+
+var bloco_comum = new bloco(tamanho_bloco,tamanho_bloco,0.3,"comum",[20,10,-0.1]);
+blocos_comuns.push(bloco_comum);
+scene.add(bloco_comum.bloc);
+
+var bloco_comum = new bloco(tamanho_bloco,tamanho_bloco,0.3,"comum",[20,0,-0.1]);
+blocos_comuns.push(bloco_comum);
+scene.add(bloco_comum.bloc);
+
 // Car Config
 var cubeGeometry = new THREE.BoxGeometry(4, 2, 2); 
 var cubeMaterial = new THREE.MeshPhongMaterial({color: "rgba(0, 10, 150)"});
 var carro = new THREE.Mesh(cubeGeometry, cubeMaterial);
 carro.position.set(0.0, 0.0, 1.5);
-carro.translateX(Math.PI/2);
 scene.add(carro);
 
 var eixofG = new THREE.CylinderGeometry( 0.1, 0.1, 2.3, 32 );
@@ -118,6 +179,8 @@ var rodaEt = new THREE.Mesh(rodaEtG, rodaEtM);
 rodaEt.position.y = rodaEt.position.y+1.1;
 eixot.add(rodaEt);
 
+carro.scale.set(0.4,0.4,.4)
+
 // Car Speed Config
 var speed = 0;
 var speed_max = 0.5;
@@ -135,6 +198,12 @@ var controls = new InfoBox();
 // Listen window size changes
 window.addEventListener( 'resize', function(){onWindowResize(camera, renderer)}, false );
 
+function detecta_pista1(){
+  if(carro.position.x<-20-tamanho_bloco || carro.position.x>20+tamanho_bloco || carro.position.y<-20-tamanho_bloco || carro.position.y>40+tamanho_bloco){
+    speed = 0.5*speed;
+  }
+}
+
 // Controls Config
 function keyboardUpdate() {
   keyboard.update(); 
@@ -148,19 +217,29 @@ function keyboardUpdate() {
     if(speed< speed_max){
       speed = speed + 0.01;
     }
-    carro.translateX(-1);
+    detecta_pista1()
+    carro.translateX(speed);
     // var x = eixof.axis;
     // rotateAroundObjectAxis(eixot, )
     // carro.children[0].translateX(  -speed );
   }
   if ( !keyboard.pressed("X") ){
     if(speed> 0){
-      speed = speed - 0.02;
-      carro.translateX(  -speed );
+      detecta_pista1()
+      speed = speed - 0.01;
+      carro.translateX(  speed );
       // carro.rotateOnAxis(, 0,05);
       // p2.matrixWorld.makeRotationAxis(axis, Math.random());
     }
-  } 
+  }
+  if (keyboard.pressed("down")){
+    detecta_pista1()
+    if(speed> 0){
+      speed = .95*speed;
+    }else{
+      carro.translateX(-.08);
+    }
+  }
 }
 
 render();
