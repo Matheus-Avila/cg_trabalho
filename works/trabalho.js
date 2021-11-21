@@ -9,50 +9,45 @@ import {initRenderer,
         createGroundPlaneWired,
         degreesToRadians} from "../libs/util/util.js";
 
-var speed = 0;
-var speed_max = 0.5;
-
-var stats = new Stats();          // To show FPS information
+// Init
+var stats = new Stats();          
 var scene = new THREE.Scene(); 
 var renderer = initRenderer();
+
+// Camera config
 var lookAtVec   = new THREE.Vector3( 0.0, 0.0, 0.0 );
 var camPosition = new THREE.Vector3( -30, -30, 50 );
 var upVec       = new THREE.Vector3( 0.0, 0, 1.0 );
 var vcWidth = 400; 
 var vcHeidth = 300;
 var camera = new THREE.PerspectiveCamera(45, vcWidth/vcHeidth, 0.1, 8000.0);
-  camera.position.copy(camPosition);
-  camera.up.copy(upVec);
-  camera.lookAt(lookAtVec);
+camera.position.copy(camPosition);
+camera.up.copy(upVec);
+camera.lookAt(lookAtVec);
 var keyboard = new KeyboardState();
-
-// Enable mouse rotation, pan, zoom etc.
 var trackballControls = new TrackballControls( camera, renderer.domElement );
 
 scene.add(new THREE.HemisphereLight());
-
 // initDefaultBasicLight(scene, true);
 
 var axesHelper = new THREE.AxesHelper( 12 );
 scene.add( axesHelper );
 
+// Plane Config
 var planeGeometry = new THREE.PlaneGeometry(2000, 2000);
 var planeMaterial = new THREE.MeshPhongMaterial({
     color: "rgba(150, 150, 150)",
     side: THREE.DoubleSide,
 });
 var plane = new THREE.Mesh(planeGeometry, planeMaterial);
-// add the plane to the scene
 scene.add(plane); 
 
-// create a cube
+// Car Config
 var cubeGeometry = new THREE.BoxGeometry(4, 2, 2); 
 var cubeMaterial = new THREE.MeshPhongMaterial({color: "rgba(0, 10, 150)"});
 var carro = new THREE.Mesh(cubeGeometry, cubeMaterial);
-// position the carro
 carro.position.set(0.0, 0.0, 1.5);
 carro.translateX(Math.PI/2);
-// add the carro to the scene
 scene.add(carro);
 
 var eixofG = new THREE.CylinderGeometry( 0.1, 0.1, 2.3, 32 );
@@ -97,6 +92,10 @@ var rodaEt = new THREE.Mesh(rodaEtG, rodaEtM);
 rodaEt.position.y = rodaEt.position.y+1.1;
 eixot.add(rodaEt);
 
+// Car Speed Config
+var speed = 0;
+var speed_max = 0.5;
+
 // Use this to show information onscreen
 var controls = new InfoBox();
   controls.add("Basic Scene");
@@ -110,18 +109,7 @@ var controls = new InfoBox();
 // Listen window size changes
 window.addEventListener( 'resize', function(){onWindowResize(camera, renderer)}, false );
 
-render();// render executado
-function render()
-{
-  stats.update(); // Update FPS
-  trackballControls.update(); // Enable mouse movements
-  keyboardUpdate();
-  requestAnimationFrame(render);
-  renderer.render(scene, camera) // Render scene
-}
-
 function keyboardUpdate() {
-
   keyboard.update(); 
   if ( keyboard.pressed("left") ){     
     carro.rotateZ( .05);
@@ -133,7 +121,7 @@ function keyboardUpdate() {
     if(speed< speed_max){
       speed = speed + 0.01;
     }
-    carro.translateX(  -speed );
+    carro.translateX(-1);
     // var x = eixof.axis;
     // rotateAroundObjectAxis(eixot, )
     // carro.children[0].translateX(  -speed );
@@ -149,3 +137,15 @@ function keyboardUpdate() {
   } 
  
 }
+
+render();
+
+function render()
+{
+  stats.update(); // Update FPS
+  trackballControls.update(); // Enable mouse movements
+  keyboardUpdate();
+  requestAnimationFrame(render);
+  renderer.render(scene, camera) // Render scene
+}
+
