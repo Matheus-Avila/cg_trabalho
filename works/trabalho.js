@@ -33,8 +33,25 @@ scene.add(new THREE.HemisphereLight());
 var axesHelper = new THREE.AxesHelper( 12 );
 scene.add( axesHelper );
 
+class bloco {
+  constructor(largura, altura, profundidade, tipo, pos_centro){
+    this.largura = largura;
+    this.altura = altura;
+    this.profundidade = profundidade;
+    this.tipo = tipo;
+    this.forma = new THREE.BoxGeometry(this.altura, this.largura, this.profundidade);
+    if(tipo=="inicial") this.material = new THREE.MeshPhongMaterial({color: "rgba(250, 10, 150)"});
+    else this.material = new THREE.MeshPhongMaterial({color: "rgba(250, 150, 250)"});
+    this.bloc = new THREE.Mesh(this.forma, this.material);
+    this.bloc.position.set(pos_centro[0], pos_centro[1], pos_centro[2]);
+  }
+}
+
+
+
 // Plane Config
 var planeGeometry = new THREE.PlaneGeometry(2000, 2000);
+planeGeometry.translate(0.0, 0.0, -0.3);
 var planeMaterial = new THREE.MeshPhongMaterial({
     color: "rgba(150, 150, 150)",
     side: THREE.DoubleSide,
@@ -42,6 +59,15 @@ var planeMaterial = new THREE.MeshPhongMaterial({
 var plane = new THREE.Mesh(planeGeometry, planeMaterial);
 scene.add(plane); 
 
+var bloco_inicial = new bloco(9.7,9.7,0.3,"inicial",[0,0,-0.1])
+scene.add(bloco_inicial.bloc);
+
+var blocos_comuns = [];
+for(var x = 1; x < 15; x++){
+  var bloco_comum = new bloco(9.7,9.7,0.3,"comum",[0,0,-0.1]);
+  blocos_comuns.push(bloco_comum);
+  scene.add(bloco_comum.bloc);
+}
 // Car Config
 var cubeGeometry = new THREE.BoxGeometry(4, 2, 2); 
 var cubeMaterial = new THREE.MeshPhongMaterial({color: "rgba(0, 10, 150)"});
