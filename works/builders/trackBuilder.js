@@ -1,7 +1,7 @@
 import { Block } from '../classes/block.js';
 
-var buildTrack = function (blockSize, blockDepth, scene) {
-    var commonBlocks = [];
+var buildTrack = function (scene, blockSize, blockDepth) {
+    var blocks = [];
     var commonBlockPositions = [
         [10, 0, -0.1],
         [20, 0, -0.1],
@@ -19,19 +19,20 @@ var buildTrack = function (blockSize, blockDepth, scene) {
         [20, 20, -0.1],
         [20, 10, -0.1],
         [20, 0, -0.1]
-    ]
+    ];
 
-    var initialBlock = new Block(blockSize, blockSize, blockDepth, "initial", [0, 0, -0.1])
+    var initialBlockPosition = [0, 0, -0.1];
+    var initialBlock = new Block(blockSize, blockSize, blockDepth, "initial", initialBlockPosition);
     scene.add(initialBlock.mesh);
-    commonBlocks.push(initialBlock);
+    blocks.push(initialBlock);
 
     for (let i = 0; i < commonBlockPositions.length; i++) {
         var commonBlock = new Block(blockSize, blockSize, blockDepth, "common", commonBlockPositions[i]);
-        commonBlocks.push(commonBlock);
+        blocks.push(commonBlock);
         scene.add(commonBlock.mesh);
     }
 
-    return commonBlocks;
+    return blocks;
 }
 
 export { buildTrack };
