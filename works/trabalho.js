@@ -30,7 +30,7 @@ scene.add(axesHelper);
 
 var blockSize = 9.7;
 var blockDepth = 0.3;
-var trackBlocks = TrackBuilder.buildTrack(scene, blockSize, blockDepth);
+var track = TrackBuilder.buildSecondTrack(scene, blockSize, blockDepth);
 
 var maxSpeed = 0.5;
 var car = CarBuilder.buildCar(scene, maxSpeed);
@@ -44,7 +44,7 @@ render();
 
 function render() {
   stats.update(); // Update FPS
-  keyboard.update(car, trackBlocks, blockSize);
+  keyboard.update(car, track);
   trackballControls.update(); // Enable mouse movements
   requestAnimationFrame(render);
   renderer.render(scene, camera) // Render scene

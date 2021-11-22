@@ -5,7 +5,7 @@ export class Keyboard {
         this.keyboardState = new KeyboardState();
     }
 
-    update = function (car, trackBlocks, blockSize) {
+    update = function (car, track) {
         this.keyboardState.update();
 
         if (this.keyboardState.pressed("left"))
@@ -18,7 +18,7 @@ export class Keyboard {
             if (car.speed < car.maxSpeed)
                 car.speed = car.speed + 0.01;
 
-            if (!this.#onTrack(car.mesh, trackBlocks, blockSize))
+            if (!this.#onTrack(car.mesh, track))
                 car.speed = car.speed * 0.5;
 
             car.mesh.translateX(car.speed);
@@ -26,7 +26,7 @@ export class Keyboard {
 
         if (!this.keyboardState.pressed("X")) {
             if (car.speed > 0) {
-                if (!this.#onTrack(car.mesh, trackBlocks, blockSize))
+                if (!this.#onTrack(car.mesh, track))
                     car.speed = car.speed * 0.5;
 
                 car.speed = car.speed - 0.01;
@@ -35,7 +35,7 @@ export class Keyboard {
         }
 
         if (this.keyboardState.pressed("down")) {
-            if (!this.#onTrack(car.mesh, trackBlocks, blockSize))
+            if (!this.#onTrack(car.mesh, track))
                 car.speed = car.speed * 0.5;
 
             if (car.speed > 0)
@@ -45,12 +45,12 @@ export class Keyboard {
         }
     }
 
-    #onTrack(car, trackBlocks, blockSize) {
-        for (var i = 0; i < trackBlocks.length; i++) {
-            if (car.position.x <= trackBlocks[i].mesh.position.x + blockSize * 1.1 / 2 &&
-                car.position.x >= trackBlocks[i].mesh.position.x - blockSize * 1.1 / 2 &&
-                car.position.y <= trackBlocks[i].mesh.position.y + blockSize * 1.1 / 2 &&
-                car.position.y >= trackBlocks[i].mesh.position.y - blockSize * 1.1 / 2) {
+    #onTrack(car, track) {
+        for (var i = 0; i < track.blocks.length; i++) {
+            if (car.position.x <= track.blocks[i].mesh.position.x + track.blockSize * 1.1 / 2 &&
+                car.position.x >= track.blocks[i].mesh.position.x - track.blockSize * 1.1 / 2 &&
+                car.position.y <= track.blocks[i].mesh.position.y + track.blockSize * 1.1 / 2 &&
+                car.position.y >= track.blocks[i].mesh.position.y - track.blockSize * 1.1 / 2) {
                 return true;
             }
         }
