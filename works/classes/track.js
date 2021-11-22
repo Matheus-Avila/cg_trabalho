@@ -2,14 +2,17 @@ import * as THREE from '../../build/three.module.js';
 import { Block } from '../classes/block.js';
 
 export class Track {
-    constructor(initialBlockPosition, commonBlockPositions, blockSize, blockDepth) {
+    constructor(number, initialBlockPosition, commonBlockPositions, blockSize, blockDepth) {
+        this.initialBlockPosition = initialBlockPosition;
+        this.number = number;
+        this.blockSize = blockSize;
+        this.blockDepth = blockDepth;
         this.blocks = [];
         this.group = new THREE.Group();
-        this.blockSize = blockSize;
 
         var initialBlock = new Block(blockSize, blockSize, blockDepth, "initial", initialBlockPosition);
-        this.group.add(initialBlock.mesh);
         this.blocks.push(initialBlock);
+        this.group.add(initialBlock.mesh);
 
         for (let i = 0; i < commonBlockPositions.length; i++) {
             var commonBlock = new Block(blockSize, blockSize, blockDepth, "common", commonBlockPositions[i]);
