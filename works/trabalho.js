@@ -3,7 +3,8 @@ import Stats from '../build/jsm/libs/stats.module.js';
 import { TrackballControls } from '../build/jsm/controls/TrackballControls.js';
 import {
   initRenderer,
-  onWindowResize
+  onWindowResize,
+  initDefaultBasicLight
 } from "../libs/util/util.js";
 import * as CameraBuilder from './builders/cameraBuilder.js';
 import * as PlaneBuilder from './builders/planeBuilder.js';
@@ -20,7 +21,7 @@ var renderer = initRenderer();
 // Build the scene
 var scene = new THREE.Scene();
 
-scene.add(new THREE.HemisphereLight());
+initDefaultBasicLight(scene, true);
 var camera = CameraBuilder.buildCamera();
 PlaneBuilder.buildPlane(scene);
 
