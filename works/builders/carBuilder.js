@@ -3,7 +3,7 @@ import * as THREE from '../../build/three.module.js';
 import { degreesToRadians } from '../../libs/util/util.js';
 
 var buildCar = function (scene, maxSpeed) {
-    var maxSpeed = 0.5;
+    var maxSpeed = 0.4;
     var casing = buildCasing();
     var axle = buildAxle(casing);
     buildWheels(axle.front, axle.back);
@@ -16,7 +16,7 @@ var buildCasing = function () {
     var casingGeometry = new THREE.BoxGeometry(4, 2, 2);
     var casingMaterial = new THREE.MeshPhongMaterial({ color: "rgba(0, 10, 150)" });
     var casing = new THREE.Mesh(casingGeometry, casingMaterial);
-    casing.position.set(0.0, 0.0, 1.5);
+    casing.position.set(0.0, 0.0, .63);
     casing.scale.set(0.4, 0.4, 0.4);
     casing.rotation.set(0, 0, degreesToRadians(180));
 
