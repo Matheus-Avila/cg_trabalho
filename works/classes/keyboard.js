@@ -1,4 +1,4 @@
-import KeyboardState from '../../libs/util/KeyboardState.js';
+import KeyboardState from '../util/KeyboardState.js';
 import * as TrackBuilder from '../builders/trackBuilder.js';
 import { degreesToRadians } from '../../libs/util/util.js';
 
