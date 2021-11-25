@@ -3,7 +3,7 @@ import * as THREE from '../../build/three.module.js';
 import { degreesToRadians } from '../../libs/util/util.js';
 
 var buildCar = function (scene, maxSpeed) {
-    var maxSpeed = 0.4;
+    var maxSpeed = 0.3;
     var casing = buildCasing();
     var axle = buildAxle(casing);
     buildWheels(axle.front, axle.back);
@@ -44,21 +44,21 @@ var buildWheels = function (frontAxle, backAxle) {
     var wheelGeometry = new THREE.CylinderGeometry(0.5, 0.5, 0.3, 32);
     var wheelMaterial = new THREE.MeshPhongMaterial({ color: 0x000000 });
 
-    var rodaDf = new THREE.Mesh(wheelGeometry, wheelMaterial);
-    rodaDf.position.y = rodaDf.position.y - 1.1;
-    frontAxle.add(rodaDf);
+    var rightFrontWheel = new THREE.Mesh(wheelGeometry, wheelMaterial);
+    rightFrontWheel.position.y = rightFrontWheel.position.y - 1.1;
+    frontAxle.add(rightFrontWheel);
 
-    var rodaEf = new THREE.Mesh(wheelGeometry, wheelMaterial);
-    rodaEf.position.y = rodaEf.position.y + 1.1;
-    frontAxle.add(rodaEf);
+    var leftFrontWheel = new THREE.Mesh(wheelGeometry, wheelMaterial);
+    leftFrontWheel.position.y = leftFrontWheel.position.y + 1.1;
+    frontAxle.add(leftFrontWheel);
 
-    var rodaDt = new THREE.Mesh(wheelGeometry, wheelMaterial);
-    rodaDt.position.y = rodaDt.position.y - 1.1;
-    backAxle.add(rodaDt);
+    var rightRearWheel = new THREE.Mesh(wheelGeometry, wheelMaterial);
+    rightRearWheel.position.y = rightRearWheel.position.y - 1.1;
+    backAxle.add(rightRearWheel);
 
-    var rodaEt = new THREE.Mesh(wheelGeometry, wheelMaterial);
-    rodaEt.position.y = rodaEt.position.y + 1.1;
-    backAxle.add(rodaEt);
+    var leftRearWheel = new THREE.Mesh(wheelGeometry, wheelMaterial);
+    leftRearWheel.position.y = leftRearWheel.position.y + 1.1;
+    backAxle.add(leftRearWheel);
 }
 
 export { buildCar };

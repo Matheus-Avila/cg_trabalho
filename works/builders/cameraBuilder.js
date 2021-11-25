@@ -3,7 +3,7 @@ import * as THREE from '../../build/three.module.js';
 var buildCamera = function () {
     var vcWidth = 400;
     var vcHeidth = 300;
-    var camPosition = new THREE.Vector3(-30, -30, 50);
+    var camPosition = new THREE.Vector3(-20, -10, 15);
     var upVec = new THREE.Vector3(0.0, 0, 1.0);
     var lookAtVec = new THREE.Vector3(0.0, 0.0, 0.0);
 
