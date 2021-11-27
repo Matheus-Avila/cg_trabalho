@@ -74,9 +74,9 @@ export class Keyboard {
     }
 
     lastTrue = function(car, track){
-        for (var i = track.blocks.length-1; i >=0; i--) {
+        for (var i = 3; i < track.blocks.length; i++) {
             // console.log(i);
-            if(track.blocks[i].crossed == 'true'){
+            if( track.blocks[i-1].crossed == 'true' && track.blocks[i].crossed == 'false'){
                 car.position.x = track.blocks[i].mesh.position.x;
                 car.position.y = track.blocks[i].mesh.position.y;
                 break;
@@ -91,7 +91,6 @@ export class Keyboard {
                 car.position.y <= track.blocks[i].mesh.position.y + track.blockSize * 1.1 / 2 &&
                 car.position.y >= track.blocks[i].mesh.position.y - track.blockSize * 1.1 / 2) {
                     if(track.blocks[i].crossed == 'checkpoint'){
-                        console.log(i);
                         this.lastTrue(car, track);
                     }
                     track.blocks[i].crossed = 'true';
