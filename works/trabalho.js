@@ -24,18 +24,20 @@ PlaneBuilder.buildPlane(scene);
 var track = TrackBuilder.buildFirstTrack(scene);
 var car = CarBuilder.buildCar(scene);
 
-var axesHelper = new THREE.AxesHelper(12);
-scene.add(axesHelper);
-
 var camera = CameraBuilder.buildCamera( );
 initDefaultBasicLight(scene, true);
 var cameraHolder = new THREE.Object3D();
 cameraHolder.add(camera);
 scene.add(cameraHolder);
 
+var cameraTarget = new THREE.Object3D();
+car.mesh.add(cameraTarget);
+cameraTarget.position.set(car.mesh.position.x + 10, car.mesh.position.y, car.mesh.position.z);
+  
 function cameraMovement(){
-  camera.lookAt(car.mesh.position);
-  cameraHolder.position.set(car.mesh.position.x - 20, car.mesh.position.y - 10, car.mesh.position.z + 15);
+  var cameraTargetPosition = cameraTarget.getWorldPosition();
+  cameraHolder.position.set(cameraTargetPosition.x - 20, cameraTargetPosition.y - 7, cameraTargetPosition.z + 7);
+  camera.lookAt(cameraTargetPosition);
 }
 
 // Additional features
