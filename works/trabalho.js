@@ -23,15 +23,20 @@ var scene = new THREE.Scene();
 PlaneBuilder.buildPlane(scene);
 var track = TrackBuilder.buildFirstTrack(scene);
 var car = CarBuilder.buildCar(scene);
+
 var axesHelper = new THREE.AxesHelper(12);
 scene.add(axesHelper);
 
-var camera = CameraBuilder.buildCamera(car);
+var camera = CameraBuilder.buildCamera( );
 initDefaultBasicLight(scene, true);
 var cameraHolder = new THREE.Object3D();
-cameraHolder.position.set(60, 40, 20);
 cameraHolder.add(camera);
-car.mesh.add(cameraHolder);
+scene.add(cameraHolder);
+
+function cameraMovement(){
+  camera.lookAt(car.mesh.position);
+  cameraHolder.position.set(car.mesh.position.x - 20, car.mesh.position.y - 10, car.mesh.position.z + 15);
+}
 
 // Additional features
 var trackballControls = new TrackballControls(camera, renderer.domElement);
@@ -43,12 +48,10 @@ render();
 function render() {
   stats.update(); // Update FPS
   trackballControls.update(); // Enable mouse movements
-  camera.lookAt(car.mesh.position);
   keyboard.update();
   keyboard.onMovementKeyPressed(car, track);
+  cameraMovement();
   track = keyboard.onChangeTrackKeyPressed(car, track, scene);
-
-
   requestAnimationFrame(render);
   renderer.render(scene, camera) // Render scene
 }
