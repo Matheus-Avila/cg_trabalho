@@ -1,15 +1,15 @@
-import { InfoBox } from "../../libs/util/util.js";
+import { InfoBoxTimer } from "./myInfoBox.js";
 
-export function showInfoxBox() {
-    var infoBox = new InfoBox();
+export function showInfoxBox(keyboard, numVoltas) {
+    var infoBox = new InfoBoxTimer();
     infoBox.add("Rock 'n Roll Racing");
-    infoBox.addParagraph();   
-    infoBox.add("Use mouse to interact with the camera:");
-    infoBox.add("* Left button to rotate");
-    infoBox.add("* Right button to translate (pan)");
-    infoBox.add("* Scroll to zoom in/out.");
     infoBox.addParagraph();
     infoBox.add("Press 1 or 2 to change between the tracks.");
 
     infoBox.show();
+    return infoBox;
+}
+export function addText( info, text){
+    info.add(text);
+    info.show();
 }

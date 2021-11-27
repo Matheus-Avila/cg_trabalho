@@ -11,9 +11,9 @@ import * as PlaneBuilder from './builders/planeBuilder.js';
 import * as TrackBuilder from './builders/trackBuilder.js';
 import * as CarBuilder from './builders/carBuilder.js';
 import { Keyboard } from './classes/keyboard.js';
-import { showInfoxBox } from './util/infoBox.js';
 
 // Init
+
 var stats = new Stats();
 var keyboard = new Keyboard();
 var renderer = initRenderer();
@@ -41,7 +41,7 @@ function cameraMovement(){
 // Additional features
 var trackballControls = new TrackballControls(camera, renderer.domElement);
 window.addEventListener('resize', function () { onWindowResize(camera, renderer) }, false);
-showInfoxBox();
+// showInfoxBox(keyboard);
 
 render();
 
