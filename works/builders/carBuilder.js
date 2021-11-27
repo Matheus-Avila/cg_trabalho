@@ -4,12 +4,13 @@ import { degreesToRadians } from '../../libs/util/util.js';
 
 var buildCar = function (scene, maxSpeed) {
     var maxSpeed = 0.3;
+    var maxAngleAxle = 0.3;
     var casing = buildCasing();
     var axle = buildAxle(casing);
     buildWheels(axle.front, axle.back);
     scene.add(casing);
 
-    return new Car(casing, maxSpeed);
+    return new Car(casing, maxSpeed, maxAngleAxle);
 }
 
 var buildCasing = function () {
@@ -42,7 +43,7 @@ var buildAxle = function (car) {
 
 var buildWheels = function (frontAxle, backAxle) {
     var wheelGeometry = new THREE.CylinderGeometry(0.5, 0.5, 0.3, 32);
-    var wheelMaterial = new THREE.MeshPhongMaterial({ color: 0x000000 });
+    var wheelMaterial = new THREE.MeshPhongMaterial({ color: 0xff00ff });
 
     var rightFrontWheel = new THREE.Mesh(wheelGeometry, wheelMaterial);
     rightFrontWheel.position.y = rightFrontWheel.position.y - 1.1;
