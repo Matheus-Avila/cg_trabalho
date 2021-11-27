@@ -10,11 +10,11 @@ export class Block {
 
         if (type == "initial"){
             this.material = new THREE.MeshPhongMaterial({ color: "rgba(250, 10, 150)" });
-            this.crossed = true;
+            this.crossed = 'true';
         }
         else{
             this.material = new THREE.MeshPhongMaterial({ color: "rgba(250, 150, 250)" });
-            this.crossed = false;
+            this.crossed = 'false';
         }
         this.mesh = new THREE.Mesh(this.boxGeometry, this.material);
         this.mesh.position.set(position[0], position[1], position[2]);

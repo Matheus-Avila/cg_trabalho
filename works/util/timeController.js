@@ -102,7 +102,7 @@ export class timeCheck{
 
     voltaConcluida = function(track){
         for (var i = 1; i < track.blocks.length-1; i++) {
-            track.blocks[i].crossed = false;
+            track.blocks[i].crossed = 'false';
         }
         
         this.numVolta();
@@ -110,7 +110,7 @@ export class timeCheck{
     checkVolta = function(track){
         var i;
         for (i = 0; i < track.blocks.length-1; i++) {
-            if(track.blocks[i].crossed == false) return false; //Passou direto por algum bloco. Volta nao computada 
+            if(track.blocks[i].crossed == 'false') return false; //Passou direto por algum bloco. Volta nao computada 
         }
         this.voltaConcluida(track);// Volta concluida! Reinicie crossed e compute a volta
         return true;

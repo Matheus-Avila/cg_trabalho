@@ -73,14 +73,34 @@ export class Keyboard {
         return track;
     }
 
+    lastTrue = function(car, track){
+        for (var i = track.blocks.length-1; i >=0; i--) {
+            // console.log(i);
+            if(track.blocks[i].crossed == 'true'){
+                car.position.x = track.blocks[i].mesh.position.x;
+                car.position.y = track.blocks[i].mesh.position.y;
+                break;
+            }
+        }
+    }
+
     #carIsOnTrack(car, track) {
         for (var i = 0; i < track.blocks.length; i++) {
             if (car.position.x <= track.blocks[i].mesh.position.x + track.blockSize * 1.1 / 2 &&
                 car.position.x >= track.blocks[i].mesh.position.x - track.blockSize * 1.1 / 2 &&
                 car.position.y <= track.blocks[i].mesh.position.y + track.blockSize * 1.1 / 2 &&
                 car.position.y >= track.blocks[i].mesh.position.y - track.blockSize * 1.1 / 2) {
-                    track.blocks[i].crossed = true;
-                    if(i == 0) this.tempo.checkVolta(track);//Se estiver no bloco inicial então verifica se completou a volta
+                    if(track.blocks[i].crossed == 'checkpoint'){
+                        console.log(i);
+                        this.lastTrue(car, track);
+                    }
+                    track.blocks[i].crossed = 'true';
+                    if(i>4){
+                        track.blocks[3].crossed = 'checkpoint';
+                    }
+                    if(i == 0){
+                        track.blocks[1].crossed = 'true';
+                        this.tempo.checkVolta(track);}//Se estiver no bloco inicial então verifica se completou a volta
                     return true;
             }
         }
