@@ -14,6 +14,7 @@ import { Keyboard } from './classes/keyboard.js';
 import { showInfoxBox } from './util/infoBox.js';
 
 // Init
+
 var stats = new Stats();
 var keyboard = new Keyboard();
 var renderer = initRenderer();
@@ -36,7 +37,7 @@ car.mesh.add(cameraHolder);
 // Additional features
 var trackballControls = new TrackballControls(camera, renderer.domElement);
 window.addEventListener('resize', function () { onWindowResize(camera, renderer) }, false);
-showInfoxBox();
+// showInfoxBox(keyboard);
 
 render();
 

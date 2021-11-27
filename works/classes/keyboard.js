@@ -7,53 +7,55 @@ import { timeCheck } from '../util/timeController.js';
 export class Keyboard {
     constructor() {
         this.keyboardState = new KeyboardState();
-        this.tempo = new timeCheck();
+        this.tempo = new timeCheck(this);
     }
 
     update = function () {
         this.keyboardState.update();
     }
     onMovementKeyPressed = function (car, track) {
-        if (this.keyboardState.pressed("left")){
-            // car.mesh.children[1].children[0].rotateZ(.05); Girar rodas
-            // car.mesh.children[1].children[1].rotateZ(.05);
-            car.mesh.rotateZ(.05);
-        }
-        if (this.keyboardState.pressed("right")){
-            // car.mesh.children[1].children[0].rotateZ(-.05);
-            // car.mesh.children[1].children[1].rotateZ(-.05);
-            car.mesh.rotateZ(-.05);
-        }
-        if (this.keyboardState.pressed("X")) {
-            if (car.speed < car.maxSpeed)
-                car.speed = car.speed + 0.01;
-            
-            if (!this.#carIsOnTrack(car.mesh, track))
-                car.speed = car.speed * 0.5;
-            var direcao = new THREE.Vector3();
-            // car.mesh.children[1].children[0].getWorldDirection(direcao); Sugestao do professor mas nao deu certo
-            // car.mesh.translateOnAxis([direcao[1], direcao[0],0], car.speed);
-            car.mesh.translateX(car.speed);
-        }
+        if(this.tempo.numVoltas!=4){
+            if (this.keyboardState.pressed("left")){
+                // car.mesh.children[1].children[0].rotateZ(.05); Girar rodas
+                // car.mesh.children[1].children[1].rotateZ(.05);
+                car.mesh.rotateZ(.05);
+            }
+            if (this.keyboardState.pressed("right")){
+                // car.mesh.children[1].children[0].rotateZ(-.05);
+                // car.mesh.children[1].children[1].rotateZ(-.05);
+                car.mesh.rotateZ(-.05);
+            }
+            if (this.keyboardState.pressed("X")) {
+                if (car.speed < car.maxSpeed)
+                    car.speed = car.speed + 0.01;
+                
+                if (!this.#carIsOnTrack(car.mesh, track))
+                    car.speed = car.speed * 0.5;
+                var direcao = new THREE.Vector3();
+                // car.mesh.children[1].children[0].getWorldDirection(direcao); Sugestao do professor mas nao deu certo
+                // car.mesh.translateOnAxis([direcao[1], direcao[0],0], car.speed);
+                car.mesh.translateX(car.speed);
+            }
 
-        if (!this.keyboardState.pressed("X")) {
-            if (car.speed > 0) {
+            if (!this.keyboardState.pressed("X")) {
+                if (car.speed > 0) {
+                    if (!this.#carIsOnTrack(car.mesh, track))
+                        car.speed = car.speed * 0.5;
+
+                    car.speed = car.speed - 0.01;
+                    car.mesh.translateX(car.speed);
+                }
+            }
+
+            if (this.keyboardState.pressed("down")) {
                 if (!this.#carIsOnTrack(car.mesh, track))
                     car.speed = car.speed * 0.5;
 
-                car.speed = car.speed - 0.01;
-                car.mesh.translateX(car.speed);
+                if (car.speed > 0)
+                    car.speed = .95 * car.speed;
+                else
+                    car.mesh.translateX(-.08);
             }
-        }
-
-        if (this.keyboardState.pressed("down")) {
-            if (!this.#carIsOnTrack(car.mesh, track))
-                car.speed = car.speed * 0.5;
-
-            if (car.speed > 0)
-                car.speed = .95 * car.speed;
-            else
-                car.mesh.translateX(-.08);
         }
     }
 
