@@ -60,10 +60,15 @@ export class Keyboard {
     }
 
     onChangeTrackKeyPressed = function (car, track, scene) {
-        if (this.keyboardState.pressed("1") && track.number == 2)
+        if (this.keyboardState.pressed("1") && track.number == 2){
             track = this.#changeTrack(car, track, scene, 1);
-        else if (this.keyboardState.pressed("2") && track.number == 1)
+            this.tempo.reset();
+        }
+        else if (this.keyboardState.pressed("2") && track.number == 1){
             track = this.#changeTrack(car, track, scene, 2);
+            this.tempo.reset();
+        }
+            
 
         return track;
     }

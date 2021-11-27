@@ -42,6 +42,22 @@ export class timeCheck{
         this.info = showInfoxBox(this.parent, this.numVoltas);
     }
 
+    reset = function(){
+        this.numVoltas = 0;
+        contagem = 0;
+        minutesLast = 0;
+        secsLast = 0;
+        miliLast = 0;
+        var elemento1 = document.getElementById('1volta');
+        elemento1.innerHTML = '';
+        var elemento2 = document.getElementById('2volta');
+        elemento2.innerHTML = '';
+        var elemento3 = document.getElementById('3volta');
+        elemento3.innerHTML = '';
+        var elemento4 = document.getElementById('4volta');
+        elemento4.innerHTML = '';
+    }
+
     numVolta = function(){
         this.numVoltas += 1;
         if (this.numVoltas == 1){

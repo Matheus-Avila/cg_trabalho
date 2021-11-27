@@ -11,7 +11,6 @@ import * as PlaneBuilder from './builders/planeBuilder.js';
 import * as TrackBuilder from './builders/trackBuilder.js';
 import * as CarBuilder from './builders/carBuilder.js';
 import { Keyboard } from './classes/keyboard.js';
-import { showInfoxBox } from './util/infoBox.js';
 
 // Init
 
