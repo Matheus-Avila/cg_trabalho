@@ -18,15 +18,15 @@ export class Keyboard {
             if (this.keyboardState.pressed("left")){
                 if(car.angle< car.maxAngleAxle){
                     car.angle= car.angle + 0.01;
-                    car.mesh.children[1].children[0].rotateZ(.01); 
-                    car.mesh.children[1].children[1].rotateZ(.01);
+                    car.mesh.children[1].children[0].rotateZ(.03); 
+                    car.mesh.children[1].children[1].rotateZ(.03);
                 }
             }
             if (this.keyboardState.pressed("right")){
                 if(car.angle> -car.maxAngleAxle){
                     car.angle= car.angle - 0.01;
-                    car.mesh.children[1].children[0].rotateZ(-.01);
-                    car.mesh.children[1].children[1].rotateZ(-.01);
+                    car.mesh.children[1].children[0].rotateZ(-.03);
+                    car.mesh.children[1].children[1].rotateZ(-.03);
                 }
             }
             if (this.keyboardState.pressed("X")) {
@@ -35,27 +35,19 @@ export class Keyboard {
                 
                 if (!this.#carIsOnTrack(car.mesh, track))
                     car.speed = car.speed * 0.5;
-                var direcao = new THREE.Vector3();
-                // car.mesh.children[1].children[0].getWorldDirection(direcao); Sugestao do professor mas nao deu certo
-                // car.mesh.translateOnAxis([direcao[1], direcao[0],0], car.speed);
                 car.mesh.translateX(car.speed);
                 if(car.angle> 0){
                     car.mesh.rotateZ(.05);
-                    car.mesh.children[1].children[0].rotateZ(-.01); 
-                    car.mesh.children[1].children[1].rotateZ(-.01);
+                    car.mesh.children[1].children[0].rotateZ(-.03); 
+                    car.mesh.children[1].children[1].rotateZ(-.03);
                     car.angle= car.angle - 0.01;
                 }
                 if(car.angle< 0){
                     car.mesh.rotateZ(-.05);
-                    car.mesh.children[1].children[0].rotateZ(.01); 
-                    car.mesh.children[1].children[1].rotateZ(.01);
+                    car.mesh.children[1].children[0].rotateZ(.03); 
+                    car.mesh.children[1].children[1].rotateZ(.03);
                     car.angle= car.angle + 0.01;
                 }
-
-                // car.mesh.children[0].children[0].rotateY(-.01);
-                // car.mesh.children[1].children[0].rotateY(-.01);
-                // car.mesh.children[0].children[1].rotateY(-.01);
-                // car.mesh.children[1].children[1].rotateY(-.01);
             }
 
             if (!this.keyboardState.pressed("X")) {
@@ -65,10 +57,7 @@ export class Keyboard {
 
                     car.speed = car.speed - 0.01;
                     car.mesh.translateX(car.speed);
-                    // car.mesh.children[0].children[0].rotateY(car.speed);
-                    // car.mesh.children[1].children[0].rotateY(car.speed);
-                    // car.mesh.children[0].children[1].rotateY(car.speed);
-                    // car.mesh.children[1].children[1].rotateY(car.speed);
+                    
                 }
             }
 
@@ -78,12 +67,21 @@ export class Keyboard {
 
                 if (car.speed > 0)
                     car.speed = .95 * car.speed;
-                else
+                else{
                     car.mesh.translateX(-.08);
-                    // car.mesh.children[0].children[0].rotateY(-car.speed);
-                    // car.mesh.children[1].children[0].rotateY(-car.speed);
-                    // car.mesh.children[0].children[1].rotateY(-car.speed);
-                    // car.mesh.children[1].children[1].rotateY(-car.speed);
+                    if(car.angle> 0){
+                        car.mesh.rotateZ(-.05);
+                        car.mesh.children[1].children[0].rotateZ(+.03); 
+                        car.mesh.children[1].children[1].rotateZ(+.03);
+                        car.angle= car.angle - 0.01;
+                    }
+                    if(car.angle< 0){
+                        car.mesh.rotateZ(.05);
+                        car.mesh.children[1].children[0].rotateZ(-.03); 
+                        car.mesh.children[1].children[1].rotateZ(-.03);
+                        car.angle= car.angle + 0.01;
+                    }
+                }
                     
             }
         }
