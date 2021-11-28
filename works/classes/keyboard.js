@@ -1,5 +1,4 @@
 import KeyboardState from '../util/KeyboardState.js';
-import * as THREE from '../../build/three.module.js';
 import * as TrackBuilder from '../builders/trackBuilder.js';
 import { degreesToRadians } from '../../libs/util/util.js';
 import { timeCheck } from '../util/timeController.js';
@@ -29,15 +28,18 @@ export class Keyboard {
                     car.mesh.children[1].children[1].rotateZ(-.03);
                 }
             }
+
             if (this.keyboardState.pressed("X")) {
-                if (car.speed < car.maxSpeed)
+                if (car.speed < car.maxSpeed && car.speed >= 0)
                     car.speed = car.speed + 0.01;
-                else car.speed -= 0.02;
+                else  if (car.speed > 0) car.speed -= 0.02;
 
                 if (!this.#carIsOnTrack(car.mesh, track))
                     car.maxSpeed = 0.15;
                 else car.maxSpeed = 0.3;
-                car.mesh.translateX(car.speed);
+
+                if (car.speed > 0) car.mesh.translateX(car.speed);
+
                 if (car.angle > 0) {
                     car.mesh.rotateZ(.05);
                     car.mesh.children[1].children[0].rotateZ(-.03);
@@ -59,35 +61,52 @@ export class Keyboard {
                     else car.maxSpeed = 0.3;
 
                     car.speed = car.speed - 0.01;
+                    if (car.speed < 0) car.speed = 0;
+                    car.mesh.translateX(car.speed);
+
+                }
+            }
+
+            if (!this.keyboardState.pressed("down")) {
+                if (car.speed < 0) {
+                    if (!this.#carIsOnTrack(car.mesh, track))
+                        car.maxSpeed = 0.15;
+                    else car.maxSpeed = 0.3;
+
+                    car.speed = car.speed + 0.01;
+                    if (car.speed > 0) car.speed = 0;
                     car.mesh.translateX(car.speed);
 
                 }
             }
 
             if (this.keyboardState.pressed("down")) {
-                if (!this.#carIsOnTrack(car.mesh, track))
+                if (car.speed > -car.maxSpeed && car.speed <=0) { car.speed -= 0.01; }
+                else if (car.speed < 0) car.speed += 0.02;
+                if (!this.#carIsOnTrack(car.mesh, track)) {
                     car.maxSpeed = 0.15;
-                else car.maxSpeed = 0.3;
-                if (car.speed > 0)
-                    car.speed -= .01;
+                }
                 else {
-                    car.mesh.translateX(-.08);
-                    if (car.angle > 0) {
-                        car.mesh.rotateZ(-.05);
-                        car.mesh.children[1].children[0].rotateZ(-.03);
-                        car.mesh.children[1].children[1].rotateZ(-.03);
-                        car.angle = car.angle - 0.01;
-                    }
-                    if (car.angle < 0) {
-                        car.mesh.rotateZ(.05);
-                        car.mesh.children[1].children[0].rotateZ(.03);
-                        car.mesh.children[1].children[1].rotateZ(.03);
-                        car.angle = car.angle + 0.01;
-                    }
+                    car.maxSpeed = 0.3;
                 }
 
+                
+                if (car.speed < 0) car.mesh.translateX(car.speed);
+                if (car.angle > 0) {
+                    car.mesh.rotateZ(-.05);
+                    car.mesh.children[1].children[0].rotateZ(-.03);
+                    car.mesh.children[1].children[1].rotateZ(-.03);
+                    car.angle = car.angle - 0.01;
+                }
+                if (car.angle < 0) {
+                    car.mesh.rotateZ(.05);
+                    car.mesh.children[1].children[0].rotateZ(.03);
+                    car.mesh.children[1].children[1].rotateZ(.03);
+                    car.angle = car.angle + 0.01;
+                }
             }
         }
+        console.log(car.maxSpeed);
     }
 
     onChangeTrackKeyPressed = function (car, track, scene) {
@@ -125,7 +144,7 @@ export class Keyboard {
                 if (i == 0) {
                     this.tempo.checkVolta(track);
                 }//Se estiver no bloco inicial então verifica se completou a volta
-                
+
                 return true;
             }
         }

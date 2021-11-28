@@ -1,5 +1,4 @@
-import { Track } from "../classes/track.js";
-import { showInfoxBox, addText } from './infoBox.js';
+import { showInfoxBox} from './infoBox.js';
 
 
 let contagem = 0;
@@ -43,7 +42,7 @@ export class timeCheck{
     constructor(parent){
         this.numVoltas = 0;
         this.parent = parent;
-        this.info = showInfoxBox(this.parent, this.numVoltas);
+        this.info = showInfoxBox();
     }
 
     reset = function(){
