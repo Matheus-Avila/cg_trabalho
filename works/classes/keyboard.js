@@ -71,14 +71,14 @@ export class Keyboard {
                     car.mesh.translateX(-.08);
                     if(car.angle> 0){
                         car.mesh.rotateZ(-.05);
-                        car.mesh.children[1].children[0].rotateZ(+.03); 
-                        car.mesh.children[1].children[1].rotateZ(+.03);
+                        car.mesh.children[1].children[0].rotateZ(-.03); 
+                        car.mesh.children[1].children[1].rotateZ(-.03);
                         car.angle= car.angle - 0.01;
                     }
                     if(car.angle< 0){
                         car.mesh.rotateZ(.05);
-                        car.mesh.children[1].children[0].rotateZ(-.03); 
-                        car.mesh.children[1].children[1].rotateZ(-.03);
+                        car.mesh.children[1].children[0].rotateZ(.03); 
+                        car.mesh.children[1].children[1].rotateZ(.03);
                         car.angle= car.angle + 0.01;
                     }
                 }
