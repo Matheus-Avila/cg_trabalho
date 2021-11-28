@@ -14,17 +14,17 @@ export class Keyboard {
         this.keyboardState.update();
     }
     onMovementKeyPressed = function (car, track) {
-        if(this.tempo.numVoltas!=4){
-            if (this.keyboardState.pressed("left")){
-                if(car.angle< car.maxAngleAxle){
-                    car.angle= car.angle + 0.01;
-                    car.mesh.children[1].children[0].rotateZ(.03); 
+        if (this.tempo.numVoltas != 4) {
+            if (this.keyboardState.pressed("left")) {
+                if (car.angle < car.maxAngleAxle) {
+                    car.angle = car.angle + 0.01;
+                    car.mesh.children[1].children[0].rotateZ(.03);
                     car.mesh.children[1].children[1].rotateZ(.03);
                 }
             }
-            if (this.keyboardState.pressed("right")){
-                if(car.angle> -car.maxAngleAxle){
-                    car.angle= car.angle - 0.01;
+            if (this.keyboardState.pressed("right")) {
+                if (car.angle > -car.maxAngleAxle) {
+                    car.angle = car.angle - 0.01;
                     car.mesh.children[1].children[0].rotateZ(-.03);
                     car.mesh.children[1].children[1].rotateZ(-.03);
                 }
@@ -32,79 +32,82 @@ export class Keyboard {
             if (this.keyboardState.pressed("X")) {
                 if (car.speed < car.maxSpeed)
                     car.speed = car.speed + 0.01;
-                
+                else car.speed -= 0.02;
+
                 if (!this.#carIsOnTrack(car.mesh, track))
-                    car.speed = car.speed * 0.5;
+                    car.maxSpeed = 0.15;
+                else car.maxSpeed = 0.3;
                 car.mesh.translateX(car.speed);
-                if(car.angle> 0){
+                if (car.angle > 0) {
                     car.mesh.rotateZ(.05);
-                    car.mesh.children[1].children[0].rotateZ(-.03); 
+                    car.mesh.children[1].children[0].rotateZ(-.03);
                     car.mesh.children[1].children[1].rotateZ(-.03);
-                    car.angle= car.angle - 0.01;
+                    car.angle = car.angle - 0.01;
                 }
-                if(car.angle< 0){
+                if (car.angle < 0) {
                     car.mesh.rotateZ(-.05);
-                    car.mesh.children[1].children[0].rotateZ(.03); 
+                    car.mesh.children[1].children[0].rotateZ(.03);
                     car.mesh.children[1].children[1].rotateZ(.03);
-                    car.angle= car.angle + 0.01;
+                    car.angle = car.angle + 0.01;
                 }
             }
 
             if (!this.keyboardState.pressed("X")) {
                 if (car.speed > 0) {
                     if (!this.#carIsOnTrack(car.mesh, track))
-                        car.speed = car.speed * 0.5;
+                        car.maxSpeed = 0.15;
+                    else car.maxSpeed = 0.3;
 
                     car.speed = car.speed - 0.01;
                     car.mesh.translateX(car.speed);
-                    
+
                 }
             }
 
             if (this.keyboardState.pressed("down")) {
                 if (!this.#carIsOnTrack(car.mesh, track))
-                    car.speed = car.speed * 0.5;
-
+                    car.maxSpeed = 0.15;
+                else car.maxSpeed = 0.3;
                 if (car.speed > 0)
-                    car.speed = .95 * car.speed;
-                else{
+                    car.speed -= .01;
+                else {
                     car.mesh.translateX(-.08);
-                    if(car.angle> 0){
+                    if (car.angle > 0) {
                         car.mesh.rotateZ(-.05);
-                        car.mesh.children[1].children[0].rotateZ(-.03); 
+                        car.mesh.children[1].children[0].rotateZ(-.03);
                         car.mesh.children[1].children[1].rotateZ(-.03);
-                        car.angle= car.angle - 0.01;
+                        car.angle = car.angle - 0.01;
                     }
-                    if(car.angle< 0){
+                    if (car.angle < 0) {
                         car.mesh.rotateZ(.05);
-                        car.mesh.children[1].children[0].rotateZ(.03); 
+                        car.mesh.children[1].children[0].rotateZ(.03);
                         car.mesh.children[1].children[1].rotateZ(.03);
-                        car.angle= car.angle + 0.01;
+                        car.angle = car.angle + 0.01;
                     }
                 }
-                    
+
             }
         }
     }
 
     onChangeTrackKeyPressed = function (car, track, scene) {
-        if (this.keyboardState.pressed("1") && track.number == 2){
+        if (this.keyboardState.pressed("1") && track.number == 2) {
             track = this.#changeTrack(car, track, scene, 1);
             this.tempo.reset();
         }
-        else if (this.keyboardState.pressed("2") && track.number == 1){
+        else if (this.keyboardState.pressed("2") && track.number == 1) {
             track = this.#changeTrack(car, track, scene, 2);
             this.tempo.reset();
         }
-            
+
 
         return track;
     }
 
-    lastTrue = function(car, track){
+    lastTrue = function (car, track) {
         for (var i = 3; i < track.blocks.length; i++) {
             // console.log(i);
-            if( track.blocks[i-1].crossed == 'true' && track.blocks[i].crossed == 'false'){
+            if (track.blocks[i - 1].crossed == true && track.blocks[i].crossed == false) {
                 car.position.x = track.blocks[i].mesh.position.x;
                 car.position.y = track.blocks[i].mesh.position.y;
                 break;
@@ -118,20 +121,14 @@ export class Keyboard {
                 car.position.x >= track.blocks[i].mesh.position.x - track.blockSize * 1.1 / 2 &&
                 car.position.y <= track.blocks[i].mesh.position.y + track.blockSize * 1.1 / 2 &&
                 car.position.y >= track.blocks[i].mesh.position.y - track.blockSize * 1.1 / 2) {
-                    if(track.blocks[i].crossed == 'checkpoint'){
-                        this.lastTrue(car, track);
-                    }
-                    track.blocks[i].crossed = 'true';
-                    if(i>4){
-                        track.blocks[3].crossed = 'checkpoint';
-                    }
-                    if(i == 0){
-                        track.blocks[1].crossed = 'true';
-                        this.tempo.checkVolta(track);}//Se estiver no bloco inicial então verifica se completou a volta
-                    return true;
+                track.blocks[i].crossed = true;
+                if (i == 0) {
+                    this.tempo.checkVolta(track);
+                }//Se estiver no bloco inicial então verifica se completou a volta
+                
+                return true;
             }
         }
-
         return false;
     }
 
