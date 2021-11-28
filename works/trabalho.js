@@ -16,12 +16,13 @@ import * as GameModeControls from './controls/gameModeControls.js';
 import * as TrackControls from './controls/trackControls.js';
 import { GameMode } from './util/enums.js';
 import { timeCheck } from './util/timeController.js';
+import { InfoBox } from "./util/infoBox.js";
 
 var stats = new Stats();
 var renderer = initRenderer();
 var gameMode = GameMode.Gameplay;
 var keyboardState = new KeyboardState();
-var tempo = new timeCheck();
+var timer = new timeCheck();
 
 var scene = new THREE.Scene();
 initDefaultBasicLight(scene, true);
@@ -41,6 +42,9 @@ cameraTarget.position.set(car.mesh.position.x + 10, car.mesh.position.y, car.mes
 var trackballControls = new TrackballControls(camera, renderer.domElement);
 window.addEventListener('resize', function () { onWindowResize(camera, renderer) }, false);
 
+var infoBox = new InfoBox();
+infoBox.showGameplayInfoBox();
+
 render();
 
 function render() {
@@ -52,10 +56,11 @@ function render() {
 
 function updateGame() {
   keyboardState.update();
-  gameMode = GameModeControls.updateGameMode(keyboardState, gameMode, scene, camera, track, car, cameraHolder);
+  gameMode = GameModeControls.updateGameMode(keyboardState, gameMode, scene, camera, track, car, cameraHolder, timer, infoBox);
 
   if (gameMode == GameMode.Gameplay) {
-    MovementControls.updateMovement(keyboardState, car, track, tempo);
+    timer.updateCounter();
+    MovementControls.updateMovement(keyboardState, car, track, timer);
     track = TrackControls.updateTrack(keyboardState, scene, track, car);
     cameraMovement();
   }
