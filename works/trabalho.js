@@ -61,7 +61,7 @@ function updateGame() {
   if (gameMode == GameMode.Gameplay) {
     timer.updateCounter();
     MovementControls.updateMovement(keyboardState, car, track, timer);
-    track = TrackControls.updateTrack(keyboardState, scene, track, car);
+    track = TrackControls.updateTrack(keyboardState, scene, track, car, timer);
     cameraMovement();
   }
   else if (gameMode == GameMode.Inspection)
