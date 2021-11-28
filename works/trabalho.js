@@ -30,6 +30,7 @@ var track = TrackBuilder.buildFirstTrack(scene);
 var car = CarBuilder.buildCar(scene);
 
 var camera = CameraBuilder.buildCamera();
+var gameplayCameraAngle = new THREE.Vector3(-10, -10, 10);  
 var cameraHolder = new THREE.Object3D();
 cameraHolder.add(camera);
 scene.add(cameraHolder);
@@ -37,6 +38,8 @@ scene.add(cameraHolder);
 var cameraTarget = new THREE.Object3D();
 car.mesh.add(cameraTarget);
 cameraTarget.position.set(car.mesh.position.x + 10, car.mesh.position.y, car.mesh.position.z);
+const helper = new THREE.CameraHelper(camera);
+scene.add(helper);
 
 var trackballControls = new TrackballControls(camera, renderer.domElement);
 window.addEventListener('resize', function () { onWindowResize(camera, renderer) }, false);
@@ -66,6 +69,6 @@ function updateGame() {
 function cameraMovement() {
   var cameraTargetPosition = new THREE.Vector3();
   cameraTarget.getWorldPosition(cameraTargetPosition);
-  cameraHolder.position.set(cameraTargetPosition.x - 20, cameraTargetPosition.y - 7, cameraTargetPosition.z + 7);
-  camera.lookAt(cameraTargetPosition);
+  cameraHolder.position.addVectors(cameraTargetPosition, gameplayCameraAngle);
+  camera.lookAt(cameraTargetPosition);             
 }

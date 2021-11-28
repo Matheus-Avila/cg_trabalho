@@ -9,11 +9,12 @@ export class Block {
         this.boxGeometry = new THREE.BoxGeometry(this.width, this.height, this.depth);
 
         if (type == "initial"){
-            this.material = new THREE.MeshPhongMaterial({ color: "rgba(250, 10, 150)" });
+            this.material = new THREE.MeshPhongMaterial({ color: "rgba(250, 250, 250)" });
             this.crossed = 'true';
+  
         }
         else{
-            this.material = new THREE.MeshPhongMaterial({ color: "rgba(250, 150, 250)" });
+            this.material = new THREE.MeshPhongMaterial({ color: "rgba(90, 90, 90)" });
             this.crossed = 'false';
         }
         this.mesh = new THREE.Mesh(this.boxGeometry, this.material);
