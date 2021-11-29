@@ -16,13 +16,15 @@ var updateMovement = function (keyboardState, car, track, tempo) {
         }
 
         if (keyboardState.pressed("X")) {
-            if (car.speed < car.maxSpeed)
+            if (car.speed < car.maxSpeed && car.speed >= 0)
                 car.speed = car.speed + 0.01;
+            else if (car.speed > 0) car.speed -= 0.02;
 
             if (!carIsOnTrack(car.mesh, track, tempo))
-                car.speed = car.speed * 0.5;
+                car.maxSpeed = 0.15;
+            else car.maxSpeed = 0.3;
 
-            car.mesh.translateX(car.speed);
+            if (car.speed > 0) car.mesh.translateX(car.speed);
 
             if (car.angle > 0) {
                 car.mesh.rotateZ(.05);
@@ -38,37 +40,57 @@ var updateMovement = function (keyboardState, car, track, tempo) {
             }
         }
 
+
         if (!keyboardState.pressed("X")) {
             if (car.speed > 0) {
                 if (!carIsOnTrack(car.mesh, track, tempo))
-                    car.speed = car.speed * 0.5;
+                    car.maxSpeed = 0.15;
+                else car.maxSpeed = 0.3;
 
                 car.speed = car.speed - 0.01;
+                if (car.speed < 0) car.speed = 0;
                 car.mesh.translateX(car.speed);
+
+            }
+        }
+
+        if (!keyboardState.pressed("down")) {
+            if (car.speed < 0) {
+                if (!carIsOnTrack(car.mesh, track, tempo))
+                    car.maxSpeed = 0.15;
+                else car.maxSpeed = 0.3;
+
+                car.speed = car.speed + 0.01;
+                if (car.speed > 0) car.speed = 0;
+                car.mesh.translateX(car.speed);
+
             }
         }
 
         if (keyboardState.pressed("down")) {
-            if (!carIsOnTrack(car.mesh, track, tempo))
-                car.speed = car.speed * 0.5;
+            if (car.speed > -car.maxSpeed && car.speed <= 0) { car.speed -= 0.01; }
+            else if (car.speed < 0) car.speed += 0.02;
 
-            if (car.speed > 0)
-                car.speed = .95 * car.speed;
+            if (!carIsOnTrack(car.mesh, track, tempo)) {
+                car.maxSpeed = 0.15;
+            }
             else {
-                car.mesh.translateX(-.08);
+                car.maxSpeed = 0.3;
+            }
 
-                if (car.angle > 0) {
-                    car.mesh.rotateZ(-.05);
-                    car.mesh.children[1].children[0].rotateZ(-.03);
-                    car.mesh.children[1].children[1].rotateZ(-.03);
-                    car.angle = car.angle - 0.01;
-                }
-                if (car.angle < 0) {
-                    car.mesh.rotateZ(.05);
-                    car.mesh.children[1].children[0].rotateZ(.03);
-                    car.mesh.children[1].children[1].rotateZ(.03);
-                    car.angle = car.angle + 0.01;
-                }
+            if (car.speed < 0) car.mesh.translateX(car.speed);
+
+            if (car.angle > 0) {
+                car.mesh.rotateZ(-.05);
+                car.mesh.children[1].children[0].rotateZ(-.03);
+                car.mesh.children[1].children[1].rotateZ(-.03);
+                car.angle = car.angle - 0.01;
+            }
+            if (car.angle < 0) {
+                car.mesh.rotateZ(.05);
+                car.mesh.children[1].children[0].rotateZ(.03);
+                car.mesh.children[1].children[1].rotateZ(.03);
+                car.angle = car.angle + 0.01;
             }
         }
     }
