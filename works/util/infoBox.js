@@ -1,7 +1,7 @@
-import { InfoBoxTimer } from "./myInfoBox.js";
+import { InfoBox } from "../../libs/util/util.js";
 
-export function showInfoxBox(keyboard, numVoltas) {
-    var infoBox = new InfoBoxTimer();
+export function showInfoxBox() {
+    var infoBox = new InfoBox();
     infoBox.add("Rock 'n Roll Racing");
     infoBox.addParagraph();
     infoBox.add("Press 1 or 2 to change between the tracks.");

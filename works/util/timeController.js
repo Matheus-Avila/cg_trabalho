@@ -1,5 +1,4 @@
-import { Track } from "../classes/track.js";
-import { showInfoxBox, addText } from './infoBox.js';
+import { showInfoxBox} from './infoBox.js';
 
 
 let contagem = 0;
@@ -43,7 +42,7 @@ export class timeCheck{
     constructor(parent){
         this.numVoltas = 0;
         this.parent = parent;
-        this.info = showInfoxBox(this.parent, this.numVoltas);
+        this.info = showInfoxBox();
     }
 
     reset = function(){
@@ -92,7 +91,7 @@ export class timeCheck{
 
     voltaConcluida = function(track){
         for (var i = 1; i < track.blocks.length-1; i++) {
-            track.blocks[i].crossed = 'false';
+            track.blocks[i].crossed = false;
         }
         
         this.numVolta();
@@ -100,7 +99,7 @@ export class timeCheck{
     checkVolta = function(track){
         var i;
         for (i = 0; i < track.blocks.length-1; i++) {
-            if(track.blocks[i].crossed == 'false') return false; //Passou direto por algum bloco. Volta nao computada 
+            if(track.blocks[i].crossed == false) return false; //Passou direto por algum bloco. Volta nao computada 
         }
         this.voltaConcluida(track);// Volta concluida! Reinicie crossed e compute a volta
         return true;
