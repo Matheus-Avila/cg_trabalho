@@ -19,7 +19,7 @@ var changeToGameplayMode = function (scene, camera, track, car, cameraHolder) {
     car.mesh.position.set(track.initialBlockPosition[0], track.initialBlockPosition[1], 1.5);
     car.speed = 0;
 
-    camera.position.set(-20, -10, 15);
+    camera.position.set(0,0,0);
     camera.up.set(0.0, 0, 1.0);
     camera.lookAt(0.0, 0.0, 0.0);
 
@@ -33,11 +33,12 @@ var changeToInspectionMode = function (scene, camera, track, car, cameraHolder) 
     scene.remove(track.group);
 
     car.mesh.rotation.set(0, 0, 0);
-    car.mesh.position.set(0.0, 0.0, 0.3);
+    car.mesh.position.set(0.0, 0.0, 0.4);
     car.speed = 0;
 
     cameraHolder.remove(camera);
     scene.remove(cameraHolder);
+    camera.position.set(7,5,7);
 
     return GameMode.Inspection;
 }

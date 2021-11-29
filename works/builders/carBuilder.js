@@ -14,8 +14,9 @@ var buildCar = function (scene, maxSpeed) {
 }
 
 var buildCasing = function () {
-    var casingGeometry = new THREE.BoxGeometry(4, 2, 2);
-    var casingMaterial = new THREE.MeshPhongMaterial({ color: "rgba(0, 10, 150)" });
+    var casingGeometry = new THREE.CylinderGeometry(1.0, 1.3, 2.5, 40, 40, false, 1);
+    casingGeometry.rotateZ(degreesToRadians(270));
+    var casingMaterial = new THREE.MeshPhongMaterial({ color: "rgba(128, 0, 0)" });
     var casing = new THREE.Mesh(casingGeometry, casingMaterial);
     casing.position.set(0.0, 0.0, .63);
     casing.scale.set(0.4, 0.4, 0.4);
@@ -42,8 +43,9 @@ var buildAxle = function (car) {
 }
 
 var buildWheels = function (frontAxle, backAxle) {
-    var wheelGeometry = new THREE.CylinderGeometry(0.5, 0.5, 0.3, 32);
-    var wheelMaterial = new THREE.MeshPhongMaterial({ color: 0xff00ff });
+    var wheelGeometry = new THREE.TorusGeometry(0.28, 0.3, 20, 20, Math.PI * 2);
+    wheelGeometry.rotateX(degreesToRadians(270));
+    var wheelMaterial = new THREE.MeshPhongMaterial({ color: 0x000000 });
 
     var rightFrontWheel = new THREE.Mesh(wheelGeometry, wheelMaterial);
     rightFrontWheel.position.y = rightFrontWheel.position.y - 1.1;

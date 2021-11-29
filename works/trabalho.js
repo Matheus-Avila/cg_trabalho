@@ -44,7 +44,7 @@ var trackballControls = new TrackballControls(camera, renderer.domElement);
 window.addEventListener('resize', function () { onWindowResize(camera, renderer) }, false);
 
 render();
-
+  
 function render() {
   stats.update();
   updateGame();
