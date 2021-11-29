@@ -18,7 +18,6 @@ import { GameMode } from './util/enums.js';
 import { timeCheck } from './util/timeController.js';
 import { InfoBox } from "./util/infoBox.js";
 
-// init
 var stats = new Stats();
 var renderer = initRenderer();
 var gameMode = GameMode.Gameplay;

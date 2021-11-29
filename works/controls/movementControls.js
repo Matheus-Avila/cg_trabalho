@@ -1,6 +1,5 @@
 import { BlockType } from "../util/enums.js";
 
-
 var updateMovement = function (keyboardState, car, track, tempo) {
     if (tempo.numVoltas < 4) {
         if (keyboardState.pressed("left") && car.angle < car.maxAngleAxle) {
@@ -13,7 +12,6 @@ var updateMovement = function (keyboardState, car, track, tempo) {
             car.angle = car.angle - 0.01;
             car.mesh.children[1].children[0].rotateZ(-.03);
             car.mesh.children[1].children[1].rotateZ(-.03);
-
         }
 
         if (keyboardState.pressed("X")) {
@@ -120,6 +118,7 @@ var carIsOnTrack = function (car, track, tempo) {
             return true;
         }
     }
+    
     return false;
 }
 

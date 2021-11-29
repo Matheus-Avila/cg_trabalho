@@ -1,4 +1,5 @@
 import * as THREE from '../../build/three.module.js';
+import { BlockType } from "../util/enums.js";
 
 export class Block {
     constructor(width, height, depth, type, position) {
@@ -8,11 +9,11 @@ export class Block {
         this.type = type;
         this.boxGeometry = new THREE.BoxGeometry(this.width, this.height, this.depth);
 
-        if (type == "initial"){
+        if (type == BlockType.Initial){
             this.material = new THREE.MeshPhongMaterial({ color: "rgba(250, 250, 250)" });
             this.crossed = true;
         }
-        else{
+        else {
             this.material = new THREE.MeshPhongMaterial({ color: "rgba(90, 90, 90)" });
             this.crossed = false;
         }
