@@ -20,6 +20,7 @@ var changeTrack = function (scene, track, car, newTrackNumber, timer) {
     car.speed = 0;
 
     timer.reset();
+    timer.resetCrossedBlocks(track);
 
     return track;
 }

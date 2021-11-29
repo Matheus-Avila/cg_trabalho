@@ -43,7 +43,7 @@ var buildAxle = function (car) {
 }
 
 var buildWheels = function (frontAxle, backAxle) {
-    var wheelGeometry = new THREE.TorusGeometry(0.28, 0.3, 20, 20, Math.PI * 2);
+    var wheelGeometry = new THREE.TorusGeometry(0.28, 0.3, 10, 10, Math.PI * 2);
     wheelGeometry.rotateX(degreesToRadians(270));
     var wheelMaterial = new THREE.MeshPhongMaterial({ color: 0x000000 });
 

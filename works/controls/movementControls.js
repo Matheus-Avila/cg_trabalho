@@ -1,3 +1,4 @@
+import { BlockType } from "../util/enums.js";
 
 
 var updateMovement = function (keyboardState, car, track, tempo) {
@@ -40,7 +41,6 @@ var updateMovement = function (keyboardState, car, track, tempo) {
             }
         }
 
-
         if (!keyboardState.pressed("X")) {
             if (car.speed > 0) {
                 if (!carIsOnTrack(car.mesh, track, tempo))
@@ -50,7 +50,6 @@ var updateMovement = function (keyboardState, car, track, tempo) {
                 car.speed = car.speed - 0.01;
                 if (car.speed < 0) car.speed = 0;
                 car.mesh.translateX(car.speed);
-
             }
         }
 
@@ -63,7 +62,6 @@ var updateMovement = function (keyboardState, car, track, tempo) {
                 car.speed = car.speed + 0.01;
                 if (car.speed > 0) car.speed = 0;
                 car.mesh.translateX(car.speed);
-
             }
         }
 
@@ -93,42 +91,45 @@ var updateMovement = function (keyboardState, car, track, tempo) {
                 car.angle = car.angle + 0.01;
             }
         }
+
+        if (car.speed > 0) {
+            spinWheels(car, 1);
+        }
+        else if (car.speed < 0) {
+            spinWheels(car, -1);
+        }
     }
 }
 
 var carIsOnTrack = function (car, track, tempo) {
+    var distanceToBlockSide = track.blockSize * 1.1 / 2;
+
     for (var i = 0; i < track.blocks.length; i++) {
-        if (car.position.x <= track.blocks[i].mesh.position.x + track.blockSize * 1.1 / 2 &&
-            car.position.x >= track.blocks[i].mesh.position.x - track.blockSize * 1.1 / 2 &&
-            car.position.y <= track.blocks[i].mesh.position.y + track.blockSize * 1.1 / 2 &&
-            car.position.y >= track.blocks[i].mesh.position.y - track.blockSize * 1.1 / 2) {
-            if (track.blocks[i].crossed == 'checkpoint') {
-                lastTrue(car, track);
-            }
-            track.blocks[i].crossed = 'true';
-            if (i > 4) {
-                track.blocks[3].crossed = 'checkpoint';
-            }
-            if (i == 0) {
-                track.blocks[1].crossed = 'true';
-                tempo.checkVolta(track); //Se estiver no bloco inicial então verifica se completou a volta
+        var blockPosition = track.blocks[i].mesh.position;
+
+        if (car.position.x <= blockPosition.x + distanceToBlockSide &&
+            car.position.x >= blockPosition.x - distanceToBlockSide &&
+            car.position.y <= blockPosition.y + distanceToBlockSide &&
+            car.position.y >= blockPosition.y - distanceToBlockSide) {
+            track.blocks[i].crossed = true;
+
+            if (track.blocks[i].type == BlockType.Initial) {
+                tempo.checkLapCompleted(track);
             }
 
             return true;
         }
     }
-
     return false;
 }
 
-var lastTrue = function (car, track) {
-    for (var i = 3; i < track.blocks.length; i++) {
-        if (track.blocks[i - 1].crossed == 'true' && track.blocks[i].crossed == 'false') {
-            car.position.x = track.blocks[i].mesh.position.x;
-            car.position.y = track.blocks[i].mesh.position.y;
-            break;
-        }
-    }
+var spinWheels = function (car, direction) {
+    var spinSpeed = car.speed * direction;
+
+    car.mesh.children[0].children[0].rotateY(spinSpeed);
+    car.mesh.children[0].children[1].rotateY(spinSpeed);
+    car.mesh.children[1].children[0].rotateY(spinSpeed);
+    car.mesh.children[1].children[1].rotateY(spinSpeed);
 }
 
 export { updateMovement };

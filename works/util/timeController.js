@@ -60,21 +60,29 @@ export class timeCheck {
         if (this.numVoltas == 4) console.log("Fim de jogo!");
     }
 
-    voltaConcluida = function(track){
-        for (var i = 1; i < track.blocks.length-1; i++) {
+    resetCrossedBlocks = function(track) {
+        for (var i = 0; i < track.blocks.length; i++) {
             track.blocks[i].crossed = false;
         }
-
-        this.numVolta();
     }
 
-    checkVolta = function (track) {
-        var i;
-        for (i = 0; i < track.blocks.length-1; i++) {
-            if(track.blocks[i].crossed == false) return false; //Passou direto por algum bloco. Volta nao computada 
+    checkLapCompleted = function (track) {
+        var totalTrackBlocks = track.blocks.length;
+        var totalBlocksCrossed = 0;
+
+        for (var i = 0; i < track.blocks.length; i++) {
+            if (track.blocks[i].crossed) 
+                totalBlocksCrossed++;
         }
-        this.voltaConcluida(track); // Volta concluida! Reinicie crossed e compute a volta
-        return true;
+
+        if (totalBlocksCrossed >= totalTrackBlocks * 0.75)
+        {
+            this.resetCrossedBlocks(track);
+            this.numVolta();
+            return true;
+        }
+
+        return false;   
     }
 
     updateCounter = function () {
