@@ -1,13 +1,14 @@
+import { LapNumber } from "../util/enums.js";
 let contagem = 0;
 let contagemTotal = 0;
 var element = document.getElementById('clock');
 var minutes;
 var secs;
-var mili;
 var elementTotal = document.getElementById('clockTotal');
 var minutesTotal;
 var secsTotal;
-var miliTotal;
+var melhorVoltaSecs;
+var melhorVoltaMins = -1;
 
 export class timeCheck {
     constructor() {
@@ -20,7 +21,6 @@ export class timeCheck {
         contagemTotal = 0;
         minutes = 0;
         secs = 0;
-        mili = 0;
 
         element.innerHTML = '';
         elementTotal.innerHTML = '';
@@ -32,32 +32,38 @@ export class timeCheck {
 
     numVolta = function () {
         this.numVoltas += 1;
-        if (this.numVoltas == 1) {
-            var element = document.getElementById('1volta');
-            var tempoVolta1 = 'Tempo 1° volta: ' + minutes + ':' + secs + ':' + mili;
-            contagem = 0;
-            element.innerHTML = tempoVolta1;
+        var volta_atual;
+        switch (this.numVoltas) {
+            case 1:
+                volta_atual = LapNumber.one;
+                break;
+            case 2:
+                volta_atual = LapNumber.two;
+                break;
+            case 3:
+                volta_atual = LapNumber.three;
+                break;
+            case 4:
+                volta_atual = LapNumber.four;
+                break;
+            default:
+                break;
         }
-        if (this.numVoltas == 2) {
-            var element = document.getElementById('2volta');
-            var tempoVolta2 = 'Tempo 2° volta: ' + minutes + ':' + secs + ':' + mili;
-            contagem = 0;
-            element.innerHTML = tempoVolta2;
+        
+        var element = document.getElementById(volta_atual);
+        var tempoVolta = volta_atual + '-' + minutes + ':' + secs;
+        contagem = 0;
+        element.innerHTML = tempoVolta;
+        if(minutes*60 + secs <= melhorVoltaMins*60 + melhorVoltaSecs || melhorVoltaMins == -1){
+            console.log("Eu!");
+            var elementBestLap = document.getElementById('melhor-volta');
+            var textBestLap = 'Melhor volta- ' + minutes + ':' + secs;
+            elementBestLap.innerHTML = textBestLap;
         }
-        if (this.numVoltas == 3) {
-            var element = document.getElementById('3volta');
-            var tempoVolta3 = 'Tempo 3° volta: ' + minutes + ':' + secs + ':' + mili;
-            contagem = 0;
-            element.innerHTML = tempoVolta3;
-        }
+    
         if (this.numVoltas == 4) {
-            var element = document.getElementById('4volta');
-            var tempoVolta4 = 'Tempo 4° volta: ' + minutes + ':' + secs + ':' + mili;
             contagem = -1;
-            element.innerHTML = tempoVolta4;
         }
-        console.log(this.numVoltas, "/", 4);
-        if (this.numVoltas == 4) console.log("Fim de jogo!");
     }
 
     resetCrossedBlocks = function(track) {
@@ -92,17 +98,15 @@ export class timeCheck {
             contagem++;
             minutes = Math.floor(contagem / 6000);
             secs = Math.floor(contagem / 100);
-            mili = contagem % 100;
             if (secs >= 60) secs = secs % 60;
-            var buffer = 'Volta Atual: ' + minutes + ':' + secs + ':' + mili;
+            var buffer = 'Volta Atual: ' + minutes + ':' + secs;
             element.innerHTML = buffer;
 
             contagemTotal++;
             minutesTotal = Math.floor(contagemTotal / 6000);
             secsTotal = Math.floor(contagemTotal / 100);
-            miliTotal = contagemTotal % 100;
             if (secsTotal >= 60) secsTotal = secsTotal % 60;
-            var bufferTotal = 'Tempo total: ' + minutesTotal + ':' + secsTotal + ':' + miliTotal;
+            var bufferTotal = 'Tempo total: ' + minutesTotal + ':' + secsTotal;
             elementTotal.innerHTML = bufferTotal;
         }
     }
