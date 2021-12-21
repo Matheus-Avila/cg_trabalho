@@ -8,6 +8,7 @@ import {
   initDefaultBasicLight
 } from "../libs/util/util.js";
 import * as CameraBuilder from './builders/cameraBuilder.js';
+import * as CameraBuilderMap from './builders/cameraBuilderMap.js';
 import * as PlaneBuilder from './builders/planeBuilder.js';
 import * as TrackBuilder from './builders/trackBuilder.js';
 import * as CarBuilder from './builders/carBuilder.js';
@@ -36,6 +37,9 @@ var cameraHolder = new THREE.Object3D();
 cameraHolder.add(camera);
 scene.add(cameraHolder);
 
+var cameraMap = CameraBuilderMap.buildCameraMap();
+scene.add(cameraMap);
+
 var cameraTarget = new THREE.Object3D();
 car.mesh.add(cameraTarget);
 cameraTarget.position.set(car.mesh.position.x + 10, car.mesh.position.y, car.mesh.position.z);
@@ -51,8 +55,29 @@ render();
 function render() {
   stats.update();
   updateGame();
+  controlCameras();
   requestAnimationFrame(render);
-  renderer.render(scene, camera);
+}
+
+function controlCameras () {
+  var width = window.innerWidth;
+  var height = window.innerHeight;
+
+  // Set main viewport
+  renderer.setViewport(0, 0, width, height); // Reset viewport    
+  renderer.setScissorTest(false); // Disable scissor to paint the entire window
+  renderer.setClearColor("rgb(80, 70, 170)");    
+  renderer.clear();   // Clean the window
+  renderer.render(scene, camera);   
+
+  // Set virtual camera viewport 
+  var offset = 10; 
+  renderer.setViewport(offset, height-300-offset, 400, 300);  // Set virtual camera viewport  
+  renderer.setScissor(offset, height-300-offset, 400, 300); // Set scissor with the same size as the viewport
+  renderer.setScissorTest(true); // Enable scissor to paint only the scissor are (i.e., the small viewport)
+  renderer.setClearColor("rgb(100, 50, 150)");  // Use a darker clear color in the small viewport 
+  renderer.clear(); // Clean the small viewport
+  renderer.render(scene, cameraMap);  // Render scene of the virtual camera
 }
 
 function updateGame() {
