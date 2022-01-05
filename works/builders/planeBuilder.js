@@ -6,9 +6,11 @@ var buildPlane = function (scene) {
     var planeMaterial = new THREE.MeshPhongMaterial({
         color: "rgba(150, 150, 150)",
         side: THREE.DoubleSide,
-    });
+    }); 
     var plane = new THREE.Mesh(planeGeometry, planeMaterial);
+
     scene.add(plane);
+    return plane;
 }
 
 export { buildPlane };

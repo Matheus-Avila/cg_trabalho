@@ -27,7 +27,7 @@ var timer = new timeCheck();
 
 var scene = new THREE.Scene();
 initDefaultBasicLight(scene, true);
-PlaneBuilder.buildPlane(scene);
+var plane = PlaneBuilder.buildPlane(scene);
 var track = TrackBuilder.buildFirstTrack(scene);
 var car = CarBuilder.buildCar(scene);
 
@@ -82,7 +82,7 @@ function controlCameras () {
 
 function updateGame() {
   keyboardState.update();
-  gameMode = GameModeControls.updateGameMode(keyboardState, gameMode, scene, camera, track, car, cameraHolder, timer, infoBox);
+  gameMode = GameModeControls.updateGameMode(keyboardState, gameMode, scene, camera, track, car, cameraHolder, timer, infoBox, plane);
 
   if (gameMode == GameMode.Gameplay) {
     timer.updateCounter();

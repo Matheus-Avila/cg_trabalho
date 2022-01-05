@@ -1,18 +1,19 @@
 import { GameMode } from '../util/enums.js';
 import { degreesToRadians } from '../../libs/util/util.js';
 
-var updateGameMode = function (keyboardState, gameMode, scene, camera, track, car, cameraHolder, timer, infoBox) {
+var updateGameMode = function (keyboardState, gameMode, scene, camera, track, car, cameraHolder, timer, infoBox, plane) {
     if (keyboardState.down("space")) {
         if (gameMode == GameMode.Gameplay)
-            gameMode = changeToInspectionMode(scene, camera, track, car, cameraHolder, timer, infoBox);
+            gameMode = changeToInspectionMode(scene, camera, track, car, cameraHolder, timer, infoBox, plane);
         else if (gameMode == GameMode.Inspection)
-            gameMode = changeToGameplayMode(scene, camera, track, car, cameraHolder, infoBox);
+            gameMode = changeToGameplayMode(scene, camera, track, car, cameraHolder, infoBox, plane);
     }
 
     return gameMode;
 }
 
-var changeToGameplayMode = function (scene, camera, track, car, cameraHolder, infoBox) {
+var changeToGameplayMode = function (scene, camera, track, car, cameraHolder, infoBox, plane) {
+    scene.add(plane);
     scene.add(track.group);
 
     car.mesh.rotation.set(0, 0, degreesToRadians(180));
@@ -32,7 +33,8 @@ var changeToGameplayMode = function (scene, camera, track, car, cameraHolder, in
     return GameMode.Gameplay;
 }
 
-var changeToInspectionMode = function (scene, camera, track, car, cameraHolder, timer, infoBox) {
+var changeToInspectionMode = function (scene, camera, track, car, cameraHolder, timer, infoBox, plane) {
+    scene.remove(plane);
     scene.remove(track.group);
 
     car.mesh.rotation.set(0, 0, 0);
