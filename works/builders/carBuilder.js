@@ -4,11 +4,12 @@ import { degreesToRadians } from '../../libs/util/util.js';
 import {ConvexGeometry} from '../../build/jsm/geometries/ConvexGeometry.js';
 
 var colorCasing = {color:"rgb(150,150,150)"};
-var fundoPrata = -0.1
+var colorBlack = {color:"rgb(50,50,50)"};
+var fundoPrata = -0.3
 var largura = 1
 var altura = 1
 var profundidade = 2.3
-var paraChoque = profundidade+0.8
+var paraChoque = profundidade+0.4
 var posRoda = 1.7
 var raioRoda = 0.5
 var alturaRoda = -1
@@ -21,6 +22,11 @@ var buildCar = function (scene, maxSpeed) {
     buildCasingContour(casing);
     buildFront(casing);
     buildCasingBack(casing);
+    buildFrontBlack(casing);
+    buildCasingContourBlackLeft(casing);
+    buildCasingContourBlackRight(casing);
+    buildBottomFrontBlack(casing);
+    buildBottomBlack(casing);
     casing.scale.set(.5,.5,.5)
     casing.rotateZ(degreesToRadians(180))
     scene.add(casing);
@@ -110,6 +116,225 @@ var buildFront = function (car){
   car.add(objectcasing);
 
 }
+
+var buildFrontBlack = function (car){
+
+  var points = [];
+
+  // Parachoque 
+  points.push(new THREE.Vector3(paraChoque, largura,0));
+  points.push(new THREE.Vector3(paraChoque, -largura,0));
+  points.push(new THREE.Vector3(paraChoque+.4, largura*.6, 0));
+  points.push(new THREE.Vector3(paraChoque+.4, -largura*.6, 0));
+  
+  points.push(new THREE.Vector3(1.01*paraChoque, 1.01*largura,0));
+  points.push(new THREE.Vector3(1.01*paraChoque, -1.01*largura,0));
+  points.push(new THREE.Vector3(1.01*paraChoque+.4, 1.01*largura*.6, 0));
+  points.push(new THREE.Vector3(1.01*paraChoque+.4, -1.01*largura*.6, 0));
+
+  points.push(new THREE.Vector3(1.01*paraChoque, 1.01*largura,altura*.1));
+  points.push(new THREE.Vector3(1.01*paraChoque, -1.01*largura,altura*.1));
+  points.push(new THREE.Vector3(1.01*paraChoque+.4, 1.01*largura*.6, altura*.1));
+  points.push(new THREE.Vector3(1.01*paraChoque+.4, -1.01*largura*.6, altura*.1));
+  
+  points.push(new THREE.Vector3(paraChoque, largura,fundoPrata));
+  points.push(new THREE.Vector3(paraChoque, -largura,fundoPrata));
+  points.push(new THREE.Vector3(paraChoque+.4, largura*.6, fundoPrata));
+  points.push(new THREE.Vector3(paraChoque+.4, -largura*.6, fundoPrata));
+
+
+  var material = new THREE.MeshPhongMaterial({color:"rgb(255,255,255)"});
+
+  var pointCloud = new THREE.Object3D();  
+  points.forEach(function (point) {
+    var spGeom = new THREE.SphereGeometry(0.2);
+    var spMesh = new THREE.Mesh(spGeom, material);
+    spMesh.position.set(0, 0, .63);
+    pointCloud.add(spMesh);
+  });
+
+  // scene.add(pointCloud);
+
+  pointCloud.visible = true;
+  var convexCasing = new ConvexGeometry(points);
+  var casing = new THREE.MeshPhongMaterial(colorBlack);
+  var objectcasing = new THREE.Mesh(convexCasing, casing);
+      objectcasing.castShadow = true;
+      objectcasing.visible = true;
+    // objectcasing.position.z = objectcasing.position.z + 1;
+
+  car.add(objectcasing);
+
+}
+
+var buildCasingContourBlackLeft = function (car){
+  var casing = new THREE.MeshPhongMaterial(colorCasing);
+  
+  var points = [];
+   
+  //Contorno rodas dianteiras
+  points.push(new THREE.Vector3(posRoda*.65, largura, -altura*.2));
+  points.push(new THREE.Vector3(posRoda*.6, largura, -altura*.5));
+  points.push(new THREE.Vector3(posRoda*.65, 1.1*largura, -altura*.2));
+  points.push(new THREE.Vector3(posRoda*.6, 1.1*largura, -altura*.5));
+
+  //Contorno rodas traseiras
+  points.push(new THREE.Vector3(-posRoda*.65, largura, -altura*.2));
+  points.push(new THREE.Vector3(-posRoda*.6, largura, -altura*.5));
+  points.push(new THREE.Vector3(-posRoda*.65, 1.1*largura, -altura*.2));
+  points.push(new THREE.Vector3(-posRoda*.6, 1.1*largura, -altura*.5));
+
+  
+    var material = new THREE.MeshPhongMaterial({color:"rgb(255,255,255)"});
+  
+    var pointCloud = new THREE.Object3D();  
+    points.forEach(function (point) {
+      var spGeom = new THREE.SphereGeometry(0.2);
+      var spMesh = new THREE.Mesh(spGeom, material);
+      spMesh.position.set(0, 0, .63);
+      pointCloud.add(spMesh);
+    });
+  
+    car.add(pointCloud);
+  
+    pointCloud.visible = true;
+    var convexCasing = new ConvexGeometry(points);
+    var countour = new THREE.MeshPhongMaterial(colorBlack);
+    var objectcontour = new THREE.Mesh(convexCasing, countour);
+        objectcontour.castShadow = true;
+        objectcontour.visible = true;
+    
+      car.add(objectcontour);
+  }
+
+  var buildCasingContourBlackRight = function (car){
+    var casing = new THREE.MeshPhongMaterial(colorCasing);
+    
+    var points = [];
+     
+    //Contorno rodas dianteiras
+    points.push(new THREE.Vector3(posRoda*.65, -largura, altura*-.2));
+    points.push(new THREE.Vector3(posRoda*.6, -largura, -altura*.5));
+    points.push(new THREE.Vector3(posRoda*.65, -1.1*largura, altura*-.2));
+    points.push(new THREE.Vector3(posRoda*.6, -1.1*largura, -altura*.5));
+  
+    //Contorno rodas traseiras
+    points.push(new THREE.Vector3(-posRoda*.65, -largura, altura*-.2));
+    points.push(new THREE.Vector3(-posRoda*.6, -largura, -altura*.5));
+    points.push(new THREE.Vector3(-posRoda*.65, -1.1*largura, altura*-.2));
+    points.push(new THREE.Vector3(-posRoda*.6, -1.1*largura, -altura*.5));
+  
+    
+      var material = new THREE.MeshPhongMaterial({color:"rgb(255,255,255)"});
+    
+      var pointCloud = new THREE.Object3D();  
+      points.forEach(function (point) {
+        var spGeom = new THREE.SphereGeometry(0.2);
+        var spMesh = new THREE.Mesh(spGeom, material);
+        spMesh.position.set(0, 0, .63);
+        pointCloud.add(spMesh);
+      });
+    
+      car.add(pointCloud);
+    
+      pointCloud.visible = true;
+      var convexCasing = new ConvexGeometry(points);
+      var countour = new THREE.MeshPhongMaterial(colorBlack);
+      var objectcontour = new THREE.Mesh(convexCasing, countour);
+          objectcontour.castShadow = true;
+          objectcontour.visible = true;
+      
+        car.add(objectcontour);
+    }
+
+  var buildBottomBlack = function (car){
+    var casing = new THREE.MeshPhongMaterial(colorCasing);
+
+    var points = [];
+      
+    //Contorno roda dianteira direita
+    points.push(new THREE.Vector3(posRoda*.65, -largura, altura*-.2));
+    points.push(new THREE.Vector3(posRoda*.6, -largura, -altura*.5));
+
+    //Contorno roda traseira direita
+    points.push(new THREE.Vector3(-posRoda*.65, -largura, altura*-.2));
+    points.push(new THREE.Vector3(-posRoda*.6, -largura, -altura*.5));
+
+    //Contorno roda dianteira esquerda
+    points.push(new THREE.Vector3(posRoda*.65, largura, altura*-.2));
+    points.push(new THREE.Vector3(posRoda*.6, largura, -altura*.5));
+
+    //Contorno roda traseira esquerda
+    points.push(new THREE.Vector3(-posRoda*.65, largura, altura*-.2));
+    points.push(new THREE.Vector3(-posRoda*.6, largura, -altura*.5));
+    
+
+    var material = new THREE.MeshPhongMaterial({color:"rgb(255,255,255)"});
+
+    var pointCloud = new THREE.Object3D();  
+    points.forEach(function (point) {
+      var spGeom = new THREE.SphereGeometry(0.2);
+      var spMesh = new THREE.Mesh(spGeom, material);
+      spMesh.position.set(0, 0, .63);
+      pointCloud.add(spMesh);
+    });
+
+    car.add(pointCloud);
+
+    pointCloud.visible = true;
+    var convexCasing = new ConvexGeometry(points);
+    var countour = new THREE.MeshPhongMaterial(colorBlack);
+    var objectcontour = new THREE.Mesh(convexCasing, countour);
+        objectcontour.castShadow = true;
+        objectcontour.visible = true;
+    
+      car.add(objectcontour);
+  }
+
+  var buildBottomFrontBlack = function (car){
+    var casing = new THREE.MeshPhongMaterial(colorCasing);
+
+    var points = [];
+      
+    points.push(new THREE.Vector3(paraChoque, largura*1.01,0));
+    points.push(new THREE.Vector3(paraChoque, -largura*1.01,0));
+
+    points.push(new THREE.Vector3(paraChoque, largura*1.01,fundoPrata));
+    points.push(new THREE.Vector3(paraChoque, -largura*1.01,fundoPrata));
+
+      //Contorno rodas dianteiras preto
+    points.push(new THREE.Vector3(posRoda*1.3, largura*1.01, altura*.4));
+    points.push(new THREE.Vector3(posRoda*1.3, -largura*1.01, altura*.4));
+    points.push(new THREE.Vector3(posRoda*1.5, largura*1.01, -altura*.3));
+    points.push(new THREE.Vector3(posRoda*1.5, -largura*1.01, -altura*.3));
+
+    //Contorno rodas traseiras preto
+    // points.push(new THREE.Vector3(-posRoda*.8, largura, altura*.4));
+    // points.push(new THREE.Vector3(-posRoda*.8, -largura, altura*.4));
+    // points.push(new THREE.Vector3(-posRoda*.6, largura, -altura*.3));
+    // points.push(new THREE.Vector3(-posRoda*.6, -largura, -altura*.3));
+
+    var material = new THREE.MeshPhongMaterial({color:"rgb(255,255,255)"});
+
+    var pointCloud = new THREE.Object3D();  
+    points.forEach(function (point) {
+      var spGeom = new THREE.SphereGeometry(0.2);
+      var spMesh = new THREE.Mesh(spGeom, material);
+      spMesh.position.set(0, 0, .63);
+      pointCloud.add(spMesh);
+    });
+
+    car.add(pointCloud);
+
+    pointCloud.visible = true;
+    var convexCasing = new ConvexGeometry(points);
+    var countour = new THREE.MeshPhongMaterial(colorBlack);
+    var objectcontour = new THREE.Mesh(convexCasing, countour);
+        objectcontour.castShadow = true;
+        objectcontour.visible = true;
+    
+      car.add(objectcontour);
+  }
 
 var buildCasingContour = function (car){
   var casing = new THREE.MeshPhongMaterial(colorCasing);
