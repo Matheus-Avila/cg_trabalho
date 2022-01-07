@@ -73,7 +73,7 @@ function controlCameras () {
   // Set virtual camera viewport 
   var offset = 10; 
   renderer.setViewport(offset, height-300-offset, 400, 300);  // Set virtual camera viewport  
-  renderer.setScissor(offset, height-300-offset, 400, 300); // Set scissor with the same size as the viewport
+  renderer.setScissor(offset, height-300-offset, 260, 300); // Set scissor with the same size as the viewport
   renderer.setScissorTest(true); // Enable scissor to paint only the scissor are (i.e., the small viewport)
   renderer.setClearColor("rgb(100, 50, 150)");  // Use a darker clear color in the small viewport 
   renderer.clear(); // Clean the small viewport
