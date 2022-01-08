@@ -13,6 +13,7 @@ import * as PlaneBuilder from './builders/planeBuilder.js';
 import * as TrackBuilder from './builders/trackBuilder.js';
 import * as CarBuilder from './builders/carBuilder.js';
 import * as MovementControls from './controls/movementControls.js';
+import * as InspectionMovementControls from './controls/inspectionMovementControls.js';
 import * as GameModeControls from './controls/gameModeControls.js';
 import * as TrackControls from './controls/trackControls.js';
 import { GameMode } from './util/enums.js';
@@ -91,7 +92,10 @@ function updateGame() {
     cameraMovement();
   }
   else if (gameMode == GameMode.Inspection)
+  {
     trackballControls.update();
+    InspectionMovementControls.updateMovement(keyboardState, car);
+  }
 }
 
 function cameraMovement() {

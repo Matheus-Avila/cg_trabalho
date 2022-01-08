@@ -90,12 +90,7 @@ var updateMovement = function (keyboardState, car, track, tempo) {
             }
         }
 
-        if (car.speed > 0) {
-            spinWheels(car, 1);
-        }
-        else if (car.speed < 0) {
-            spinWheels(car, -1);
-        }
+        car.spinWheels();
     }
 }
 
@@ -120,15 +115,6 @@ var carIsOnTrack = function (car, track, tempo) {
     }
     
     return false;
-}
-
-var spinWheels = function (car, direction) {
-    var spinSpeed = car.speed * direction;
-
-    car.mesh.children[0].children[0].rotateY(spinSpeed);
-    car.mesh.children[0].children[1].rotateY(spinSpeed);
-    car.mesh.children[1].children[0].rotateY(spinSpeed);
-    car.mesh.children[1].children[1].rotateY(spinSpeed);
 }
 
 export { updateMovement };
