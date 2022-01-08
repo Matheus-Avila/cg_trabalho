@@ -1,4 +1,4 @@
-import { BlockType } from "../util/enums.js";
+import { BlockType } from "../util/constants.js";
 
 var updateMovement = function (keyboardState, car, track, tempo) {
     var accelerationRate = 0.01;
@@ -8,8 +8,6 @@ var updateMovement = function (keyboardState, car, track, tempo) {
     var resistanceRate = 0.02;
 
     if (tempo.numVoltas < 4) {
-        car.maxSpeed = carIsOnTrack(car.mesh, track, tempo) ? 0.3 : 0.15;
-
         if (carIsOnTrack(car.mesh, track, tempo)) {
             car.maxSpeed = 0.3;
         }

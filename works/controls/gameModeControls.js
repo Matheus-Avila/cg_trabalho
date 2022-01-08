@@ -1,4 +1,4 @@
-import { GameMode } from '../util/enums.js';
+import { GameMode } from '../util/constants.js';
 import { degreesToRadians } from '../../libs/util/util.js';
 
 var updateGameMode = function (keyboardState, gameMode, scene, camera, track, car, cameraHolder, timer, infoBox, plane) {

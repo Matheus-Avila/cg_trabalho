@@ -1,6 +1,6 @@
 import * as THREE from '../../build/three.module.js';
 import { Block } from '../classes/block.js';
-import { BlockType } from "../util/enums.js";
+import { BlockType } from "../util/constants.js";
 
 export class Track {
     constructor(number, initialBlockPosition, commonBlockPositions, blockSize, blockDepth) {

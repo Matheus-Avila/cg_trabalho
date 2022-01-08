@@ -1,4 +1,5 @@
-import { LapNumber } from "../util/enums.js";
+import { LapNumber } from "./constants.js";
+
 let contagem = 0;
 let contagemTotal = 0;
 var element = document.getElementById('clock');
@@ -7,8 +8,8 @@ var secs;
 var elementTotal = document.getElementById('clockTotal');
 var minutesTotal;
 var secsTotal;
-var melhorVoltaSecs;
-var melhorVoltaMins = -1;
+var melhorVoltaSecs = 0;
+var melhorVoltaMins = 0;
 
 export class timeCheck {
     constructor() {
@@ -24,14 +25,15 @@ export class timeCheck {
 
         element.innerHTML = '';
         elementTotal.innerHTML = '';
-        document.getElementById('1volta').innerHTML = '';
-        document.getElementById('2volta').innerHTML = '';
-        document.getElementById('3volta').innerHTML = '';
-        document.getElementById('4volta').innerHTML = '';
+        document.getElementById(LapNumber.one.id).innerHTML = '';
+        document.getElementById(LapNumber.two.id).innerHTML = '';
+        document.getElementById(LapNumber.three.id).innerHTML = '';
+        document.getElementById(LapNumber.four.id).innerHTML = '';
     }
 
     numVolta = function () {
         this.numVoltas += 1;
+
         var volta_atual;
         switch (this.numVoltas) {
             case 1:
@@ -50,19 +52,18 @@ export class timeCheck {
                 break;
         }
         
-        var element = document.getElementById(volta_atual);
-        var tempoVolta = volta_atual + '-' + minutes + ':' + secs;
+        var element = document.getElementById(volta_atual.id);
+        var tempoVolta = volta_atual.name + ': ' + this.toMMSS(minutes, secs);
         contagem = 0;
         element.innerHTML = tempoVolta;
-        if(minutes*60 + secs <= melhorVoltaMins*60 + melhorVoltaSecs || melhorVoltaMins == -1){
-            console.log("Eu!");
+
+        if (minutes * 60 + secs < melhorVoltaMins * 60 + melhorVoltaSecs || this.numVoltas == 1) {
+            melhorVoltaMins = minutes;
+            melhorVoltaSecs = secs;
+
             var elementBestLap = document.getElementById('melhor-volta');
-            var textBestLap = 'Melhor volta- ' + minutes + ':' + secs;
+            var textBestLap = 'Melhor volta: ' + this.toMMSS(minutes, secs);
             elementBestLap.innerHTML = textBestLap;
-        }
-    
-        if (this.numVoltas == 4) {
-            contagem = -1;
         }
     }
 
@@ -81,8 +82,7 @@ export class timeCheck {
                 totalBlocksCrossed++;
         }
 
-        if (totalBlocksCrossed >= totalTrackBlocks * 0.75)
-        {
+        if (totalBlocksCrossed >= totalTrackBlocks * 0.75) {
             this.resetCrossedBlocks(track);
             this.numVolta();
             return true;
@@ -92,22 +92,30 @@ export class timeCheck {
     }
 
     updateCounter = function () {
-        if (contagem < 0) {
-            element.innerHTML = 'Corrida concluída!!';
-        } else {
+        if (this.numVoltas == 4) {
+            element.innerHTML = 'Corrida concluída!';
+        } 
+        else {
             contagem++;
             minutes = Math.floor(contagem / 6000);
-            secs = Math.floor(contagem / 100);
-            if (secs >= 60) secs = secs % 60;
-            var buffer = 'Volta Atual: ' + minutes + ':' + secs;
+            secs = Math.floor((contagem / 100) % 60);
+            var buffer = 'Volta atual: ' + this.toMMSS(minutes, secs);
             element.innerHTML = buffer;
 
             contagemTotal++;
             minutesTotal = Math.floor(contagemTotal / 6000);
-            secsTotal = Math.floor(contagemTotal / 100);
-            if (secsTotal >= 60) secsTotal = secsTotal % 60;
-            var bufferTotal = 'Tempo total: ' + minutesTotal + ':' + secsTotal;
+            secsTotal = Math.floor((contagemTotal / 100) % 60);
+            var bufferTotal = 'Tempo total: ' + this.toMMSS(minutesTotal, secsTotal);
             elementTotal.innerHTML = bufferTotal;
         }
+    }
+
+    toMMSS = function (minutes, seconds) {   
+        if (minutes < 10)
+            minutes = "0" + minutes;
+        if (seconds < 10) 
+            seconds = "0" + seconds;
+
+        return minutes + ':' + seconds;
     }
 }
