@@ -1,5 +1,5 @@
 import * as THREE from '../../build/three.module.js';
-import { BlockType } from "../util/enums.js";
+import { BlockType } from "../util/constants.js";
 
 export class Block {
     constructor(width, height, depth, type, position) {

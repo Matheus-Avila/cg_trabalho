@@ -16,7 +16,7 @@ import * as MovementControls from './controls/movementControls.js';
 import * as InspectionMovementControls from './controls/inspectionMovementControls.js';
 import * as GameModeControls from './controls/gameModeControls.js';
 import * as TrackControls from './controls/trackControls.js';
-import { GameMode } from './util/enums.js';
+import { GameMode } from './util/constants.js';
 import { timeCheck } from './util/timeController.js';
 import { InfoBox } from "./util/infoBox.js";
 
