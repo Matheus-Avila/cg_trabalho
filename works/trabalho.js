@@ -45,6 +45,8 @@ var cameraTarget = new THREE.Object3D();
 car.mesh.add(cameraTarget);
 cameraTarget.position.set(car.mesh.position.x + 10, car.mesh.position.y, car.mesh.position.z);
 
+car.mesh.position.set(track.initialBlockPosition[0], track.initialBlockPosition[1], 1.5);
+
 var trackballControls = new TrackballControls(camera, renderer.domElement);
 window.addEventListener('resize', function () { onWindowResize(camera, renderer) }, false);
 
