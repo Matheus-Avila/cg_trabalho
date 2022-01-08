@@ -35,6 +35,7 @@ var buildCar = function (scene, maxSpeed) {
     buildwheelTopBackBlack(casing);
     buildCasingBlackBack(casing);
     buildCasingBlackBackWhell(casing);
+    buildTopBack(casing);
     buildParabrisa(casing);
     buildTopRightFront(casing);
     buildTopLeftFront(casing);
@@ -90,6 +91,41 @@ var buildCasing = function (scene)
     objectcasing.position.z = objectcasing.position.z + 1;
 
   return objectcasing;
+}
+
+
+var buildTopBack = function (car)
+{
+  var points = [];
+  // Topo pontudo do carro
+  points.push(new THREE.Vector3(-profundidade, largura, altura));
+  points.push(new THREE.Vector3(-profundidade, -largura, altura));
+
+  points.push(new THREE.Vector3(-profundidade*.6,-largura*0.95,altura*1.08*2*.65));
+  points.push(new THREE.Vector3(-profundidade*.6,largura*0.95,altura*1.08*2*.65));
+  points.push(new THREE.Vector3(-profundidade*.6,-largura,altura));
+  points.push(new THREE.Vector3(-profundidade*.6,largura,altura));
+
+  var material = new THREE.MeshPhongMaterial({color:"rgb(255,255,255)"});
+
+  var pointCloud = new THREE.Object3D();  
+  points.forEach(function (point) {
+    var spGeom = new THREE.SphereGeometry(0.2);
+    var spMesh = new THREE.Mesh(spGeom, material);
+    spMesh.position.set(0, 0, .63);
+    pointCloud.add(spMesh);
+  });
+
+  //  
+
+  pointCloud.visible = true;
+  var convexCasing = new ConvexGeometry(points);
+  var casing = new THREE.MeshPhongMaterial(colorCasing );
+  var objectcasing = new THREE.Mesh(convexCasing, casing);
+      objectcasing.castShadow = true;
+      objectcasing.visible = true;
+
+  car.add(objectcasing);
 }
 
 var buildParabrisa = function (car)
@@ -260,7 +296,7 @@ var buildRightBack = function (car){
 
   pointCloud.visible = true;
   var convexCasing = new ConvexGeometry(points);
-  var casing = new THREE.MeshPhongMaterial(colorBlack);
+  var casing = new THREE.MeshLambertMaterial(colorBlack);
   var objectcasing = new THREE.Mesh(convexCasing, casing);
       objectcasing.castShadow = true;
       objectcasing.visible = true;
@@ -362,7 +398,7 @@ var buildLeftSupport1 = function (car){
 
   pointCloud.visible = true;
   var convexCasing = new ConvexGeometry(points);
-  var casing = new THREE.MeshPhongMaterial(colorBlack);
+  var casing = new THREE.MeshLambertMaterial(colorBlack);
   var objectcasing = new THREE.Mesh(convexCasing, casing);
       objectcasing.castShadow = true;
       objectcasing.visible = true;
@@ -393,7 +429,7 @@ var buildRightSupport1 = function (car){
 
   pointCloud.visible = true;
   var convexCasing = new ConvexGeometry(points);
-  var casing = new THREE.MeshPhongMaterial(colorBlack);
+  var casing = new THREE.MeshLambertMaterial(colorBlack);
   var objectcasing = new THREE.Mesh(convexCasing, casing);
       objectcasing.castShadow = true;
       objectcasing.visible = true;
@@ -424,7 +460,7 @@ var buildLeftSupport2 = function (car){
 
   pointCloud.visible = true;
   var convexCasing = new ConvexGeometry(points);
-  var casing = new THREE.MeshPhongMaterial(colorBlack);
+  var casing = new THREE.MeshLambertMaterial(colorBlack);
   var objectcasing = new THREE.Mesh(convexCasing, casing);
       objectcasing.castShadow = true;
       objectcasing.visible = true;
@@ -455,7 +491,7 @@ var buildRightSupport2 = function (car){
 
   pointCloud.visible = true;
   var convexCasing = new ConvexGeometry(points);
-  var casing = new THREE.MeshPhongMaterial(colorBlack);
+  var casing = new THREE.MeshLambertMaterial(colorBlack);
   var objectcasing = new THREE.Mesh(convexCasing, casing);
       objectcasing.castShadow = true;
       objectcasing.visible = true;
@@ -487,7 +523,7 @@ var buildLeftSupport3 = function (car){
 
   pointCloud.visible = true;
   var convexCasing = new ConvexGeometry(points);
-  var casing = new THREE.MeshPhongMaterial(colorBlack);
+  var casing = new THREE.MeshLambertMaterial(colorBlack);
   var objectcasing = new THREE.Mesh(convexCasing, casing);
       objectcasing.castShadow = true;
       objectcasing.visible = true;
@@ -518,7 +554,7 @@ var buildRightSupport3 = function (car){
 
   pointCloud.visible = true;
   var convexCasing = new ConvexGeometry(points);
-  var casing = new THREE.MeshPhongMaterial(colorBlack);
+  var casing = new THREE.MeshLambertMaterial(colorBlack);
   var objectcasing = new THREE.Mesh(convexCasing, casing);
       objectcasing.castShadow = true;
       objectcasing.visible = true;
@@ -610,7 +646,7 @@ var buildFrontBlack = function (car){
 
   pointCloud.visible = true;
   var convexCasing = new ConvexGeometry(points);
-  var casing = new THREE.MeshPhongMaterial(colorBlack);
+  var casing = new THREE.MeshLambertMaterial(colorBlack);
   var objectcasing = new THREE.Mesh(convexCasing, casing);
       objectcasing.castShadow = true;
       objectcasing.visible = true;
@@ -652,7 +688,7 @@ var buildCasingContourBlackLeft = function (car){
   
     pointCloud.visible = true;
     var convexCasing = new ConvexGeometry(points);
-    var countour = new THREE.MeshPhongMaterial(colorBlack);
+    var countour = new THREE.MeshLambertMaterial(colorBlack);
     var objectcontour = new THREE.Mesh(convexCasing, countour);
         objectcontour.castShadow = true;
         objectcontour.visible = true;
@@ -692,7 +728,7 @@ var buildCasingContourBlackLeft = function (car){
     
       pointCloud.visible = true;
       var convexCasing = new ConvexGeometry(points);
-      var countour = new THREE.MeshPhongMaterial(colorBlack);
+      var countour = new THREE.MeshLambertMaterial(colorBlack);
       var objectcontour = new THREE.Mesh(convexCasing, countour);
           objectcontour.castShadow = true;
           objectcontour.visible = true;
@@ -736,7 +772,7 @@ var buildCasingContourBlackLeft = function (car){
 
     pointCloud.visible = true;
     var convexCasing = new ConvexGeometry(points);
-    var countour = new THREE.MeshPhongMaterial(colorBlack);
+    var countour = new THREE.MeshLambertMaterial(colorBlack);
     var objectcontour = new THREE.Mesh(convexCasing, countour);
         objectcontour.castShadow = true;
         objectcontour.visible = true;
@@ -776,7 +812,7 @@ var buildCasingContourBlackLeft = function (car){
 
     pointCloud.visible = true;
     var convexCasing = new ConvexGeometry(points);
-    var countour = new THREE.MeshPhongMaterial(colorBlack);
+    var countour = new THREE.MeshLambertMaterial(colorBlack);
     var objectcontour = new THREE.Mesh(convexCasing, countour);
         objectcontour.castShadow = true;
         objectcontour.visible = true;
@@ -816,7 +852,7 @@ var buildCasingContourBlackLeft = function (car){
 
     pointCloud.visible = true;
     var convexCasing = new ConvexGeometry(points);
-    var countour = new THREE.MeshPhongMaterial(colorBlack);
+    var countour = new THREE.MeshLambertMaterial(colorBlack);
     var objectcontour = new THREE.Mesh(convexCasing, countour);
         objectcontour.castShadow = true;
         objectcontour.visible = true;
@@ -896,7 +932,7 @@ var buildCasingContourBlackLeft = function (car){
 
     pointCloud.visible = true;
     var convexCasing = new ConvexGeometry(points);
-    var countour = new THREE.MeshPhongMaterial(colorBlack);
+    var countour = new THREE.MeshLambertMaterial(colorBlack);
     var objectcontour = new THREE.Mesh(convexCasing, countour);
         objectcontour.castShadow = true;
         objectcontour.visible = true;
@@ -935,7 +971,7 @@ var buildCasingContourBlackLeft = function (car){
 
     pointCloud.visible = true;
     var convexCasing = new ConvexGeometry(points);
-    var countour = new THREE.MeshPhongMaterial(colorBlack);
+    var countour = new THREE.MeshLambertMaterial(colorBlack);
     var objectcontour = new THREE.Mesh(convexCasing, countour);
         objectcontour.castShadow = true;
         objectcontour.visible = true;
@@ -1102,12 +1138,12 @@ var buildAxle = function (car) {
 
     var front = new THREE.Mesh(axleGeometry, axleMaterial);
     front.position.x = front.position.x - posRoda*1.1;
-    front.position.z = front.position.z - .2;
+    front.position.z = front.position.z - .25;
     car.add(front);
 
     var back = new THREE.Mesh(axleGeometry, axleMaterial);
     back.position.x = back.position.x + posRoda*1.1;
-    back.position.z = back.position.z - .2;
+    back.position.z = back.position.z - .25;
     car.add(back);
 
     return { front, back };
