@@ -1,96 +1,57 @@
 import { BlockType } from "../util/enums.js";
 
 var updateMovement = function (keyboardState, car, track, tempo) {
+    var accelerationRate = 0.01;
+    var angleRate = 0.01;
+    var wheelsRotationRate = 0.03;
+    var carRotationRate = 0.05;
+    var resistanceRate = 0.02;
+
     if (tempo.numVoltas < 4) {
+        car.maxSpeed = carIsOnTrack(car.mesh, track, tempo) ? 0.3 : 0.15;
+
+        if (carIsOnTrack(car.mesh, track, tempo)) {
+            car.maxSpeed = 0.3;
+        }
+        else {
+            car.maxSpeed = 0.15;
+
+            if (Math.abs(car.speed) > car.maxSpeed)
+                car.speed = car.maxSpeed * Math.sign(car.speed);
+        }
+
         if (keyboardState.pressed("left") && car.angle < car.maxAngleAxle) {
-            car.angle = car.angle + 0.01;
-            car.mesh.children[1].children[0].rotateZ(.03);
-            car.mesh.children[1].children[1].rotateZ(.03);
+            car.angle += angleRate;
+            car.mesh.children[1].rotateZ(wheelsRotationRate);
+        }
+    
+        if (keyboardState.pressed("right") && Math.abs(car.angle) < car.maxAngleAxle) {
+            car.angle -= angleRate;
+            car.mesh.children[1].rotateZ(-wheelsRotationRate);
         }
 
-        if (keyboardState.pressed("right") && car.angle > -car.maxAngleAxle) {
-            car.angle = car.angle - 0.01;
-            car.mesh.children[1].children[0].rotateZ(-.03);
-            car.mesh.children[1].children[1].rotateZ(-.03);
-        }
+        if (keyboardState.pressed("X") && car.speed < car.maxSpeed)
+            car.speed += accelerationRate;
 
-        if (keyboardState.pressed("X")) {
-            if (car.speed < car.maxSpeed && car.speed >= 0)
-                car.speed = car.speed + 0.01;
-            else if (car.speed > 0) car.speed -= 0.02;
+        if (keyboardState.pressed("down") && Math.abs(car.speed) < car.maxSpeed)
+            car.speed -= accelerationRate;
 
-            if (!carIsOnTrack(car.mesh, track, tempo))
-                car.maxSpeed = 0.15;
-            else car.maxSpeed = 0.3;
+        if (car.speed != 0) {
+            if (!keyboardState.pressed("X") && car.speed > 0)
+                car.speed -= Math.min(resistanceRate, car.speed);
 
-            if (car.speed > 0) car.mesh.translateX(car.speed);
+            if (!keyboardState.pressed("down") && car.speed < 0)
+                car.speed += Math.min(resistanceRate, Math.abs(car.speed));
+        
+            car.spinWheels();
+            car.mesh.translateX(car.speed);
 
-            if (car.angle > 0) {
-                car.mesh.rotateZ(.05);
-                car.mesh.children[1].children[0].rotateZ(-.03);
-                car.mesh.children[1].children[1].rotateZ(-.03);
-                car.angle = car.angle - 0.01;
-            }
-            if (car.angle < 0) {
-                car.mesh.rotateZ(-.05);
-                car.mesh.children[1].children[0].rotateZ(.03);
-                car.mesh.children[1].children[1].rotateZ(.03);
-                car.angle = car.angle + 0.01;
+            if (car.angle != 0) {
+                car.mesh.rotateZ(carRotationRate * Math.sign(car.speed) * Math.sign(car.angle));
+                car.mesh.children[1].rotateZ(-wheelsRotationRate * Math.sign(car.angle));
+                car.angle -= Math.min(angleRate, Math.abs(car.angle)) * Math.sign(car.angle);
             }
         }
-
-        if (!keyboardState.pressed("X")) {
-            if (car.speed > 0) {
-                if (!carIsOnTrack(car.mesh, track, tempo))
-                    car.maxSpeed = 0.15;
-                else car.maxSpeed = 0.3;
-
-                car.speed = car.speed - 0.01;
-                if (car.speed < 0) car.speed = 0;
-                car.mesh.translateX(car.speed);
-            }
-        }
-
-        if (!keyboardState.pressed("down")) {
-            if (car.speed < 0) {
-                if (!carIsOnTrack(car.mesh, track, tempo))
-                    car.maxSpeed = 0.15;
-                else car.maxSpeed = 0.3;
-
-                car.speed = car.speed + 0.01;
-                if (car.speed > 0) car.speed = 0;
-                car.mesh.translateX(car.speed);
-            }
-        }
-
-        if (keyboardState.pressed("down")) {
-            if (car.speed > -car.maxSpeed && car.speed <= 0) { car.speed -= 0.01; }
-            else if (car.speed < 0) car.speed += 0.02;
-
-            if (!carIsOnTrack(car.mesh, track, tempo)) {
-                car.maxSpeed = 0.15;
-            }
-            else {
-                car.maxSpeed = 0.3;
-            }
-
-            if (car.speed < 0) car.mesh.translateX(car.speed);
-
-            if (car.angle > 0) {
-                car.mesh.rotateZ(-.05);
-                car.mesh.children[1].children[0].rotateZ(-.03);
-                car.mesh.children[1].children[1].rotateZ(-.03);
-                car.angle = car.angle - 0.01;
-            }
-            if (car.angle < 0) {
-                car.mesh.rotateZ(.05);
-                car.mesh.children[1].children[0].rotateZ(.03);
-                car.mesh.children[1].children[1].rotateZ(.03);
-                car.angle = car.angle + 0.01;
-            }
-        }
-
-        car.spinWheels();
     }
 }
 
