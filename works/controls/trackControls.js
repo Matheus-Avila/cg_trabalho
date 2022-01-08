@@ -1,19 +1,19 @@
 import * as TrackBuilder from '../builders/trackBuilder.js';
 import { degreesToRadians } from '../../libs/util/util.js';
 
-var updateTrack = function (keyboardState, scene, track, car, timer) {
+var updateTrack = function (keyboardState, scene, track, car, timer, speedMeter) {
     if (keyboardState.down("1") && track.number != 1)
-        track = changeTrack(scene, track, car, 1, timer);
+        track = changeTrack(scene, track, car, 1, timer, speedMeter);
     else if (keyboardState.down("2") && track.number != 2)
-        track = changeTrack(scene, track, car, 2, timer);
+        track = changeTrack(scene, track, car, 2, timer, speedMeter);
     else if (keyboardState.down("3") && track.number != 3)
-        track = changeTrack(scene, track, car, 3, timer);
+        track = changeTrack(scene, track, car, 3, timer, speedMeter);
     else if (keyboardState.down("4") && track.number != 4)
-        track = changeTrack(scene, track, car, 4, timer);
+        track = changeTrack(scene, track, car, 4, timer, speedMeter);
     return track;
 }
 
-var changeTrack = function (scene, track, car, newTrackNumber, timer) {
+var changeTrack = function (scene, track, car, newTrackNumber, timer, speedMeter) {
     scene.remove(track.group);
     track = TrackBuilder.buildTrack(scene, newTrackNumber);
     
@@ -28,6 +28,8 @@ var changeTrack = function (scene, track, car, newTrackNumber, timer) {
 
     timer.reset();
     timer.resetCrossedBlocks(track);
+
+    speedMeter.reset();
 
     return track;
 }
