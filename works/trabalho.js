@@ -19,6 +19,7 @@ import * as TrackControls from './controls/trackControls.js';
 import { GameMode } from './util/constants.js';
 import { timeCheck } from './util/timeController.js';
 import { InfoBox } from "./util/infoBox.js";
+import { SpeedMeter } from "./util/speedMeter.js";
 
 var stats = new Stats();
 var renderer = initRenderer();
@@ -53,6 +54,8 @@ window.addEventListener('resize', function () { onWindowResize(camera, renderer)
 var infoBox = new InfoBox();
 infoBox.showGameplayInfoBox();
 
+var speedMeter = new SpeedMeter();
+
 render();
   
 function render() {
@@ -85,16 +88,16 @@ function controlCameras () {
 
 function updateGame() {
   keyboardState.update();
-  gameMode = GameModeControls.updateGameMode(keyboardState, gameMode, scene, camera, track, car, cameraHolder, timer, infoBox, plane);
+  gameMode = GameModeControls.updateGameMode(keyboardState, gameMode, scene, camera, track, car, cameraHolder, timer, infoBox, plane, speedMeter);
 
   if (gameMode == GameMode.Gameplay) {
     timer.updateCounter();
-    MovementControls.updateMovement(keyboardState, car, track, timer);
-    track = TrackControls.updateTrack(keyboardState, scene, track, car, timer);
+    MovementControls.updateMovement(keyboardState, car, track, timer, speedMeter);
+    speedMeter.updateSpeed(car.speed);
+    track = TrackControls.updateTrack(keyboardState, scene, track, car, timer, speedMeter);
     cameraMovement();
   }
-  else if (gameMode == GameMode.Inspection)
-  {
+  else if (gameMode == GameMode.Inspection) {
     trackballControls.update();
     InspectionMovementControls.updateMovement(keyboardState, car);
   }

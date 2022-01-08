@@ -1,10 +1,10 @@
 import { GameMode } from '../util/constants.js';
 import { degreesToRadians } from '../../libs/util/util.js';
 
-var updateGameMode = function (keyboardState, gameMode, scene, camera, track, car, cameraHolder, timer, infoBox, plane) {
+var updateGameMode = function (keyboardState, gameMode, scene, camera, track, car, cameraHolder, timer, infoBox, plane, speedMeter) {
     if (keyboardState.down("space")) {
         if (gameMode == GameMode.Gameplay)
-            gameMode = changeToInspectionMode(scene, camera, track, car, cameraHolder, timer, infoBox, plane);
+            gameMode = changeToInspectionMode(scene, camera, track, car, cameraHolder, timer, infoBox, plane, speedMeter);
         else if (gameMode == GameMode.Inspection)
             gameMode = changeToGameplayMode(scene, camera, track, car, cameraHolder, infoBox, plane);
     }
@@ -33,7 +33,7 @@ var changeToGameplayMode = function (scene, camera, track, car, cameraHolder, in
     return GameMode.Gameplay;
 }
 
-var changeToInspectionMode = function (scene, camera, track, car, cameraHolder, timer, infoBox, plane) {
+var changeToInspectionMode = function (scene, camera, track, car, cameraHolder, timer, infoBox, plane, speedMeter) {
     scene.remove(plane);
     scene.remove(track.group);
 
@@ -50,6 +50,8 @@ var changeToInspectionMode = function (scene, camera, track, car, cameraHolder, 
 
     infoBox.clear();
     infoBox.showInspectionInfoBox();
+    
+    speedMeter.reset();
 
     return GameMode.Inspection;
 }
