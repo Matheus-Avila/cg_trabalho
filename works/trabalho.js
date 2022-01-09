@@ -85,12 +85,12 @@ function controlCameras () {
   // Set virtual camera viewport 
   if(gameMode == GameMode.Gameplay){
   var offset = 10; 
-  renderer.setViewport(offset, height-300-offset, 400, 300);  // Set virtual camera viewport  
-  renderer.setScissor(offset, height-300-offset, 400, 300); // Set scissor with the same size as the viewport
-  renderer.setScissorTest(true); // Enable scissor to paint only the scissor are (i.e., the small viewport)
-  renderer.setClearColor("rgb(100, 50, 150)");  // Use a darker clear color in the small viewport 
-  renderer.clear(); // Clean the small viewport
-  renderer.render(scene, cameraMap);  // Render scene of the virtual camera
+    renderer.setViewport(offset, height-300-offset, 350, 300);  // Set virtual camera viewport  
+    renderer.setScissor(offset, height-300-offset, 300, 300); // Set scissor with the same size as the viewport
+    renderer.setScissorTest(true); // Enable scissor to paint only the scissor are (i.e., the small viewport)
+    renderer.setClearColor("rgb(100, 50, 150)");  // Use a darker clear color in the small viewport 
+    renderer.clear(); // Clean the small viewport
+    renderer.render(scene, cameraMap);  // Render scene of the virtual camera
   }
 }
 
