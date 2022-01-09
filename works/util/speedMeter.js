@@ -6,7 +6,8 @@ export class SpeedMeter {
 
     updateSpeed(speed) {
         this.speed = speed;
-        this.element.innerHTML = "Velocidade: " + (speed * 100).toFixed(2);
+        var speedText = (Math.abs(speed) * 100).toFixed(2);
+        this.element.innerHTML = "Velocidade: " + speedText + " km/h";
     }
 
     reset() {
