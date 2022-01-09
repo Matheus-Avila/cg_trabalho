@@ -9,10 +9,10 @@ var updateMovement = function (keyboardState, car, track, tempo) {
 
     if (tempo.numVoltas < 4) {
         if (carIsOnTrack(car.mesh, track, tempo)) {
-            car.maxSpeed = 0.3;
+            car.maxSpeed = 0.6;
         }
         else {
-            car.maxSpeed = 0.15;
+            car.maxSpeed = 0.3;
 
             if (Math.abs(car.speed) > car.maxSpeed)
                 car.speed = car.maxSpeed * Math.sign(car.speed);
