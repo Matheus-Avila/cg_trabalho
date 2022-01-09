@@ -14,7 +14,6 @@ import * as PlaneBuilder from './builders/planeBuilder.js';
 import * as TrackBuilder from './builders/trackBuilder.js';
 import * as CarBuilder from './builders/carBuilder.js';
 import * as MovementControls from './controls/movementControls.js';
-import * as InspectionMovementControls from './controls/inspectionMovementControls.js';
 import * as GameModeControls from './controls/gameModeControls.js';
 import * as TrackControls from './controls/trackControls.js';
 import { GameMode } from './util/constants.js';
@@ -100,14 +99,14 @@ function updateGame() {
 
   if (gameMode == GameMode.Gameplay) {
     timer.updateCounter();
-    MovementControls.updateMovement(keyboardState, car, track, timer, speedMeter);
+    MovementControls.updateMovement(keyboardState, car, track, timer, true);
     speedMeter.updateSpeed(car.speed);
     track = TrackControls.updateTrack(keyboardState, scene, track, car, timer, speedMeter);
     cameraMovement();
   }
   else if (gameMode == GameMode.Inspection) {
     trackballControls.update();
-    InspectionMovementControls.updateMovement(keyboardState, car);
+    MovementControls.updateMovement(keyboardState, car, track, timer, false);
   }
 }
 

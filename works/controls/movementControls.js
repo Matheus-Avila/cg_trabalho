@@ -1,6 +1,6 @@
 import { BlockType } from "../util/constants.js";
 
-var updateMovement = function (keyboardState, car, track, tempo) {
+var updateMovement = function (keyboardState, car, track, tempo, accelerationOn) {
     var accelerationRate = 0.01;
     var angleRate = 0.01;
     var wheelsRotationRate = 0.03;
@@ -8,7 +8,7 @@ var updateMovement = function (keyboardState, car, track, tempo) {
     var resistanceRate = 0.02;
 
     if (tempo.numVoltas < 4) {
-        if (carIsOnTrack(car.mesh, track, tempo)) {
+        if (!accelerationOn || carIsOnTrack(car.mesh, track, tempo)) {
             car.maxSpeed = 0.6;
         }
         else {
@@ -23,7 +23,7 @@ var updateMovement = function (keyboardState, car, track, tempo) {
             car.mesh.children[1].rotateZ(wheelsRotationRate);
         }
     
-        if (keyboardState.pressed("right") && Math.abs(car.angle) < car.maxAngleAxle) {
+        if (keyboardState.pressed("right") && car.angle > -car.maxAngleAxle) {
             car.angle -= angleRate;
             car.mesh.children[1].rotateZ(-wheelsRotationRate);
         }
@@ -42,12 +42,15 @@ var updateMovement = function (keyboardState, car, track, tempo) {
                 car.speed += Math.min(resistanceRate, Math.abs(car.speed));
         
             car.spinWheels();
-            car.mesh.translateX(car.speed);
 
-            if (car.angle != 0) {
-                car.mesh.rotateZ(carRotationRate * Math.sign(car.speed) * Math.sign(car.angle));
-                car.mesh.children[1].rotateZ(-wheelsRotationRate * Math.sign(car.angle));
-                car.angle -= Math.min(angleRate, Math.abs(car.angle)) * Math.sign(car.angle);
+            if (accelerationOn) {
+                car.mesh.translateX(car.speed);
+    
+                if (car.angle != 0) {
+                    car.mesh.rotateZ(carRotationRate * Math.sign(car.speed) * Math.sign(car.angle));
+                    car.mesh.children[1].rotateZ(-wheelsRotationRate * Math.sign(car.angle));
+                    car.angle -= Math.min(angleRate, Math.abs(car.angle)) * Math.sign(car.angle);
+                }
             }
         }
     }
