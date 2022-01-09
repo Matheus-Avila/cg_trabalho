@@ -22,6 +22,8 @@ export class timeCheck {
         contagemTotal = 0;
         minutes = 0;
         secs = 0;
+        melhorVoltaMins = 0;
+        melhorVoltaSecs = 0;
 
         element.innerHTML = '';
         elementTotal.innerHTML = '';
@@ -29,6 +31,7 @@ export class timeCheck {
         document.getElementById(LapNumber.two.id).innerHTML = '';
         document.getElementById(LapNumber.three.id).innerHTML = '';
         document.getElementById(LapNumber.four.id).innerHTML = '';
+        document.getElementById('melhor-volta').innerHTML = '';
     }
 
     numVolta = function () {
