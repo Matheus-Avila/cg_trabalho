@@ -5,6 +5,7 @@ import KeyboardState from './util/KeyboardState.js';
 import {
   initRenderer,
   onWindowResize,
+  degreesToRadians,
   initDefaultBasicLight
 } from "../libs/util/util.js";
 import * as CameraBuilder from './builders/cameraBuilder.js';
@@ -29,6 +30,9 @@ var timer = new timeCheck();
 
 var scene = new THREE.Scene();
 initDefaultBasicLight(scene, true);
+var ambientLight = new THREE.AmbientLight("rgb(50,50,50)");
+scene.add(ambientLight);
+
 var plane = PlaneBuilder.buildPlane(scene);
 var track = TrackBuilder.buildFirstTrack(scene);
 var car = CarBuilder.buildCar(scene);
@@ -56,6 +60,8 @@ infoBox.showGameplayInfoBox();
 
 var speedMeter = new SpeedMeter();
 
+var spotLight = buildSpotLight();
+
 render();
   
 function render() {
@@ -77,6 +83,7 @@ function controlCameras () {
   renderer.render(scene, camera);   
 
   // Set virtual camera viewport 
+  if(gameMode == GameMode.Gameplay){
   var offset = 10; 
   renderer.setViewport(offset, height-300-offset, 400, 300);  // Set virtual camera viewport  
   renderer.setScissor(offset, height-300-offset, 400, 300); // Set scissor with the same size as the viewport
@@ -84,11 +91,12 @@ function controlCameras () {
   renderer.setClearColor("rgb(100, 50, 150)");  // Use a darker clear color in the small viewport 
   renderer.clear(); // Clean the small viewport
   renderer.render(scene, cameraMap);  // Render scene of the virtual camera
+  }
 }
 
 function updateGame() {
   keyboardState.update();
-  gameMode = GameModeControls.updateGameMode(keyboardState, gameMode, scene, camera, track, car, cameraHolder, timer, infoBox, plane, speedMeter);
+  gameMode = GameModeControls.updateGameMode(keyboardState, gameMode, scene, camera, cameraMap, track, car, cameraHolder, timer, infoBox, plane, speedMeter, spotLight);
 
   if (gameMode == GameMode.Gameplay) {
     timer.updateCounter();
@@ -108,4 +116,18 @@ function cameraMovement() {
   cameraTarget.getWorldPosition(cameraTargetPosition);
   cameraHolder.position.addVectors(cameraTargetPosition, gameplayCameraAngle);
   camera.lookAt(cameraTargetPosition);             
+}
+
+function buildSpotLight(){
+  var spotLight = new THREE.SpotLight(0xffffff);
+  spotLight.target = car.mesh; 
+  spotLight.shadow.mapSize.width = 512;
+  spotLight.shadow.mapSize.height = 512;
+  spotLight.angle = degreesToRadians(40);
+  spotLight.castShadow = true;
+  spotLight.decay = 2;
+  spotLight.penumbra = 0.8;
+  spotLight.visible = false;
+  camera.add(spotLight);
+  return spotLight;
 }

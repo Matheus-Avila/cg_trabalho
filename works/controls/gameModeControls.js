@@ -1,20 +1,22 @@
 import { GameMode } from '../util/constants.js';
 import { degreesToRadians } from '../../libs/util/util.js';
 
-var updateGameMode = function (keyboardState, gameMode, scene, camera, track, car, cameraHolder, timer, infoBox, plane, speedMeter) {
+var updateGameMode = function (keyboardState, gameMode, scene, camera, cameraMap, track, car, cameraHolder, timer, infoBox, plane, speedMeter, light) {
     if (keyboardState.down("space")) {
         if (gameMode == GameMode.Gameplay)
-            gameMode = changeToInspectionMode(scene, camera, track, car, cameraHolder, timer, infoBox, plane, speedMeter);
+            gameMode = changeToInspectionMode(scene, camera, cameraMap, track, car, cameraHolder, timer, infoBox, plane, speedMeter, light);
         else if (gameMode == GameMode.Inspection)
-            gameMode = changeToGameplayMode(scene, camera, track, car, cameraHolder, infoBox, plane);
+            gameMode = changeToGameplayMode(scene, camera, cameraMap, track, car, cameraHolder, infoBox, plane, light);
     }
 
     return gameMode;
 }
 
-var changeToGameplayMode = function (scene, camera, track, car, cameraHolder, infoBox, plane) {
+var changeToGameplayMode = function (scene, camera, cameraMap, track, car, cameraHolder, infoBox, plane, light) {
     scene.add(plane);
     scene.add(track.group);
+ 
+    light.visible = false;
 
     car.mesh.rotation.set(0, 0, degreesToRadians(180));
     car.mesh.position.set(track.initialBlockPosition[0], track.initialBlockPosition[1], 1.5);
@@ -27,13 +29,15 @@ var changeToGameplayMode = function (scene, camera, track, car, cameraHolder, in
     cameraHolder.add(camera);
     scene.add(cameraHolder);
 
+    scene.add(cameraMap);
+
     infoBox.clear();
     infoBox.showGameplayInfoBox();
 
     return GameMode.Gameplay;
 }
 
-var changeToInspectionMode = function (scene, camera, track, car, cameraHolder, timer, infoBox, plane, speedMeter) {
+var changeToInspectionMode = function (scene, camera, cameraMap, track, car, cameraHolder, timer, infoBox, plane, speedMeter, light) {
     scene.remove(plane);
     scene.remove(track.group);
 
@@ -44,6 +48,11 @@ var changeToInspectionMode = function (scene, camera, track, car, cameraHolder, 
     cameraHolder.remove(camera);
     scene.remove(cameraHolder);
     camera.position.set(7, 5, 7);
+
+    scene.remove(cameraMap);
+
+    scene.add(camera);
+    light.visible = true;
 
     timer.reset();
     timer.resetCrossedBlocks(track);
