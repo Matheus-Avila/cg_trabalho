@@ -18,7 +18,11 @@ var changeToGameplayMode = function (scene, camera, cameraMap, track, car, camer
  
     light.visible = false;
 
-    car.mesh.rotation.set(0, 0, degreesToRadians(180));
+    if(track.number == 4)
+        car.mesh.rotation.set(0, 0, degreesToRadians(90));
+    else
+        car.mesh.rotation.set(0, 0, degreesToRadians(180));
+    
     car.mesh.position.set(track.initialBlockPosition[0], track.initialBlockPosition[1], 1.5);
     car.speed = 0;
 
