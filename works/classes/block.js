@@ -19,5 +19,6 @@ export class Block {
         }
         this.mesh = new THREE.Mesh(this.boxGeometry, this.material);
         this.mesh.position.set(position[0], position[1], position[2]);
+        this.mesh.receiveShadow = true;
     }
 }

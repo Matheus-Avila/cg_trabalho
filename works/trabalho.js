@@ -23,12 +23,13 @@ import { SpeedMeter } from "./util/speedMeter.js";
 
 var stats = new Stats();
 var renderer = initRenderer();
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 var gameMode = GameMode.Gameplay;
 var keyboardState = new KeyboardState();
 var timer = new timeCheck();
 
 var scene = new THREE.Scene();
-initDefaultBasicLight(scene, true);
 var ambientLight = new THREE.AmbientLight("rgb(50,50,50)");
 scene.add(ambientLight);
 
@@ -60,6 +61,8 @@ infoBox.showGameplayInfoBox();
 var speedMeter = new SpeedMeter();
 
 var spotLight = buildSpotLight();
+
+var directionalLight = buildDirectionalLight();
 
 render();
   
@@ -114,7 +117,8 @@ function cameraMovement() {
   var cameraTargetPosition = new THREE.Vector3();
   cameraTarget.getWorldPosition(cameraTargetPosition);
   cameraHolder.position.addVectors(cameraTargetPosition, gameplayCameraAngle);
-  camera.lookAt(cameraTargetPosition);             
+  camera.lookAt(cameraTargetPosition);   
+  directionalLight.target = car.mesh;      
 }
 
 function buildSpotLight(){
@@ -129,4 +133,18 @@ function buildSpotLight(){
   spotLight.visible = false;
   camera.add(spotLight);
   return spotLight;
+}
+
+function buildDirectionalLight(){
+  var directionalLight = new THREE.DirectionalLight(0Xffffff,1);
+  directionalLight.position.set(-15, -15, cameraHolder.position.z + 5 );  
+  directionalLight.castShadow = true;
+  cameraHolder.add(directionalLight);
+  directionalLight.shadow.mapSize.width = 512; 
+  directionalLight.shadow.mapSize.height = 512; 
+  directionalLight.shadow.camera.near = 0.5; 
+  directionalLight.shadow.camera.far = 500;
+
+  return directionalLight;
+
 }

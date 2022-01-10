@@ -7,7 +7,8 @@ var buildPlane = function (scene) {
         color: "rgba(150, 150, 150)",
         side: THREE.DoubleSide,
     }); 
-    var plane = new THREE.Mesh(planeGeometry, planeMaterial);
+    var plane = new THREE.Mesh(planeGeometry, planeMaterial);   
+    plane.receiveShadow = true;
 
     scene.add(plane);
     return plane;

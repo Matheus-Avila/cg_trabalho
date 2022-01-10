@@ -5,15 +5,15 @@ import {ConvexGeometry} from '../../build/jsm/geometries/ConvexGeometry.js';
 
 var colorCasing = {color:"rgb(150,150,150)"};
 var colorBlack = {color:"rgb(50,50,50)"};
-var glassOpacity = 0.8
-var fundoPrata = -0.3
-var largura = 1
-var altura = 1
-var profundidade = 2.3
-var paraChoque = profundidade+0.4
-var posRoda = 1.7
-var raioRoda = 0.5
-var alturaRoda = -1
+var glassOpacity = 0.8;
+var fundoPrata = -0.3;
+var largura = 1;
+var altura = 1;
+var profundidade = 2.3;
+var paraChoque = profundidade+0.4;
+var posRoda = 1.7;
+var raioRoda = 0.5;
+
 var buildCar = function (scene, maxSpeed) {
     var maxSpeed = 0.6;
     var maxAngleAxle = 0.1;
@@ -48,8 +48,8 @@ var buildCar = function (scene, maxSpeed) {
     buildRightSupport2(casing);
     buildLeftSupport3(casing);
     buildRightSupport3(casing);
-    casing.scale.set(.5,.5,.5)
-    casing.rotateZ(degreesToRadians(180))
+    casing.scale.set(.5,.5,.5);
+    casing.rotateZ(degreesToRadians(180));
     scene.add(casing);
     return new Car(casing, maxSpeed, maxAngleAxle);
 }
@@ -1155,18 +1155,22 @@ var buildWheels = function (frontAxle, backAxle) {
 
     var rightFrontWheel = new THREE.Mesh(wheelGeometry, wheelMaterial);
     rightFrontWheel.position.y = rightFrontWheel.position.y - 1;
+    rightFrontWheel.castShadow = true;
     frontAxle.add(rightFrontWheel);
 
     var leftFrontWheel = new THREE.Mesh(wheelGeometry, wheelMaterial);
     leftFrontWheel.position.y = leftFrontWheel.position.y + 1;
+    leftFrontWheel.castShadow = true;
     frontAxle.add(leftFrontWheel);
 
     var rightRearWheel = new THREE.Mesh(wheelGeometry, wheelMaterial);
     rightRearWheel.position.y = rightRearWheel.position.y - 1;
+    rightRearWheel.castShadow = true;
     backAxle.add(rightRearWheel);
 
     var leftRearWheel = new THREE.Mesh(wheelGeometry, wheelMaterial);
     leftRearWheel.position.y = leftRearWheel.position.y + 1;
+    leftRearWheel.castShadow = true;
     backAxle.add(leftRearWheel);
 
     return { rightFrontWheel, leftFrontWheel, rightRearWheel, leftRearWheel};
