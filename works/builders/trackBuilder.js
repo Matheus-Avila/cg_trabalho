@@ -192,7 +192,7 @@ var buildFourthTrack = function (scene) {
         [10, 30, -0.1],
         [0, 30, -0.1],
         [-10, 30, -0.1],
-        [-10, 20, -0.1] //create elevation here
+        [-10, 20, -0.1], //create elevation here
         [-10, 0, -0.1],       
         [-10, -10, -0.1],
         [-10, -20, -0.1],
