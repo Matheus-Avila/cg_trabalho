@@ -1,6 +1,7 @@
 export const GameMode = {
     Gameplay: 0,
-    Inspection: 1
+    Inspection: 1,
+    ThirdPerson: 2
 }
 
 export const BlockType = {

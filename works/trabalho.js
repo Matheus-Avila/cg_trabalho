@@ -5,8 +5,7 @@ import KeyboardState from './util/KeyboardState.js';
 import {
   initRenderer,
   onWindowResize,
-  degreesToRadians,
-  initDefaultBasicLight
+  degreesToRadians
 } from "../libs/util/util.js";
 import * as CameraBuilder from './builders/cameraBuilder.js';
 import * as CameraBuilderMap from './builders/cameraBuilderMap.js';
@@ -43,14 +42,14 @@ var cameraHolder = new THREE.Object3D();
 cameraHolder.add(camera);
 scene.add(cameraHolder);
 
-var cameraMap = CameraBuilderMap.buildCameraMap();
-scene.add(cameraMap);
-
 var cameraTarget = new THREE.Object3D();
 car.mesh.add(cameraTarget);
 cameraTarget.position.set(car.mesh.position.x + 10, car.mesh.position.y, car.mesh.position.z);
 
 car.mesh.position.set(track.initialBlockPosition[0], track.initialBlockPosition[1], 1.5);
+
+var cameraMap = CameraBuilderMap.buildCameraMap();
+scene.add(cameraMap);
 
 var trackballControls = new TrackballControls(camera, renderer.domElement);
 window.addEventListener('resize', function () { onWindowResize(camera, renderer) }, false);
@@ -61,7 +60,6 @@ infoBox.showGameplayInfoBox();
 var speedMeter = new SpeedMeter();
 
 var spotLight = buildSpotLight();
-
 var directionalLight = buildDirectionalLight();
 
 render();
@@ -85,8 +83,8 @@ function controlCameras () {
   renderer.render(scene, camera);   
 
   // Set virtual camera viewport 
-  if(gameMode == GameMode.Gameplay){
-  var offset = 10; 
+  if (gameMode == GameMode.Gameplay || gameMode == GameMode.ThirdPerson) {
+    var offset = 10; 
     renderer.setViewport(offset, height-300-offset, 350, 300);  // Set virtual camera viewport  
     renderer.setScissor(offset, height-300-offset, 300, 300); // Set scissor with the same size as the viewport
     renderer.setScissorTest(true); // Enable scissor to paint only the scissor are (i.e., the small viewport)
@@ -98,9 +96,10 @@ function controlCameras () {
 
 function updateGame() {
   keyboardState.update();
-  gameMode = GameModeControls.updateGameMode(keyboardState, gameMode, scene, camera, cameraMap, track, car, cameraHolder, timer, infoBox, plane, speedMeter, spotLight);
+  gameMode = GameModeControls.updateGameMode(
+    keyboardState, gameMode, scene, camera, cameraMap, track, car, cameraHolder, timer, infoBox, plane, speedMeter, spotLight);
 
-  if (gameMode == GameMode.Gameplay) {
+  if (gameMode == GameMode.Gameplay || gameMode == GameMode.ThirdPerson) {
     timer.updateCounter();
     MovementControls.updateMovement(keyboardState, car, track, timer, true);
     speedMeter.updateSpeed(car.speed);
@@ -117,8 +116,9 @@ function cameraMovement() {
   var cameraTargetPosition = new THREE.Vector3();
   cameraTarget.getWorldPosition(cameraTargetPosition);
   cameraHolder.position.addVectors(cameraTargetPosition, gameplayCameraAngle);
-  camera.lookAt(cameraTargetPosition);   
-  directionalLight.target = car.mesh;      
+  camera.lookAt(cameraTargetPosition);    
+  
+  directionalLight.target = car.mesh;
 }
 
 function buildSpotLight(){
@@ -131,7 +131,9 @@ function buildSpotLight(){
   spotLight.decay = 2;
   spotLight.penumbra = 0.8;
   spotLight.visible = false;
+
   camera.add(spotLight);
+
   return spotLight;
 }
 
@@ -139,12 +141,12 @@ function buildDirectionalLight(){
   var directionalLight = new THREE.DirectionalLight(0Xffffff,1);
   directionalLight.position.set(-15, -15, cameraHolder.position.z + 5 );  
   directionalLight.castShadow = true;
-  cameraHolder.add(directionalLight);
   directionalLight.shadow.mapSize.width = 512; 
   directionalLight.shadow.mapSize.height = 512; 
   directionalLight.shadow.camera.near = 0.5; 
   directionalLight.shadow.camera.far = 500;
 
-  return directionalLight;
+  cameraHolder.add(directionalLight);
 
+  return directionalLight;
 }
