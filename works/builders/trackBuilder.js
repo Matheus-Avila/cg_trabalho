@@ -51,7 +51,7 @@ var buildFirstTrack = function (scene) {
         [20, -30, -0.1],
         [10, -30, -0.1]  
     ];
-    var blockSize = 9.7;
+    var blockSize = 10;
     var blockDepth = 0.3;
 
     var track = new Track(trackNumber, initialBlockPosition, commonBlockPositions, blockSize, blockDepth);
@@ -100,7 +100,7 @@ var buildSecondTrack = function (scene) {
         [20, -30, -0.1],
         [10, -30, -0.1]
     ];
-    var blockSize = 9.7;
+    var blockSize = 10;
     var blockDepth = 0.3;
 
     var track = new Track(trackNumber, initialBlockPosition, commonBlockPositions, blockSize, blockDepth);
@@ -157,7 +157,7 @@ var buildThirdTrack = function (scene) {
         [40, 60, -0.1],
         [30, 60, -0.1] //create elevation here
     ];
-    var blockSize = 9.7;
+    var blockSize = 10;
     var blockDepth = 0.3;
 
     var track = new Track(trackNumber, initialBlockPosition, commonBlockPositions, blockSize, blockDepth);
@@ -204,7 +204,7 @@ var buildFourthTrack = function (scene) {
         [-50, -20, -0.1],
         [-50, -10, -0.1]
     ];
-    var blockSize = 9.7;
+    var blockSize = 10;
     var blockDepth = 0.3;
 
     var track = new Track(trackNumber, initialBlockPosition, commonBlockPositions, blockSize, blockDepth);

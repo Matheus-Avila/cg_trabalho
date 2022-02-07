@@ -1,7 +1,10 @@
 import * as THREE from '../../build/three.module.js';
 
 var buildPlane = function (scene) {
-    var planeGeometry = new THREE.PlaneGeometry(2000, 2000);
+    var side = 2000;
+    var textureLoader = new THREE.TextureLoader();
+    var plane_texture  = textureLoader.load('textures/grass.jpg');
+    var planeGeometry = new THREE.PlaneGeometry(side, side);
     planeGeometry.translate(0.0, 0.0, -0.3);
     var planeMaterial = new THREE.MeshPhongMaterial({
         color: "rgba(150, 150, 150)",
@@ -9,7 +12,10 @@ var buildPlane = function (scene) {
     }); 
     var plane = new THREE.Mesh(planeGeometry, planeMaterial);   
     plane.receiveShadow = true;
-
+    plane.material.map = plane_texture;
+    plane.material.map.repeat.set(side/10,side/10);
+    plane.material.map.wrapS = 'Repeat';
+    plane.material.map.wrapT = 'Repeat';
     scene.add(plane);
     return plane;
 }

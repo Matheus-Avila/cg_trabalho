@@ -1179,7 +1179,7 @@ var buildWheels = function (frontAxle, backAxle) {
 var buildWheelsTexture = function (wheels) {
 
   var textureLoader = new THREE.TextureLoader();
-  var calota  = textureLoader.load('util/calota.jpg');
+  var calota  = textureLoader.load('textures/calota.jpg');
   var wheelGeometry = new THREE.CylinderGeometry(raioRoda, raioRoda, .1, 40);
   var wheelMaterial = new THREE.MeshLambertMaterial();
 

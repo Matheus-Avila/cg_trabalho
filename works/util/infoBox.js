@@ -25,7 +25,7 @@ export class InfoBox {
     this.add("Press X to accelerate");
     this.add("Press left or right to change direction");
     this.add("Press down to brake or to back up");
-    this.add("Press 1 or 2 to change between the tracks");
+    this.add("Press 1 2 3 4 to change between the tracks");
     this.add("Press space to change modes (gameplay or inspection)");
     this.show();
   }

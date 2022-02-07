@@ -17,7 +17,11 @@ export class Block {
             this.material = new THREE.MeshPhongMaterial({ color: "rgba(90, 90, 90)" });
             this.crossed = false;
         }
+        var textureLoader = new THREE.TextureLoader();
+        // var block_texture  = textureLoader.load('textures/gravel_CG.png');
+        var block_texture  = textureLoader.load('textures/snow_CG.png');
         this.mesh = new THREE.Mesh(this.boxGeometry, this.material);
+        this.mesh.material.map = block_texture;
         this.mesh.position.set(position[0], position[1], position[2]);
         this.mesh.receiveShadow = true;
     }
