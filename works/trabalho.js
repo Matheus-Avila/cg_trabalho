@@ -29,7 +29,7 @@ var keyboardState = new KeyboardState();
 var timer = new timeCheck();
 
 var scene = new THREE.Scene();
-var ambientLight = new THREE.AmbientLight("rgb(50,50,50)");
+var ambientLight = new THREE.AmbientLight("rgb(150,150,150)");
 scene.add(ambientLight);
 
 var plane = PlaneBuilder.buildPlane(scene);
