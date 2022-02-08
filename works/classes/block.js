@@ -10,15 +10,15 @@ export class Block {
         this.boxGeometry = new THREE.BoxGeometry(this.width, this.height, this.depth);
 
         if (type == BlockType.Initial){
-            this.material = new THREE.MeshPhongMaterial({ color: "rgba(250, 250, 250)" });
+            this.material = new THREE.MeshPhongMaterial({ color: "rgba(90, 90, 90)"});
             this.crossed = true;
         }
         else {
-            this.material = new THREE.MeshPhongMaterial({ color: "rgba(90, 90, 90)" });
+            this.material = new THREE.MeshPhongMaterial({ color: "rgba(250, 250, 250)" });
             this.crossed = false;
         }
         var textureLoader = new THREE.TextureLoader();
-        // var block_texture  = textureLoader.load('textures/gravel_CG.png');
+
         var block_texture  = textureLoader.load('textures/snow_CG.png');
         this.mesh = new THREE.Mesh(this.boxGeometry, this.material);
         this.mesh.material.map = block_texture;

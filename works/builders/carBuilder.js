@@ -269,41 +269,6 @@ var buildTopRightBack = function (car){
   car.add(objectcasing);
 }
 
-var buildRightBack = function (car){ 
-
-  var points = [];
-  
-  //Parte de cima
-  points.push(new THREE.Vector3(-profundidade*1.01, -largura*.8*1.01, altura));
-  points.push(new THREE.Vector3(-profundidade, -largura, altura));
-  points.push(new THREE.Vector3(0.2*1.01,-largura*0.8*1.01,altura*2));
-  points.push(new THREE.Vector3(0.2*1.01,-largura*0.7*1.01,altura*2));
-
-  //Parte lateral
-  points.push(new THREE.Vector3(-profundidade*.9*1.01, -largura*1.01, altura));
-  points.push(new THREE.Vector3(0.2*1.01,-largura*0.8*1.03,altura*2*.9));
-  var material = new THREE.MeshPhongMaterial({color:"rgb(255,255,255)"});
-
-  var pointCloud = new THREE.Object3D();  
-  points.forEach(function (point) {
-    var spGeom = new THREE.SphereGeometry(0.2);
-    var spMesh = new THREE.Mesh(spGeom, material);
-    spMesh.position.set(0, 0, .63);
-    pointCloud.add(spMesh);
-  });
-
-  //  
-
-  pointCloud.visible = true;
-  var convexCasing = new ConvexGeometry(points);
-  var casing = new THREE.MeshLambertMaterial(colorBlack);
-  var objectcasing = new THREE.Mesh(convexCasing, casing);
-      objectcasing.castShadow = true;
-      objectcasing.visible = true;
-
-  car.add(objectcasing);
-}
-
 var buildTopCenter = function (car){ 
 
   var points = [];
@@ -582,6 +547,18 @@ var buildFront = function (car){
   points.push(new THREE.Vector3(paraChoque, -largura,0));
   points.push(new THREE.Vector3(paraChoque+.4, largura*.6, 0));
   points.push(new THREE.Vector3(paraChoque+.4, -largura*.6, 0));
+  
+  var textureLoader = new THREE.TextureLoader();
+      var plane_texture  = textureLoader.load('textures/carbon_car.jpg');
+      var planeGeometry = new THREE.PlaneGeometry(largura*1.2 , altura*.4);
+      var planeMaterial = new THREE.MeshPhongMaterial(); 
+      var plane = new THREE.Mesh(planeGeometry, planeMaterial);
+      plane.position.x = 1.001*paraChoque+.4; 
+      plane.position.z = altura*.3;
+      plane.rotateZ(Math.PI/2);
+      plane.rotateX(Math.PI/2);
+      plane.material.map = plane_texture;
+      car.add(plane);
 
   var material = new THREE.MeshPhongMaterial({color:"rgb(255,255,255)"});
 
@@ -1111,7 +1088,7 @@ var buildCasingContour = function (car){
     points.push(new THREE.Vector3(-profundidade*1.2, -largura*.7, -altura*.3));
     
       var material = new THREE.MeshPhongMaterial({color:"rgb(255,255,255)"});
-    
+
       var pointCloud = new THREE.Object3D();  
       points.forEach(function (point) {
         var spGeom = new THREE.SphereGeometry(0.2);
@@ -1120,16 +1097,26 @@ var buildCasingContour = function (car){
         pointCloud.add(spMesh);
       });
     
-        
-    
       pointCloud.visible = true;
       var convexCasing = new ConvexGeometry(points);
       var countour = new THREE.MeshPhongMaterial(colorCasing);
       var objectcontour = new THREE.Mesh(convexCasing, countour);
           objectcontour.castShadow = true;
           objectcontour.visible = true;
+
       
-        car.add(objectcontour);
+      var textureLoader = new THREE.TextureLoader();
+      var plane_texture  = textureLoader.load('textures/copper_car.jpg');
+      var planeGeometry = new THREE.PlaneGeometry(largura*2 , altura*.6);
+      var planeMaterial = new THREE.MeshPhongMaterial(); 
+      var plane = new THREE.Mesh(planeGeometry, planeMaterial);
+      plane.position.x = -1.2001*profundidade; 
+      plane.position.z = altura*.7;
+      plane.rotateZ(Math.PI/2);
+      plane.rotateX(-Math.PI/2);
+      plane.material.map = plane_texture;
+      car.add(plane);
+      car.add(objectcontour);
     }
 
 var buildAxle = function (car) {
@@ -1151,7 +1138,7 @@ var buildAxle = function (car) {
 
 var buildWheels = function (frontAxle, backAxle) {
     var wheelGeometry = new THREE.CylinderGeometry(raioRoda*1.3, raioRoda*1.3, .2, 40);
-    var wheelMaterial = new THREE.MeshPhongMaterial({ color: 0x000000 });
+    var wheelMaterial = new THREE.MeshPhongMaterial({color:"rgb(0,0,0)"});
 
     var rightFrontWheel = new THREE.Mesh(wheelGeometry, wheelMaterial);
     rightFrontWheel.position.y = rightFrontWheel.position.y - 1;
