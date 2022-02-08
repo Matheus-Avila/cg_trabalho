@@ -1,17 +1,18 @@
 import { Track } from '../classes/track.js';
+import { degreesToRadians } from '../../libs/util/util.js';
 
-var buildTrack = function (scene, trackNumber) {
+var buildTrack = function (scene, car, trackNumber) {
     if (trackNumber == 1)
-        return buildFirstTrack(scene);
+        return buildFirstTrack(scene, car);
     else if (trackNumber == 2)
-        return buildSecondTrack(scene);
+        return buildSecondTrack(scene, car);
     else if (trackNumber == 3)
-        return buildThirdTrack(scene);
+        return buildThirdTrack(scene, car);
     else if (trackNumber == 4)
-        return buildFourthTrack(scene);
+        return buildFourthTrack(scene, car);
 }
 
-var buildFirstTrack = function (scene) {
+var buildFirstTrack = function (scene, car) {
     var trackNumber = 1;
     var initialBlockPosition = [0, -30, -0.1];
     var commonBlockPositions = [
@@ -54,13 +55,15 @@ var buildFirstTrack = function (scene) {
     var blockSize = 10;
     var blockDepth = 0.3;
 
+    car.mesh.rotation.set(0, 0, degreesToRadians(180));
+
     var track = new Track(trackNumber, initialBlockPosition, commonBlockPositions, blockSize, blockDepth);
     scene.add(track.group);
 
     return track;
 }
 
-var buildSecondTrack = function (scene) {
+var buildSecondTrack = function (scene, car) {
     var trackNumber = 2;
     var initialBlockPosition = [0, -30, -0.1];
     var commonBlockPositions = [
@@ -103,13 +106,15 @@ var buildSecondTrack = function (scene) {
     var blockSize = 10;
     var blockDepth = 0.3;
 
+    car.mesh.rotation.set(0, 0, degreesToRadians(180));
+
     var track = new Track(trackNumber, initialBlockPosition, commonBlockPositions, blockSize, blockDepth);
     scene.add(track.group);
 
     return track;
 }
 
-var buildThirdTrack = function (scene) {
+var buildThirdTrack = function (scene, car) {
     var trackNumber = 3;
     var initialBlockPosition =  [20, 60, -0.1];
     var commonBlockPositions = [
@@ -160,13 +165,15 @@ var buildThirdTrack = function (scene) {
     var blockSize = 10;
     var blockDepth = 0.3;
 
+    car.mesh.rotation.set(0, 0, degreesToRadians(180));
+
     var track = new Track(trackNumber, initialBlockPosition, commonBlockPositions, blockSize, blockDepth);
     scene.add(track.group);
 
     return track;
 }
 
-var buildFourthTrack = function (scene) {
+var buildFourthTrack = function (scene, car) {
     var trackNumber = 4;
     var initialBlockPosition =  [-50, 0, -0.1];
     var commonBlockPositions = [
@@ -206,6 +213,8 @@ var buildFourthTrack = function (scene) {
     ];
     var blockSize = 10;
     var blockDepth = 0.3;
+
+    car.mesh.rotation.set(0, 0, degreesToRadians(90));
 
     var track = new Track(trackNumber, initialBlockPosition, commonBlockPositions, blockSize, blockDepth);
     scene.add(track.group);

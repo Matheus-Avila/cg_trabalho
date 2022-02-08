@@ -34,8 +34,8 @@ var ambientLight = new THREE.AmbientLight("rgb(50,50,50)");
 scene.add(ambientLight);
 
 var plane = PlaneBuilder.buildPlane(scene);
-var track = TrackBuilder.buildFirstTrack(scene);
 var car = CarBuilder.buildCar(scene);
+var track = TrackBuilder.buildFirstTrack(scene, car);
 
 var camera = CameraBuilder.buildCamera();
 var gameplayCameraAngle = new THREE.Vector3(-10, -10, 10);  
@@ -48,7 +48,7 @@ scene.add(cameraMap);
 
 var cameraTarget = new THREE.Object3D();
 car.mesh.add(cameraTarget);
-cameraTarget.position.set(car.mesh.position.x + 10, car.mesh.position.y, car.mesh.position.z);
+cameraTarget.position.set(car.mesh.position.x + 5, car.mesh.position.y, car.mesh.position.z);
 
 car.mesh.position.set(track.initialBlockPosition[0], track.initialBlockPosition[1], 1.5);
 
@@ -144,7 +144,5 @@ function buildDirectionalLight(){
   directionalLight.shadow.mapSize.height = 512; 
   directionalLight.shadow.camera.near = 0.5; 
   directionalLight.shadow.camera.far = 500;
-
   return directionalLight;
-
 }

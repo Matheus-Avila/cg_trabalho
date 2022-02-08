@@ -15,13 +15,8 @@ var updateTrack = function (keyboardState, scene, track, car, timer, speedMeter)
 
 var changeTrack = function (scene, track, car, newTrackNumber, timer, speedMeter) {
     scene.remove(track.group);
-    track = TrackBuilder.buildTrack(scene, newTrackNumber);
+    track = TrackBuilder.buildTrack(scene, car, newTrackNumber);
     
-    if(newTrackNumber == 4)
-        car.mesh.rotation.set(0, 0, degreesToRadians(90));
-    else
-        car.mesh.rotation.set(0, 0, degreesToRadians(180));
-
     car.mesh.position.setX(track.initialBlockPosition[0]);
     car.mesh.position.setY(track.initialBlockPosition[1]);
     car.speed = 0;
