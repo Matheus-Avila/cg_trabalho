@@ -10,6 +10,7 @@ import {
 import * as CameraBuilder from './builders/cameraBuilder.js';
 import * as CameraBuilderMap from './builders/cameraBuilderMap.js';
 import * as PlaneBuilder from './builders/planeBuilder.js';
+import * as SkyboxBuilder from './builders/skyboxBuilder.js';
 import * as TrackBuilder from './builders/trackBuilder.js';
 import * as CarBuilder from './builders/carBuilder.js';
 import * as MovementControls from './controls/movementControls.js';
@@ -35,6 +36,8 @@ scene.add(ambientLight);
 var plane = PlaneBuilder.buildPlane(scene);
 var car = CarBuilder.buildCar(scene);
 var track = TrackBuilder.buildFirstTrack(scene, car);
+
+var skybox = SkyboxBuilder.buildSkybox(scene);
 
 var camera = CameraBuilder.buildCamera();
 var gameplayCameraAngle = new THREE.Vector3(-10, -10, 10);  

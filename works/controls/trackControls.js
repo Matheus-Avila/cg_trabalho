@@ -1,5 +1,4 @@
 import * as TrackBuilder from '../builders/trackBuilder.js';
-import { degreesToRadians } from '../../libs/util/util.js';
 
 var updateTrack = function (keyboardState, scene, track, car, timer, speedMeter) {
     if (keyboardState.down("1") && track.number != 1)
