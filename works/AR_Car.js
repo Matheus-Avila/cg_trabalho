@@ -116,10 +116,10 @@ var newScale = 0.5;
 car.mesh.rotateX(degreesToRadians(90));
 car.mesh.rotateZ(degreesToRadians(90));
 car.mesh.position.setZ(0);
-// car.mesh.scale.set(
-// 	newScale * (1.0/scale),
-// 	newScale * (1.0/scale),
-// 	newScale * (1.0/scale));
+car.mesh.scale.set(
+	newScale * (1.0/scale),
+	newScale * (1.0/scale),
+	newScale * (1.0/scale));
 
 // run the rendering loop
 requestAnimationFrame(function animate(nowMsec)
@@ -141,7 +141,7 @@ requestAnimationFrame(function animate(nowMsec)
 		mixer[i].update( delta );
 })
 
-function createSpotlight(scene, initialPosition) {
+function createSpotlight(camera, initialPosition) {
     var position = (initialPosition !== undefined) ? initialPosition : new THREE.Vector3(-10, 30, 40);
     var spotLight = new THREE.SpotLight(0xffffff);
     spotLight.name = "spotLight"
@@ -153,11 +153,11 @@ function createSpotlight(scene, initialPosition) {
     spotLight.angle = degreesToRadians(40);    
     spotLight.shadow.mapSize.width = 512;
     spotLight.shadow.mapSize.height = 512;
-    scene.add(spotLight);
+    camera.add(spotLight);
 
     var ambientLight = new THREE.AmbientLight(0x343434);
     ambientLight.name = "ambientLight";
-    scene.add(ambientLight);
+    camera.add(ambientLight);
 
     return spotLight;
 }
