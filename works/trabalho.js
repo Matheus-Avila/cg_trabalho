@@ -13,6 +13,8 @@ import * as CameraBuilderMap from './builders/cameraBuilderMap.js';
 import * as PlaneBuilder from './builders/planeBuilder.js';
 import * as TrackBuilder from './builders/trackBuilder.js';
 import * as CarBuilder from './builders/carBuilder.js';
+import * as barrelBuilder from './builders/barrelBuilder.js';
+import * as boxBuilder from './builders/boxBuilder.js';
 import * as MovementControls from './controls/movementControls.js';
 import * as GameModeControls from './controls/gameModeControls.js';
 import * as TrackControls from './controls/trackControls.js';
