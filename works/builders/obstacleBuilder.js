@@ -1,6 +1,6 @@
 import * as THREE from '../../build/three.module.js';
 import { BoxList } from '../classes/boxesList.js';
-import { BarrelList } from '../classes/barrelsList.js';
+import { ConeList } from '../classes/coneList.js';
 
 var buildObstacles = function (scene, trackNumber) {
     if (trackNumber == 1)
@@ -14,200 +14,174 @@ var buildObstacles = function (scene, trackNumber) {
 }
 
 var buildFirstObstacles = function (scene) {
-    var positionsBarrels = [
-        [-10, -30, 2],
-        [-20, -30, 2],
-        [-30, -30, 2],
-        [-40, -30, 2],
-        [-50, -30, 2],
-        [-50, -20, 2],
-        [-50, -10, 2],
-        [-50, 0, 2],
-        [-50, 10, 2],
-        [-50, 20, 2],
-        [-50, 30, 2],
-        [-50, 40, 2],
-        [-50, 50, 2],
-        [-50, 60, 2],
-        [-40, 60, 2],
-        [-30, 60, 2],
-        [-20, 60, 2],
-        [-10, 60, 2],
-        [0, 60, 2],
-        [10, 60, 2],
-        [20, 60, 2],
-        [30, 60, 2],
-        [40, 60, 2],
-        [40, 50, 2],
-        [40, 40 , 2],
-        [40, 30, 2],
-        [40, 20, 2],
-        [40, 10, 2],
-        [40, 0, 2],
-        [40, -10, 2],
-        [40, -20, 2],
-        [40, -30, 2],
-        [30, -30, 2],
-        [20, -30, 2],
-        [10, -30, 2]  
+    
+    var positionsCones = [
+        
+        [-30, -30, 1],
+        [-40, -30, 1],
+        [-50, -30, 1],
+        [-40, 60, 1],
+        [-30, 60, 1],
+        [-20, 60, 1],
+        [-10, 60, 1],
+        [0, 60, 1],
+        [10, 60, 1],
+        [20, 60, 1],
+        [30, 60, 1],
+        [40, 60, 1],
+        [40, 50, 1],
+        [40, 40 , 1],
+        [40, 30, 1],
+        [40, 20, 1],
+        [40, 10, 1],
+        [40, 0, 1]
     ];
 
-    var barrels = new BarrelList(positionsBarrels);
-    scene.add(barrels.group);
+    var positionsBoxes = [
+        [-10, -30, 1],
+        [-20, -30, 1],
+        [-50, -20, 1],
+        [-50, -10, 1],
+        [-50, 0, 1],
+        [-50, 10, 1],
+        [-50, 20, 1],
+        [-50, 30, 1],
+        [-50, 40, 1],
+        [-50, 50, 1],
+        [40, 50, 1],
+        [40, 40 , 1],
+        [40, 30, 1],
+        [40, -10, 1],
+        [40, -20, 1],
+        [40, -30, 1],
+        [30, -30, 1],
+        [20, -30, 1],
+        [10, -30, 1]  
+    ];
 
-    return track;
+    var cones = new ConeList(positionsCones);
+    scene.add(cones.group);
+
+    var boxes =  new BoxList(positionsBoxes);
+    scene.add(boxes.group);
+
+    return {cones, boxes};
 }
 
 var buildSecondObstacles = function (scene) {
     
-    var positionsBarrels = [
-        [-10, -30, 2],
-        [-20, -30, 2],
-        [-30, -30, 2],
-        [-40, -30, 2],
-        [-50, -30, 2],
-        [-50, -20, 2],
-        [-50, -10, 2],
-        [-50, 0, 2],
-        [-50, 10, 2],
-        [-50, 20, 2],
-        [-50, 30, 2],
-        [-50, 40, 2],
-        [-50, 50, 2],
-        [-50, 60, 2],
-        [-40, 60, 2],
-        [-30, 60, 2],
-        [-20, 60, 2],
-        [-10, 60, 2],
-        [-10, 50, 2],
-        [-10, 40, 2],
-        [-10, 30, 2],
-        [-10, 20, 2],
-        [0, 20, 2],
-        [10, 20, 2],
-        [20, 20, 2],
-        [30, 20, 2],
-        [40, 20, 2],
-        [40, 10, 2],
-        [40, 0, 2],
-        [40, -10, 2],
-        [40, -20, 2],
-        [40, -30, 2],
-        [30, -30, 2],
-        [20, -30, 2],
-        [10, -30, 2]
+    var positionsCones = [
+        [-10, -30, 1],
+        [-20, -30, 1],
+        [-40, -30, 1],
+        [-30, 60, 1],
+        [-10, 50, 1],
+        [-10, 40, 1],
+        [-10, 20, 1],
+        [0, 20, 1],
+        [40, -30, 1],
+        [20, -30, 1]
     ];
-    var blockSize = 10;
-    var blockDepth = 0.3;
 
-    var track = new Obstacles(trackNumber, initialBlockPosition, commonBlockPositions, blockSize, blockDepth);
-    scene.add(track.group);
+    var positionsBoxes = [
+        [-50, -20, 1],
+        [-50, -10, 1],
+        [-50, 0, 1],
+        [-50, 60, 1],
+        [10, 20, 1],
+        [40, 20, 1],
+        [40, 0, 1],
+        [40, -10, 1],
+        [40, -20, 1],
+        [30, -30, 1],
+        [10, -30, 1]
+    ];
 
-    return track;
+    var cones = new ConeList(positionsCones);
+    scene.add(cones.group);
+
+    var boxes =  new BoxList(positionsBoxes);
+    scene.add(boxes.group);
+
+    return {cones, boxes};
 }
 
 var buildThirdObstacles = function (scene) {
-    var trackNumber = 3;
-    var initialBlockPosition =  [20, 60, 2];
-    var commonBlockPositions = [
-        [10, 60, 2],
-        [0, 60, 2], //create elevation here
-        [-10, 60, 2],
-        [-20, 60, 2], 
-        [-20, 50, 2],
-        [-20, 40, 2],
-        [-20, 30, 2],
-        [-20, 20, 2],
-        [-30, 20, 2],
-        [-40, 20, 2],
-        [-50, 20, 2],
-        [-50, 10, 2],
-        [-50, 0, 2],
-        [-50, -10, 2],
-        [-50, -20, 2],
-        [-50, -30, 2],
-        [-40, -30, 2],
-        [-30, -30, 2],
-        [-20, -30, 2],
-        [-10, -30, 2],
-        [0, -30, 2],
-        [10, -30, 2],
-        [10, -20, 2],
-        [10, -10, 2],
-        [10, 0, 2],
-        [10, 10, 2],
-        [10, 20, 2],
-        [10, 30, 2],
-        [20, 30, 2],
-        [30, 30, 2], 
-        [20, -30, 2],
-        [30, -30, 2],
-        [40, -30, 2],
-        [40, -20, 2],
-        [40, -10, 2],
-        [40, 0, 2],
-        [40, 10, 2], 
-        [40, 20, 2], 
-        [40, 30, 2],
-        [40, 40, 2],
-        [40, 50, 2],
-        [40, 60, 2],
-        [30, 60, 2] //create elevation here
+
+    var positionsCones = [
+        [-20, 20, 1],
+        [-30, 20, 1],
+        [-50, 20, 1],
+        [-50, 0, 1],
+        [0, -30, 1],
+        [10, -20, 1],
+        [10, 0, 1],
+        [10, 20, 1],
+        [20, 30, 1],
+        [40, 40, 1],
+        [40, 60, 1]
     ];
-    var blockSize = 10;
-    var blockDepth = 0.3;
 
-    var track = new Obstacles(trackNumber, initialBlockPosition, commonBlockPositions, blockSize, blockDepth);
-    scene.add(track.group);
+    var positionsBoxes = [
+        [10, 60, 1],
+        [0, 60, 1], 
+        [-10, 60, 1],
+        [-20, 40, 1],
+        [-20, 20, 1],
+        [-50, -30, 1],
+        [-20, -30, 1],
+        [20, -30, 1],
+        [30, -30, 1],
+        [40, 0, 1],
+        [40, 20, 1], 
+        [40, 50, 1],
+        [30, 60, 1] 
+    ];
 
-    return track;
+    var cones = new ConeList(positionsCones);
+    scene.add(cones.group);
+
+    var boxes =  new BoxList(positionsBoxes);
+    scene.add(boxes.group);
+
+    return {cones, boxes};
 }
 
 var buildFourthObstacles = function (scene) {
-    var trackNumber = 4;
-    var initialBlockPosition =  [-50, 0, 2];
-    var commonBlockPositions = [
-        [-50, 10, 2],
-        [-40, 10, 2],
-        [-30, 10, 2],
-        [-20, 10, 2],
-        [-10, 10, 2],
-        [0, 10, 2],
-        [10, 10, 2],
-        [10, 20, 2],
-        [10, 40, 2],
-        [10, 50, 2],
-        [10, 60, 2],
-        [20, 60, 2],
-        [30, 60, 2],
-        [40, 60, 2],
-        [40, 50, 2],
-        [40, 40, 2],
-        [40, 30, 2],
-        [30, 30, 2],
-        [20, 30, 2], //create elevation here
-        [10, 30, 2],
-        [0, 30, 2],
-        [-10, 30, 2],
-        [-10, 20, 2], //create elevation here
-        [-10, 0, 2],       
-        [-10, -10, 2],
-        [-10, -20, 2],
-        [-10, -30, 2],
-        [-20, -30, 2],
-        [-30, -30, 2],
-        [-40, -30, 2],   
-        [-50, -30, 2],
-        [-50, -20, 2],
-        [-50, -10, 2]
+    
+    var positionsCones = [
+        [10, 10, 1],
+        [10, 20, 1],
+        [10, 50, 1],
+        [10, 60, 1],
+        [20, 60, 1],
+        [40, 60, 1],
+        [-10, 20, 1],    
+        [-10, -10, 1],
+        [-10, -20, 1],
+        [-20, -30, 1]
     ];
-    var blockSize = 10;
-    var blockDepth = 0.3;
 
-    var track = new Obstacles(trackNumber, initialBlockPosition, commonBlockPositions, blockSize, blockDepth);
-    scene.add(track.group);
+    var positionsBoxes = [
+        [-50, 10, 1],
+        [-40, 10, 1],
+        [-10, 10, 1],
+        [0, 10, 1],
+        [40, 40, 1],
+        [20, 30, 1],
+        [10, 30, 1],
+        [-50, -30, 1],
+        [-50, -20, 1],
+        [-50, -10, 1]
+    ];
 
-    return track;
+    var cones = new ConeList(positionsCones);
+    scene.add(cones.group);
+
+    var boxes =  new BoxList(positionsBoxes);
+    scene.add(boxes.group);
+
+    return {cones, boxes};
 }
 
 export { buildObstacles, buildFirstObstacles, buildSecondObstacles, buildThirdObstacles, buildFourthObstacles };
