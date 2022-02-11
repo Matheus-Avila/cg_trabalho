@@ -1,7 +1,10 @@
 import * as THREE from '../../build/three.module.js';
 
 export class Barrel {
-    constructor(base, middle, height, position) {
+    constructor(position) {
+    var base = 1;
+    var middle = 3;
+    var height = 2;
     var textureLoader = new THREE.TextureLoader();
     var barrel_texture  = textureLoader.load('../textures/wood_box.jpg');
     var barrelBottomGeometry = new THREE.CylinderGeometry(base, middle, height/2, 32);

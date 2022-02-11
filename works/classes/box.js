@@ -1,10 +1,10 @@
 import * as THREE from '../../build/three.module.js';
 
 export class Box {
-    constructor(width, height, depth, position) {
-        this.width = width;
-        this.height = height;
-        this.depth = depth;
+    constructor(position) {
+        this.width = 3;
+        this.height = 3;
+        this.depth = 3;
         this.boxGeometry = new THREE.BoxGeometry(this.width, this.height, this.depth);
 
         var textureLoader = new THREE.TextureLoader();
