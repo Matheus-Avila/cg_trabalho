@@ -3,12 +3,12 @@ import { degreesToRadians } from '../../libs/util/util.js';
 
 var buildSkybox = function (scene) {
     var materialArray = [];
-    var textureFront = new THREE.TextureLoader().load( 'textures/Daylight Box_Front.bmp');
-    var textureBack = new THREE.TextureLoader().load( 'textures/Daylight Box_Back.bmp');
-    var textureTop = new THREE.TextureLoader().load( 'textures/Daylight Box_Top.bmp');
-    var textureBottom = new THREE.TextureLoader().load( 'textures/Daylight Box_Bottom.bmp');
-    var textureRight = new THREE.TextureLoader().load( 'textures/Daylight Box_Right.bmp');
-    var textureLeft = new THREE.TextureLoader().load( 'textures/Daylight Box_Left.bmp');
+    var textureFront = new THREE.TextureLoader().load( 'textures/skybox/paze_ft.jpg');
+    var textureBack = new THREE.TextureLoader().load( 'textures/skybox/paze_bk.jpg');
+    var textureTop = new THREE.TextureLoader().load( 'textures/skybox/paze_up.jpg');
+    var textureBottom = new THREE.TextureLoader().load( 'textures/skybox/paze_dn.jpg');
+    var textureRight = new THREE.TextureLoader().load( 'textures/skybox/paze_rt.jpg');
+    var textureLeft = new THREE.TextureLoader().load( 'textures/skybox/paze_lf.jpg');
       
     materialArray.push(new THREE.MeshBasicMaterial( { map: textureFront }));
     materialArray.push(new THREE.MeshBasicMaterial( { map: textureBack }));

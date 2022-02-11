@@ -34,12 +34,12 @@ var arToolkitSource = new ARjs.Source({
 	//sourceType : 'webcam',
 
 	// to read from an image
-	sourceType : 'image',
-	sourceUrl : '../assets/AR/kanjiScene.jpg',
+	//sourceType : 'image',
+	//sourceUrl : '../assets/AR/kanjiScene.jpg',
 
 	// to read from a video
-	// sourceType : 'video',
-	// sourceUrl : '../assets/AR/kanjiScene.mp4'
+	sourceType : 'video',
+	sourceUrl : '../assets/AR/kanjiScene.mp4'
 })
 
 arToolkitSource.init(function onReady(){
