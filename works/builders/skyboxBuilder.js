@@ -2,7 +2,7 @@ import * as THREE from '../../build/three.module.js';
 import { degreesToRadians } from '../../libs/util/util.js';
 
 var buildSkybox = function (scene) {
-    var materialArray = [];
+    var faceArray = [];
     var textureFront = new THREE.TextureLoader().load( 'textures/skybox/paze_ft.jpg');
     var textureBack = new THREE.TextureLoader().load( 'textures/skybox/paze_bk.jpg');
     var textureTop = new THREE.TextureLoader().load( 'textures/skybox/paze_up.jpg');
@@ -10,18 +10,18 @@ var buildSkybox = function (scene) {
     var textureRight = new THREE.TextureLoader().load( 'textures/skybox/paze_rt.jpg');
     var textureLeft = new THREE.TextureLoader().load( 'textures/skybox/paze_lf.jpg');
       
-    materialArray.push(new THREE.MeshBasicMaterial( { map: textureFront }));
-    materialArray.push(new THREE.MeshBasicMaterial( { map: textureBack }));
-    materialArray.push(new THREE.MeshBasicMaterial( { map: textureTop }));
-    materialArray.push(new THREE.MeshBasicMaterial( { map: textureBottom }));
-    materialArray.push(new THREE.MeshBasicMaterial( { map: textureRight }));
-    materialArray.push(new THREE.MeshBasicMaterial( { map: textureLeft }));
+    faceArray.push(new THREE.MeshBasicMaterial( { map: textureFront }));
+    faceArray.push(new THREE.MeshBasicMaterial( { map: textureBack }));
+    faceArray.push(new THREE.MeshBasicMaterial( { map: textureTop }));
+    faceArray.push(new THREE.MeshBasicMaterial( { map: textureBottom }));
+    faceArray.push(new THREE.MeshBasicMaterial( { map: textureRight }));
+    faceArray.push(new THREE.MeshBasicMaterial( { map: textureLeft }));
        
     for (var i = 0; i < 6; i++)
-      materialArray[i].side = THREE.BackSide;
+      faceArray[i].side = THREE.BackSide;
        
-    var skyboxGeo = new THREE.BoxGeometry( 1000, 1000, 1000);
-    var skybox = new THREE.Mesh( skyboxGeo, materialArray );
+    var skyboxGeometry = new THREE.BoxGeometry( 1000, 1000, 1000);
+    var skybox = new THREE.Mesh( skyboxGeometry, faceArray );
     skybox.rotateX(degreesToRadians(90));
     scene.add( skybox );
     return skybox;
