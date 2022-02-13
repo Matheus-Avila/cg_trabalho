@@ -1,5 +1,4 @@
 import * as TrackBuilder from '../builders/trackBuilder.js';
-import * as obstacleBuilder from '../builders/obstacleBuilder.js';
 import { degreesToRadians } from '../../libs/util/util.js';
 
 var updateTrack = function (keyboardState, scene, track, car, timer, speedMeter) {
@@ -17,7 +16,6 @@ var updateTrack = function (keyboardState, scene, track, car, timer, speedMeter)
 var changeTrack = function (scene, track, car, newTrackNumber, timer, speedMeter) {
     scene.remove(track.group);
     track = TrackBuilder.buildTrack(scene, newTrackNumber);
-    obstacleBuilder.buildObstacles(scene, newTrackNumber);
     
     if(newTrackNumber == 4)
         car.mesh.rotation.set(0, 0, degreesToRadians(90));

@@ -5,8 +5,7 @@ import KeyboardState from './util/KeyboardState.js';
 import {
   initRenderer,
   onWindowResize,
-  degreesToRadians,
-  initDefaultBasicLight
+  degreesToRadians
 } from "../libs/util/util.js";
 import * as CameraBuilder from './builders/cameraBuilder.js';
 import * as CameraBuilderMap from './builders/cameraBuilderMap.js';
@@ -57,11 +56,9 @@ window.addEventListener('resize', function () { onWindowResize(camera, renderer)
 
 var infoBox = new InfoBox();
 infoBox.showGameplayInfoBox();
-
 var speedMeter = new SpeedMeter();
 
 var spotLight = buildSpotLight();
-
 var directionalLight = buildDirectionalLight();
 
 render();
@@ -85,7 +82,7 @@ function controlCameras () {
   renderer.render(scene, camera);   
 
   // Set virtual camera viewport 
-  if(gameMode == GameMode.Gameplay){
+  if(gameMode == GameMode.Gameplay) {
   var offset = 10; 
     renderer.setViewport(offset, height-300-offset, 350, 300);  // Set virtual camera viewport  
     renderer.setScissor(offset, height-300-offset, 300, 300); // Set scissor with the same size as the viewport
@@ -121,7 +118,7 @@ function cameraMovement() {
   directionalLight.target = car.mesh;      
 }
 
-function buildSpotLight(){
+function buildSpotLight() {
   var spotLight = new THREE.SpotLight(0xffffff);
   spotLight.target = car.mesh; 
   spotLight.shadow.mapSize.width = 512;
@@ -131,11 +128,13 @@ function buildSpotLight(){
   spotLight.decay = 2;
   spotLight.penumbra = 0.8;
   spotLight.visible = false;
+  
   camera.add(spotLight);
+
   return spotLight;
 }
 
-function buildDirectionalLight(){
+function buildDirectionalLight() {
   var directionalLight = new THREE.DirectionalLight(0Xffffff,1);
   directionalLight.position.set(-15, -15, cameraHolder.position.z + 5 );  
   directionalLight.castShadow = true;
@@ -146,5 +145,4 @@ function buildDirectionalLight(){
   directionalLight.shadow.camera.far = 500;
 
   return directionalLight;
-
 }
