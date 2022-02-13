@@ -56,8 +56,8 @@ var buildFirstTrack = function (scene, car) {
     var blockDepth = 0.3;
 
     car.mesh.rotation.set(0, 0, degreesToRadians(180));
-
-    var track = new Track(trackNumber, initialBlockPosition, commonBlockPositions, blockSize, blockDepth);
+    var tex_track = 'textures/sand.png';
+    var track = new Track(trackNumber, initialBlockPosition, commonBlockPositions, blockSize, blockDepth, tex_track);
     scene.add(track.group);
 
     return track;
@@ -108,7 +108,8 @@ var buildSecondTrack = function (scene, car) {
 
     car.mesh.rotation.set(0, 0, degreesToRadians(180));
 
-    var track = new Track(trackNumber, initialBlockPosition, commonBlockPositions, blockSize, blockDepth);
+    var tex_track = 'textures/loam.png';
+    var track = new Track(trackNumber, initialBlockPosition, commonBlockPositions, blockSize, blockDepth, tex_track);
     scene.add(track.group);
 
     return track;
@@ -167,7 +168,8 @@ var buildThirdTrack = function (scene, car) {
 
     car.mesh.rotation.set(0, 0, degreesToRadians(180));
 
-    var track = new Track(trackNumber, initialBlockPosition, commonBlockPositions, blockSize, blockDepth);
+    var tex_track = 'textures/snow_CG.png';
+    var track = new Track(trackNumber, initialBlockPosition, commonBlockPositions, blockSize, blockDepth, tex_track);
     scene.add(track.group);
 
     return track;
@@ -216,7 +218,8 @@ var buildFourthTrack = function (scene, car) {
 
     car.mesh.rotation.set(0, 0, degreesToRadians(90));
 
-    var track = new Track(trackNumber, initialBlockPosition, commonBlockPositions, blockSize, blockDepth);
+    var tex_track = 'textures/grass.png';
+    var track = new Track(trackNumber, initialBlockPosition, commonBlockPositions, blockSize, blockDepth, tex_track);
     scene.add(track.group);
 
     return track;

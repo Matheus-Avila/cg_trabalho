@@ -32,8 +32,8 @@ var timer = new timeCheck();
 var scene = new THREE.Scene();
 var ambientLight = new THREE.AmbientLight("rgb(150,150,150)");
 scene.add(ambientLight);
-
-var plane = PlaneBuilder.buildPlane(scene);
+var texPlane = 'textures/lava.png';
+var plane = PlaneBuilder.buildPlane(scene, texPlane);
 var car = CarBuilder.buildCar(scene);
 var track = TrackBuilder.buildFirstTrack(scene, car);
 

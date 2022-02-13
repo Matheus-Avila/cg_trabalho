@@ -1,9 +1,9 @@
 import * as THREE from '../../build/three.module.js';
 
-var buildPlane = function (scene) {
+var buildPlane = function (scene, texture) {
     var side = 2000;
     var textureLoader = new THREE.TextureLoader();
-    var plane_texture  = textureLoader.load('textures/grass.jpg');
+    var plane_texture  = textureLoader.load(texture);
     var planeGeometry = new THREE.PlaneGeometry(side, side);
     planeGeometry.translate(0.0, 0.0, -0.3);
     var planeMaterial = new THREE.MeshPhongMaterial({

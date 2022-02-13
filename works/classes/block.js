@@ -2,7 +2,7 @@ import * as THREE from '../../build/three.module.js';
 import { BlockType } from "../util/constants.js";
 
 export class Block {
-    constructor(width, height, depth, type, position) {
+    constructor(width, height, depth, type, position, tex_track) {
         this.width = width;
         this.height = height;
         this.depth = depth;
@@ -19,7 +19,7 @@ export class Block {
         }
         var textureLoader = new THREE.TextureLoader();
 
-        var block_texture  = textureLoader.load('textures/snow_CG.png');
+        var block_texture  = textureLoader.load(tex_track);
         this.mesh = new THREE.Mesh(this.boxGeometry, this.material);
         this.mesh.material.map = block_texture;
         this.mesh.position.set(position[0], position[1], position[2]);
