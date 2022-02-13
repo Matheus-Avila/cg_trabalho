@@ -2,11 +2,11 @@ import * as THREE from '../../build/three.module.js';
 
 export class Cone {
     constructor(position) {
-        this.base = 1;
+        this.base = 0.5;
         this.height = 2;
 
         var textureLoader = new THREE.TextureLoader();
-        var cone_texture  = textureLoader.load('textures/wood.png');
+        var cone_texture  = textureLoader.load('textures/traffic-cone.jpg');
         
         var coneGeometry = new THREE.ConeGeometry(this.base, this.height, 32);
         var coneMaterial = new THREE.MeshPhongMaterial({
