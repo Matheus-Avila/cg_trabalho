@@ -1,3 +1,4 @@
+import * as THREE from '../../build/three.module.js';
 import { BlockType } from "../util/constants.js";
 
 var updateMovement = function (keyboardState, car, track, tempo, accelerationOn) {
@@ -9,14 +10,17 @@ var updateMovement = function (keyboardState, car, track, tempo, accelerationOn)
 
     if (tempo.numVoltas < 4) {
         if (!accelerationOn || carIsOnTrack(car.mesh, track, tempo)) {
-            car.maxSpeed = 0.6;
+            if (checkObstaclesCollision(car, track))
+                car.maxSpeed = 0.6 * 0.2;
+            else
+                car.maxSpeed = 0.6;
         }
         else {
             car.maxSpeed = 0.3;
-
-            if (Math.abs(car.speed) > car.maxSpeed)
-                car.speed = car.maxSpeed * Math.sign(car.speed);
         }
+
+        if (Math.abs(car.speed) > car.maxSpeed)
+            car.speed = car.maxSpeed * Math.sign(car.speed);
 
         if (keyboardState.pressed("left") && car.angle < car.maxAngleAxle) {
             car.angle += angleRate;
@@ -76,6 +80,29 @@ var carIsOnTrack = function (car, track, tempo) {
         }
     }
     
+    return false;
+}
+
+var checkObstaclesCollision = function (car, track) {
+    return checkObstaclesCollisionHelper(car, track.cones) || checkObstaclesCollisionHelper(car, track.boxes);
+}
+
+var checkObstaclesCollisionHelper = function (car, obstacles) {
+    for (var i = 0; i < obstacles.length; i++) {
+        var obstacle = obstacles[i];
+
+        var obstacleBox3 = new THREE.Box3();
+        obstacleBox3.setFromObject(obstacle.mesh);
+
+        var carBox3 = new THREE.Box3();
+        carBox3.setFromObject(car.boundingBox);
+
+        if (carBox3.min.x <= obstacleBox3.max.x && carBox3.max.x >= obstacleBox3.min.x &&
+            carBox3.min.y <= obstacleBox3.max.y && carBox3.max.y >= obstacleBox3.min.y) {
+            return true;
+        }
+    }
+
     return false;
 }
 

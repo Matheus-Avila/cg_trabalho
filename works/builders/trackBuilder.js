@@ -56,11 +56,19 @@ var buildFirstTrack = function (scene, car) {
     var blockSize = 10;
     var blockDepth = 0.3;
     var obstacles = ObstacleBuilder.buildObstacles(scene, trackNumber);
-    var tex_track = 'textures/sand.png';
+    var texture = 'textures/sand.png';
 
     car.mesh.rotation.set(0, 0, degreesToRadians(180));
 
-    var track = new Track(trackNumber, initialBlockPosition, commonBlockPositions, blockSize, blockDepth, tex_track, obstacles);
+    var track = new Track(
+        trackNumber, 
+        initialBlockPosition, 
+        commonBlockPositions, 
+        blockSize, blockDepth, 
+        texture, 
+        obstacles.coneList, 
+        obstacles.boxList
+    );
     scene.add(track.group);
 
     return track;
@@ -109,11 +117,19 @@ var buildSecondTrack = function (scene, car) {
     var blockSize = 10;
     var blockDepth = 0.3;
     var obstacles = ObstacleBuilder.buildObstacles(scene, trackNumber);
-    var tex_track = 'textures/loam.png';
+    var texture = 'textures/loam.png';
 
     car.mesh.rotation.set(0, 0, degreesToRadians(180));
 
-    var track = new Track(trackNumber, initialBlockPosition, commonBlockPositions, blockSize, blockDepth, tex_track, obstacles);
+    var track = new Track(
+        trackNumber, 
+        initialBlockPosition, 
+        commonBlockPositions, 
+        blockSize, blockDepth, 
+        texture, 
+        obstacles.coneList, 
+        obstacles.boxList
+    );
     scene.add(track.group);
 
     return track;
@@ -170,11 +186,19 @@ var buildThirdTrack = function (scene, car) {
     var blockSize = 10;
     var blockDepth = 0.3;
     var obstacles = ObstacleBuilder.buildObstacles(scene, trackNumber);
-    var tex_track = 'textures/snow_CG.png';
+    var texture = 'textures/snow_CG.png';
 
     car.mesh.rotation.set(0, 0, degreesToRadians(180));
 
-    var track = new Track(trackNumber, initialBlockPosition, commonBlockPositions, blockSize, blockDepth, tex_track, obstacles);
+    var track = new Track(
+        trackNumber, 
+        initialBlockPosition, 
+        commonBlockPositions, 
+        blockSize, blockDepth, 
+        texture, 
+        obstacles.coneList, 
+        obstacles.boxList
+    );
     scene.add(track.group);
 
     return track;
@@ -221,11 +245,19 @@ var buildFourthTrack = function (scene, car) {
     var blockSize = 10;
     var blockDepth = 0.3;
     var obstacles = ObstacleBuilder.buildObstacles(scene, trackNumber);
-    var tex_track = 'textures/grass.png';
+    var texture = 'textures/grass.png';
 
     car.mesh.rotation.set(0, 0, degreesToRadians(90));
     
-    var track = new Track(trackNumber, initialBlockPosition, commonBlockPositions, blockSize, blockDepth, tex_track, obstacles);
+    var track = new Track(
+        trackNumber, 
+        initialBlockPosition, 
+        commonBlockPositions, 
+        blockSize, blockDepth, 
+        texture, 
+        obstacles.coneList, 
+        obstacles.boxList
+    );
     scene.add(track.group);
 
     return track;
