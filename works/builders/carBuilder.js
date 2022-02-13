@@ -17,9 +17,11 @@ var raioRoda = 0.5;
 var buildCar = function (scene, maxSpeed) {
     var maxSpeed = 0.6;
     var maxAngleAxle = 0.1;
+
     var casing = buildCasing(scene);
     var axle = buildAxle(casing);
     var wheels = buildWheels(axle.front, axle.back);
+
     buildWheelsTexture(wheels);
     buildCasingContour(casing);
     buildFront(casing);
@@ -48,10 +50,20 @@ var buildCar = function (scene, maxSpeed) {
     buildRightSupport2(casing);
     buildLeftSupport3(casing);
     buildRightSupport3(casing);
+
     casing.scale.set(.5,.5,.5);
     casing.rotateZ(degreesToRadians(180));
+
+    var geometry = new THREE.BoxGeometry(5.85, 2, 2);
+    var material = new THREE.MeshBasicMaterial({color: 0x00ff00});
+    var boundingBox = new THREE.Mesh(geometry, material);
+    boundingBox.position.setX(0.15);
+    boundingBox.visible = false;
+    casing.add(boundingBox);
+
     scene.add(casing);
-    return new Car(casing, maxSpeed, maxAngleAxle);
+
+    return new Car(casing, maxSpeed, maxAngleAxle, boundingBox);
 }
 
 var buildCasing = function (scene)

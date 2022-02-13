@@ -1,5 +1,4 @@
-import * as THREE from '../../build/three.module.js';
-import { BoxList } from '../classes/boxesList.js';
+import { BoxList } from '../classes/boxList.js';
 import { ConeList } from '../classes/coneList.js';
 
 var buildObstacles = function (scene, trackNumber) {
@@ -57,16 +56,16 @@ var buildFirstObstacles = function (scene) {
         [10, -30, 1]  
     ];
 
-    var cones = new ConeList(positionsCones);
-    var boxes = new BoxList(positionsBoxes);
+    var coneList = new ConeList(positionsCones);
+    var boxList = new BoxList(positionsBoxes);
 
-    var obstacles = new THREE.Group();
-    obstacles.add(cones.group);
-    obstacles.add(boxes.group);
+    scene.add(coneList.group);
+    scene.add(boxList.group);
 
-    scene.add(obstacles);
+    //scene.add(coneList.boundingBoxGroup);
+    //scene.add(boxList.boundingBoxGroup);
 
-    return obstacles;
+    return {coneList, boxList};
 }
 
 var buildSecondObstacles = function (scene) {
@@ -97,16 +96,13 @@ var buildSecondObstacles = function (scene) {
         [10, -30, 1]
     ];
 
-    var cones = new ConeList(positionsCones);
-    var boxes = new BoxList(positionsBoxes);
+    var coneList = new ConeList(positionsCones);
+    var boxList = new BoxList(positionsBoxes);
 
-    var obstacles = new THREE.Group();
-    obstacles.add(cones.group);
-    obstacles.add(boxes.group);
+    scene.add(coneList.group);
+    scene.add(boxList.group);
 
-    scene.add(obstacles);
-
-    return obstacles;
+    return {coneList, boxList};
 }
 
 var buildThirdObstacles = function (scene) {
@@ -140,16 +136,13 @@ var buildThirdObstacles = function (scene) {
         [30, 60, 1] 
     ];
 
-    var cones = new ConeList(positionsCones);
-    var boxes = new BoxList(positionsBoxes);
+    var coneList = new ConeList(positionsCones);
+    var boxList = new BoxList(positionsBoxes);
 
-    var obstacles = new THREE.Group();
-    obstacles.add(cones.group);
-    obstacles.add(boxes.group);
+    scene.add(coneList.group);
+    scene.add(boxList.group);
 
-    scene.add(obstacles);
-
-    return obstacles;
+    return {coneList, boxList};
 }
 
 var buildFourthObstacles = function (scene) {
@@ -179,16 +172,13 @@ var buildFourthObstacles = function (scene) {
         [-50, -10, 1]
     ];
 
-    var cones = new ConeList(positionsCones);
-    var boxes = new BoxList(positionsBoxes);
+    var coneList = new ConeList(positionsCones);
+    var boxList = new BoxList(positionsBoxes);
 
-    var obstacles = new THREE.Group();
-    obstacles.add(cones.group);
-    obstacles.add(boxes.group);
+    scene.add(coneList.group);
+    scene.add(boxList.group);
 
-    scene.add(obstacles);
-
-    return obstacles;
+    return {coneList, boxList};
 }
 
 export { buildObstacles, buildFirstObstacles, buildSecondObstacles, buildThirdObstacles, buildFourthObstacles };
