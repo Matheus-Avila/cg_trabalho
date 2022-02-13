@@ -13,6 +13,7 @@ var updateTrack = function (keyboardState, scene, track, car, timer, speedMeter)
 }
 
 var changeTrack = function (scene, track, car, newTrackNumber, timer, speedMeter) {
+    scene.remove(track.plane);
     scene.remove(track.group);
     track = TrackBuilder.buildTrack(scene, car, newTrackNumber);
     
