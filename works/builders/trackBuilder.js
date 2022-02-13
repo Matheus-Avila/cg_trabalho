@@ -1,6 +1,7 @@
 import { Track } from '../classes/track.js';
 import { degreesToRadians } from '../../libs/util/util.js';
 import * as ObstacleBuilder from '../builders/obstacleBuilder.js';
+import * as PlaneBuilder from '../builders/planeBuilder.js';
 
 var buildTrack = function (scene, car, trackNumber) {
     if (trackNumber == 1)
@@ -56,9 +57,11 @@ var buildFirstTrack = function (scene, car) {
     var blockSize = 10;
     var blockDepth = 0.3;
     var obstacles = ObstacleBuilder.buildObstacles(scene, trackNumber);
-    var texture = 'textures/sand.png';
+    var texture = 'textures/road.png';
 
     car.mesh.rotation.set(0, 0, degreesToRadians(180));
+    var planeTexture = 'textures/grass.png';
+    var plane = PlaneBuilder.buildPlane(scene, planeTexture);
 
     var track = new Track(
         trackNumber, 
@@ -67,7 +70,8 @@ var buildFirstTrack = function (scene, car) {
         blockSize, blockDepth, 
         texture, 
         obstacles.coneList, 
-        obstacles.boxList
+        obstacles.boxList,
+        plane
     );
     scene.add(track.group);
 
@@ -120,6 +124,8 @@ var buildSecondTrack = function (scene, car) {
     var texture = 'textures/loam.png';
 
     car.mesh.rotation.set(0, 0, degreesToRadians(180));
+    var planeTexture = 'textures/lava.png';
+    var plane = PlaneBuilder.buildPlane(scene, planeTexture);
 
     var track = new Track(
         trackNumber, 
@@ -128,7 +134,8 @@ var buildSecondTrack = function (scene, car) {
         blockSize, blockDepth, 
         texture, 
         obstacles.coneList, 
-        obstacles.boxList
+        obstacles.boxList,
+        plane
     );
     scene.add(track.group);
 
@@ -186,9 +193,11 @@ var buildThirdTrack = function (scene, car) {
     var blockSize = 10;
     var blockDepth = 0.3;
     var obstacles = ObstacleBuilder.buildObstacles(scene, trackNumber);
-    var texture = 'textures/snow_CG.png';
+    var texture = 'textures/road.png';
 
     car.mesh.rotation.set(0, 0, degreesToRadians(180));
+    var planeTexture = 'textures/snow_CG.png';
+    var plane = PlaneBuilder.buildPlane(scene, planeTexture);
 
     var track = new Track(
         trackNumber, 
@@ -197,7 +206,8 @@ var buildThirdTrack = function (scene, car) {
         blockSize, blockDepth, 
         texture, 
         obstacles.coneList, 
-        obstacles.boxList
+        obstacles.boxList,
+        plane
     );
     scene.add(track.group);
 
@@ -245,10 +255,12 @@ var buildFourthTrack = function (scene, car) {
     var blockSize = 10;
     var blockDepth = 0.3;
     var obstacles = ObstacleBuilder.buildObstacles(scene, trackNumber);
-    var texture = 'textures/grass.png';
+    var texture = 'textures/road.png';
 
     car.mesh.rotation.set(0, 0, degreesToRadians(90));
-    
+    var planeTexture = 'textures/sand.png';
+    var plane = PlaneBuilder.buildPlane(scene, planeTexture);
+
     var track = new Track(
         trackNumber, 
         initialBlockPosition, 
@@ -256,7 +268,8 @@ var buildFourthTrack = function (scene, car) {
         blockSize, blockDepth, 
         texture, 
         obstacles.coneList, 
-        obstacles.boxList
+        obstacles.boxList,
+        plane
     );
     scene.add(track.group);
 

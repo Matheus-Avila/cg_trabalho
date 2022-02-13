@@ -7,7 +7,7 @@ var buildPlane = function (scene, texture) {
     var planeGeometry = new THREE.PlaneGeometry(side, side);
     planeGeometry.translate(0.0, 0.0, -0.3);
     var planeMaterial = new THREE.MeshPhongMaterial({
-        color: "rgba(150, 150, 150)",
+        color: "rgba(250, 250, 250)",
         side: THREE.DoubleSide,
     }); 
     var plane = new THREE.Mesh(planeGeometry, planeMaterial);   

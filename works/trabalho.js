@@ -9,7 +9,6 @@ import {
 } from "../libs/util/util.js";
 import * as CameraBuilder from './builders/cameraBuilder.js';
 import * as CameraBuilderMap from './builders/cameraBuilderMap.js';
-import * as PlaneBuilder from './builders/planeBuilder.js';
 import * as SkyboxBuilder from './builders/skyboxBuilder.js';
 import * as TrackBuilder from './builders/trackBuilder.js';
 import * as CarBuilder from './builders/carBuilder.js';
@@ -32,11 +31,9 @@ var timer = new timeCheck();
 var scene = new THREE.Scene();
 var ambientLight = new THREE.AmbientLight("rgb(150,150,150)");
 scene.add(ambientLight);
-var texPlane = 'textures/lava.png';
-var plane = PlaneBuilder.buildPlane(scene, texPlane);
+
 var car = CarBuilder.buildCar(scene);
 var track = TrackBuilder.buildFirstTrack(scene, car);
-
 var skybox = SkyboxBuilder.buildSkybox(scene);
 
 var camera = CameraBuilder.buildCamera();
@@ -99,7 +96,7 @@ function controlCameras () {
 function updateGame() {
   keyboardState.update();
   gameMode = GameModeControls.updateGameMode(
-    keyboardState, gameMode, scene, camera, cameraMap, track, car, cameraHolder, timer, infoBox, plane, speedMeter, spotLight);
+    keyboardState, gameMode, scene, camera, cameraMap, track, car, cameraHolder, timer, infoBox, speedMeter, spotLight);
 
   if (gameMode == GameMode.Gameplay || gameMode == GameMode.ThirdPerson) {
     timer.updateCounter();

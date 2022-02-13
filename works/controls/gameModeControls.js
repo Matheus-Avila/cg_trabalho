@@ -2,21 +2,21 @@ import { GameMode } from '../util/constants.js';
 import { degreesToRadians } from '../../libs/util/util.js';
 
 var updateGameMode = function (
-    keyboardState, gameMode, scene, camera, cameraMap, track, car, cameraHolder, timer, infoBox, plane, speedMeter, spotLight) {
+    keyboardState, gameMode, scene, camera, cameraMap, track, car, cameraHolder, timer, infoBox, speedMeter, spotLight) {
     if (keyboardState.down("space")) {
         if (gameMode == GameMode.Gameplay)
-            gameMode = changeToInspectionMode(scene, camera, cameraMap, track, car, cameraHolder, timer, infoBox, plane, speedMeter, spotLight);
+            gameMode = changeToInspectionMode(scene, camera, cameraMap, track, car, cameraHolder, timer, infoBox, speedMeter, spotLight);
         else if (gameMode == GameMode.Inspection)
-            gameMode = changeToThirdPersonMode(scene, camera, cameraMap, track, car, cameraHolder, infoBox, plane, spotLight);
+            gameMode = changeToThirdPersonMode(scene, camera, cameraMap, track, car, cameraHolder, infoBox, spotLight);
         else if (gameMode == GameMode.ThirdPerson)
-            gameMode = changeToGameplayMode(scene, camera, cameraMap, track, car, cameraHolder, infoBox, plane, spotLight);
+            gameMode = changeToGameplayMode(scene, camera, cameraMap, track, car, cameraHolder, infoBox, spotLight);
     }
 
     return gameMode;
 }
 
-var changeToGameplayMode = function (scene, camera, cameraMap, track, car, cameraHolder, infoBox, plane, spotLight) {
-    scene.add(plane);
+var changeToGameplayMode = function (scene, camera, cameraMap, track, car, cameraHolder, infoBox, spotLight) {
+    scene.add(track.plane);
     scene.add(track.group);
  
     spotLight.visible = false;
@@ -44,8 +44,8 @@ var changeToGameplayMode = function (scene, camera, cameraMap, track, car, camer
     return GameMode.Gameplay;
 }
 
-var changeToInspectionMode = function (scene, camera, cameraMap, track, car, cameraHolder, timer, infoBox, plane, speedMeter, spotLight) {
-    scene.remove(plane);
+var changeToInspectionMode = function (scene, camera, cameraMap, track, car, cameraHolder, timer, infoBox, speedMeter, spotLight) {
+    scene.remove(track.plane);
     scene.remove(track.group);
 
     car.mesh.rotation.set(0, 0, 0);
@@ -72,8 +72,8 @@ var changeToInspectionMode = function (scene, camera, cameraMap, track, car, cam
     return GameMode.Inspection;
 }
 
-var changeToThirdPersonMode = function (scene, camera, cameraMap, track, car, cameraHolder, infoBox, plane, spotLight) {
-    scene.add(plane);
+var changeToThirdPersonMode = function (scene, camera, cameraMap, track, car, cameraHolder, infoBox, spotLight) {
+    scene.add(track.plane);
     scene.add(track.group);
  
     spotLight.visible = false;
