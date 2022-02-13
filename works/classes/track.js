@@ -3,11 +3,12 @@ import { Block } from '../classes/block.js';
 import { BlockType } from "../util/constants.js";
 
 export class Track {
-    constructor(number, initialBlockPosition, commonBlockPositions, blockSize, blockDepth, tex_track) {
+    constructor(number, initialBlockPosition, commonBlockPositions, blockSize, blockDepth, tex_track, obstacles) {
         this.initialBlockPosition = initialBlockPosition;
         this.number = number;
         this.blockSize = blockSize;
         this.blockDepth = blockDepth;
+
         this.blocks = [];
         this.group = new THREE.Group();
 
@@ -20,5 +21,7 @@ export class Track {
             this.blocks.push(commonBlock);
             this.group.add(commonBlock.mesh);
         }
+
+        this.group.add(obstacles);
     }
 }

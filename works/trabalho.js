@@ -59,7 +59,6 @@ window.addEventListener('resize', function () { onWindowResize(camera, renderer)
 
 var infoBox = new InfoBox();
 infoBox.showGameplayInfoBox();
-
 var speedMeter = new SpeedMeter();
 
 var spotLight = buildSpotLight();
@@ -124,7 +123,7 @@ function cameraMovement() {
   directionalLight.target = car.mesh;
 }
 
-function buildSpotLight(){
+function buildSpotLight() {
   var spotLight = new THREE.SpotLight(0xffffff);
   spotLight.target = car.mesh; 
   spotLight.shadow.mapSize.width = 512;
@@ -134,13 +133,13 @@ function buildSpotLight(){
   spotLight.decay = 2;
   spotLight.penumbra = 0.8;
   spotLight.visible = false;
-
+  
   camera.add(spotLight);
 
   return spotLight;
 }
 
-function buildDirectionalLight(){
+function buildDirectionalLight() {
   var directionalLight = new THREE.DirectionalLight(0Xffffff,1);
   directionalLight.position.set(-15, -15, cameraHolder.position.z + 5 );  
   directionalLight.castShadow = true;
