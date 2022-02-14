@@ -25,6 +25,7 @@ var buildCar = function (scene, maxSpeed) {
     buildWheelsTexture(wheels);
     buildCasingContour(casing);
     buildFront(casing);
+    buildGrayAxle(casing);
     buildCasingBack(casing);
     buildFrontBlack(casing);
     buildCasingContourBlackLeft(casing);
@@ -149,19 +150,6 @@ var buildTopBack = function (car)
     pointCloud.add(spMesh);
   });
 
-  // var textureLoader = new THREE.TextureLoader();
-  //     var plane_texture  = textureLoader.load('textures/fire_circle.jpg');
-  //     var planeGeometry = new THREE.PlaneGeometry(largura*1.8, profundidade*.55);
-  //     var planeMaterial = new THREE.MeshPhongMaterial(); 
-  //     var plane = new THREE.Mesh(planeGeometry, planeMaterial);
-  //     plane.position.x = -profundidade*.85; 
-  //     plane.position.z = altura*1.17;
-  //     plane.rotateZ(Math.PI/2);
-  //     plane.rotateX(-Math.PI/6.6);
-  //     plane.material.map = plane_texture;
-  //     car.add(plane);
-
-
   pointCloud.visible = true;
   var convexCasing = new ConvexGeometry(points);
   var casing = new THREE.MeshPhongMaterial(colorCasing );
@@ -207,6 +195,52 @@ var buildParabrisa = function (car)
 
   car.add(objectcasing);
 }
+
+var buildGrayAxle = function (car){ 
+
+  var points = [];
+  
+  points.push(new THREE.Vector3(posRoda*1.5, largura*.8, 0.3));
+  points.push(new THREE.Vector3(posRoda*1.5, -largura*.8, 0.3));
+  points.push(new THREE.Vector3(posRoda*.6, largura*.8, 0.3));
+  points.push(new THREE.Vector3(posRoda*.6, -largura*.8, 0.3));
+  points.push(new THREE.Vector3(posRoda*1.5, largura*.8, -.55));
+  points.push(new THREE.Vector3(posRoda*1.5, -largura*.8, -.55));
+  points.push(new THREE.Vector3(posRoda*.6, largura*.8, -.55));
+  points.push(new THREE.Vector3(posRoda*.6, -largura*.8, -.55));
+
+
+  points.push(new THREE.Vector3(-posRoda*1.5, largura*.8, 0.3));
+  points.push(new THREE.Vector3(-posRoda*1.5, -largura*.8, 0.3));
+  points.push(new THREE.Vector3(-posRoda*.6, largura*.8, 0.3));
+  points.push(new THREE.Vector3(-posRoda*.6, -largura*.8, 0.3));
+  points.push(new THREE.Vector3(-posRoda*1.5, largura*.8, -.55));
+  points.push(new THREE.Vector3(-posRoda*1.5, -largura*.8, -.55));
+  points.push(new THREE.Vector3(-posRoda*.6, largura*.8, -.55));
+  points.push(new THREE.Vector3(-posRoda*.6, -largura*.8, -.55));
+
+  var material = new THREE.MeshPhongMaterial(colorBlack);
+
+  var pointCloud = new THREE.Object3D();  
+  points.forEach(function (point) {
+    var spGeom = new THREE.SphereGeometry(0.2);
+    var spMesh = new THREE.Mesh(spGeom, material);
+    spMesh.position.set(0, 0, .63);
+    pointCloud.add(spMesh);
+  });
+
+  //  
+
+  pointCloud.visible = true;
+  var convexCasing = new ConvexGeometry(points);
+  var casing = new THREE.MeshPhongMaterial(colorBlack);
+  var objectcasing = new THREE.Mesh(convexCasing, casing);
+      objectcasing.castShadow = true;
+      objectcasing.visible = true;
+
+  car.add(objectcasing);
+}
+
 
 var buildTopLeftFront = function (car){ 
 
