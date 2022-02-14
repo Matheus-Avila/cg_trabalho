@@ -155,7 +155,7 @@ function createSpotlight(camera, initialPosition) {
     spotLight.shadow.mapSize.height = 512;
     camera.add(spotLight);
 
-    var ambientLight = new THREE.AmbientLight(0x343434);
+    var ambientLight = new THREE.AmbientLight(0xffffff);
     ambientLight.name = "ambientLight";
     camera.add(ambientLight);
 
