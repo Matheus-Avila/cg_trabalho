@@ -3,7 +3,7 @@ import * as THREE from '../../build/three.module.js';
 import { degreesToRadians } from '../../libs/util/util.js';
 import {ConvexGeometry} from '../../build/jsm/geometries/ConvexGeometry.js';
 
-var colorCasing = {color:"rgb(150,150,150)"};
+var colorCasing = {color:"rgb(0,0,0)"};
 var colorBlack = {color:"rgb(50,50,50)"};
 var glassOpacity = 0.8;
 var fundoPrata = -0.3;
@@ -21,7 +21,7 @@ var buildCar = function (scene, maxSpeed) {
     var casing = buildCasing(scene);
     var axle = buildAxle(casing);
     var wheels = buildWheels(axle.front, axle.back);
-
+    buildTextures(casing);
     buildWheelsTexture(wheels);
     buildCasingContour(casing);
     buildFront(casing);
@@ -78,9 +78,6 @@ var buildCasing = function (scene)
   points.push(new THREE.Vector3(profundidade, -largura,altura*.4));
   points.push(new THREE.Vector3(-profundidade, largura,altura*.4));
   points.push(new THREE.Vector3(-profundidade, -largura,altura*.4));
-  // // Topo pontudo do carro
-  // points.push(new THREE.Vector3(0.2,-largura*0.8,altura*2));
-  // points.push(new THREE.Vector3(0.2,largura*0.8,altura*2)); 
 
   var material = new THREE.MeshPhongMaterial({color:"rgb(255,255,255)"});
 
@@ -105,6 +102,30 @@ var buildCasing = function (scene)
   return objectcasing;
 }
 
+var buildTextures = function (car){
+  var textureLoader = new THREE.TextureLoader();
+  var plane_texture  = textureLoader.load('textures/fire.jpg');
+  var planeGeometry = new THREE.PlaneGeometry(profundidade*.9 , altura*.8);
+  var planeMaterial = new THREE.MeshPhongMaterial(); 
+  var plane = new THREE.Mesh(planeGeometry, planeMaterial);
+  plane.position.y = 1.001*largura; 
+  plane.position.z = altura*.3;
+  plane.rotateZ(Math.PI/2);
+  plane.rotateX(Math.PI/2);
+  plane.rotateY(Math.PI/2);
+  plane.material.map = plane_texture;
+  car.add(plane);
+
+  var plane2 = new THREE.Mesh(planeGeometry, planeMaterial);
+  plane2.position.y = -1.001*largura; 
+  plane2.position.z = altura*.3;
+  plane2.rotateZ(Math.PI/2);
+  plane2.rotateX(Math.PI/2);
+  plane2.rotateY(Math.PI/2);
+  plane2.rotateX(Math.PI)
+  plane2.material.map = plane_texture;
+  car.add(plane2);
+}
 
 var buildTopBack = function (car)
 {
@@ -128,7 +149,18 @@ var buildTopBack = function (car)
     pointCloud.add(spMesh);
   });
 
-  //  
+  // var textureLoader = new THREE.TextureLoader();
+  //     var plane_texture  = textureLoader.load('textures/fire_circle.jpg');
+  //     var planeGeometry = new THREE.PlaneGeometry(largura*1.8, profundidade*.55);
+  //     var planeMaterial = new THREE.MeshPhongMaterial(); 
+  //     var plane = new THREE.Mesh(planeGeometry, planeMaterial);
+  //     plane.position.x = -profundidade*.85; 
+  //     plane.position.z = altura*1.17;
+  //     plane.rotateZ(Math.PI/2);
+  //     plane.rotateX(-Math.PI/6.6);
+  //     plane.material.map = plane_texture;
+  //     car.add(plane);
+
 
   pointCloud.visible = true;
   var convexCasing = new ConvexGeometry(points);
@@ -559,18 +591,6 @@ var buildFront = function (car){
   points.push(new THREE.Vector3(paraChoque, -largura,0));
   points.push(new THREE.Vector3(paraChoque+.4, largura*.6, 0));
   points.push(new THREE.Vector3(paraChoque+.4, -largura*.6, 0));
-  
-  var textureLoader = new THREE.TextureLoader();
-      var plane_texture  = textureLoader.load('textures/carbon_car.jpg');
-      var planeGeometry = new THREE.PlaneGeometry(largura*1.2 , altura*.4);
-      var planeMaterial = new THREE.MeshPhongMaterial(); 
-      var plane = new THREE.Mesh(planeGeometry, planeMaterial);
-      plane.position.x = 1.001*paraChoque+.4; 
-      plane.position.z = altura*.3;
-      plane.rotateZ(Math.PI/2);
-      plane.rotateX(Math.PI/2);
-      plane.material.map = plane_texture;
-      car.add(plane);
 
   var material = new THREE.MeshPhongMaterial({color:"rgb(255,255,255)"});
 
@@ -1118,7 +1138,7 @@ var buildCasingContour = function (car){
 
       
       var textureLoader = new THREE.TextureLoader();
-      var plane_texture  = textureLoader.load('textures/copper_car.jpg');
+      var plane_texture  = textureLoader.load('textures/carbon_car.jpg');
       var planeGeometry = new THREE.PlaneGeometry(largura*2 , altura*.6);
       var planeMaterial = new THREE.MeshPhongMaterial(); 
       var plane = new THREE.Mesh(planeGeometry, planeMaterial);
